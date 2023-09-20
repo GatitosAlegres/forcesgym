@@ -41,7 +41,7 @@ class StripeController extends Controller
             'metadata'              => [
                 'user_id' => "0001"
             ],
-            'customer_email' => "admin@retogym.com",
+            'customer_email' => "admin@forcesgym.com",
             'success_url' => route('success'),
             'cancel_url'  => route('cancel'),
         ]);

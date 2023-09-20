@@ -39,8 +39,8 @@ class DownloadPdfController extends Controller
         }
 
         $notes = [
-            'Retogym - Guadalupe',
-            'Siente el PODER',
+            'ForcesGym - Pacasmayo',
+            'Donde los sueños se vuelven musculos',
         ];
         $notes = implode("<br>", $notes);
 

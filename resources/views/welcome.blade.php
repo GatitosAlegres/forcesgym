@@ -33,7 +33,7 @@
         <nav
             class="flex items-center justify-between bg-white bg-opacity-20 backdrop-filter backdrop-blur-lg py-4 px-8 top-0 left-0 w-full z-10 bg-gray-100 dark:bg-black">
             <div class="flex items-center">
-                <span class="flex text-2xl font-bold text-white">Retogym</span>
+                <span class="flex text-2xl font-bold text-white">ForcesGym</span>
             </div>
             <div class="flex items-center space-x-4">
                 <a href="/store" target="_blank" class="text-white hover:text-gray-300">Tienda</a>
@@ -56,7 +56,8 @@
                                     Siente el <span class="text-orange-500">PODER</span>
                                 </h1>
                                 <p class="mt-4 text-lg text-gray-300">
-                                    Bienvenido/a a Retogym. Somos el mejor centro de fitness y entrenamiento ubicado en
+                                    Bienvenido/a a ForcesGym. Somos el mejor centro de fitness y entrenamiento ubicado
+                                    en
                                     Guadalupe
                                     que se enfoca en llevarte al límite absoluto
                                 </p>
@@ -202,7 +203,7 @@
             class="bg-gray-100 dark:bg-black bg-white bg-opacity-20 backdrop-filter backdrop-blur-lg py-8 px-4 bottom-0 left-0 w-full z-10">
             <div class="container mx-auto">
                 <div class="flex items-center justify-between">
-                    <span class="text-white">© Retogym &copy; {{ date('Y') }}. Todos los derechos
+                    <span class="text-white">© ForcesGym &copy; {{ date('Y') }}. Todos los derechos
                         reservados.</span>
                     <div class="flex space-x-4">
                         <a href="#" class="text-white hover:text-gray-300">Acerca de</a>
