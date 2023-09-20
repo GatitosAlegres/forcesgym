@@ -1,0 +1,71 @@
+services:
+  app:
+    build:
+      args:
+        user: retogym
+        uid: 1000
+      context: ./
+      dockerfile: Dockerfile
+    image: retogym
+    container_name: app
+    working_dir: /var/www/
+    volumes:
+      - ./:/var/www
+    networks:
+      - retogym
+    depends_on:
+      - db
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8000"]
+      interval: 30s
+      timeout: 10s
+      retries: 5
+
+  db:
+    image: mysql:8.0
+    container_name: db
+    restart: unless-stopped
+    environment:
+      MYSQL_DATABASE: ${DB_DATABASE}
+      MYSQL_ROOT_PASSWORD: ${DB_PASSWORD}
+      MYSQL_PASSWORD: ${DB_PASSWORD}
+      #MYSQL_USER: ${DB_USERNAME}
+      SERVICE_TAGS: dev
+      SERVICE_NAME: mysql
+    volumes:
+      - ./infraestructure/dev/mysql:/var/lib/mysql
+    #   - ./docker-compose/mysql:/docker-entrypoint-initdb.d
+    networks:
+      - retogym
+
+  phpmyadmin:
+    image: phpmyadmin/phpmyadmin
+    container_name: phpmyadmin
+    restart: unless-stopped
+    environment:
+      PMA_HOST: ${DB_HOST}
+      PMA_PORT: ${DB_PORT}
+      PMA_USER: ${DB_USERNAME}
+      PMA_PASSWORD: ${DB_PASSWORD}
+    ports:
+      - 8080:80
+    depends_on:
+      - db
+    networks:
+      - retogym
+
+  nginx:
+    image: nginx:alpine
+    container_name: nginx
+    restart: unless-stopped
+    ports:
+      - 8000:80
+    volumes:
+      - ./:/var/www
+      - ./infraestructure/dev/nginx:/etc/nginx/conf.d/
+    networks:
+      - retogym
+
+networks:
+  retogym:
+    driver: bridge
