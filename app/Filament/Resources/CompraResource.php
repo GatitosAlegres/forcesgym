@@ -47,12 +47,6 @@ class CompraResource extends Resource
 
                 Forms\Components\Card::make()
                     ->schema([
-                        Forms\Components\Placeholder::make('invoice_number')
-                            ->label('Proveedor')
-                            ->content(fn (Compra $record): ?string => $record->invoice?->supplier->name),
-                        Forms\Components\Placeholder::make('warranty_code')
-                            ->label('Expiración de Garantia')
-                            ->content(fn (Compra $record): ?string => $record->warranty?->expiration_date),
                         Forms\Components\Placeholder::make('total_price')
                             ->label('Monto total')
                             ->content(fn (Compra $record): ?string => $record->currency . ' ' . $record->total_price),
