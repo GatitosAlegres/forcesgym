@@ -20,15 +20,6 @@ return new class extends Migration
             $table->decimal("total_price", 10, 2)->default(0);
             $table->text("notes")->nullable();
             $table->timestamps();
-
-            $table->unsignedBigInteger('guia_remision_id');
-            $table->foreign('guia_remision_id')->references('id')->on('guia_remisions')->onDelete('cascade');
-
-            $table->unsignedBigInteger('invoice_id');
-            $table->foreign('invoice_id')->references('id')->on('invoices')->onDelete('cascade');
-
-            $table->unsignedBigInteger("warranty_id");
-            $table->foreign("warranty_id")->references("id")->on("warranties")->onDelete("cascade");
         });
     }
 
