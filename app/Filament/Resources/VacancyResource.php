@@ -2,9 +2,9 @@
 
 namespace App\Filament\Resources;
 
-use App\Filament\Resources\VacanteResource\Pages;
-use App\Filament\Resources\VacanteResource\RelationManagers;
-use App\Models\Vacante;
+use App\Filament\Resources\VacancyResource\Pages;
+use App\Filament\Resources\VacancyResource\RelationManagers;
+use App\Models\Vacancy;
 use Filament\Forms;
 use Filament\Resources\Form;
 use Filament\Resources\Resource;
@@ -13,9 +13,9 @@ use Filament\Tables;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
 
-class VacanteResource extends Resource
+class VacancyResource extends Resource
 {
-    protected static ?string $model = Vacante::class;
+    protected static ?string $model = Vacancy::class;
 
     protected static ?string $navigationIcon = 'heroicon-o-collection';
 
@@ -27,12 +27,15 @@ class VacanteResource extends Resource
     {
         return $form
             ->schema([
-                Forms\Components\TextInput::make('nombre')
+                Forms\Components\TextInput::make('name')
                     ->required()
-                    ->maxLength(255),
-                Forms\Components\TextInput::make('cantidad')
+                    ->maxLength(255)
+                    ->name('Nombre'),
+                Forms\Components\TextInput::make('quantity')
                     ->required()
-                    ->maxLength(255),
+                    ->name('Cantidad')
+                    ->numeric()
+                    ->minValue(1),
             ]);
     }
 
@@ -40,8 +43,8 @@ class VacanteResource extends Resource
     {
         return $table
             ->columns([
-                Tables\Columns\TextColumn::make('nombre'),
-                Tables\Columns\TextColumn::make('cantidad'),
+                Tables\Columns\TextColumn::make('name'),
+                Tables\Columns\TextColumn::make('quantity'),
                 Tables\Columns\TextColumn::make('created_at')
                     ->dateTime(),
                 Tables\Columns\TextColumn::make('updated_at')
@@ -65,16 +68,12 @@ class VacanteResource extends Resource
         ];
     }
     
-    protected static function getNavigationBadge(): ?string {
-        return static ::$model::count();
-    }
-
     public static function getPages(): array
     {
         return [
-            'index' => Pages\ListVacantes::route('/'),
-            'create' => Pages\CreateVacante::route('/create'),
-            'edit' => Pages\EditVacante::route('/{record}/edit'),
+            'index' => Pages\ListVacancies::route('/'),
+            'create' => Pages\CreateVacancy::route('/create'),
+            'edit' => Pages\EditVacancy::route('/{record}/edit'),
         ];
     }    
 }
