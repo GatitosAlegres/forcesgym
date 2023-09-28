@@ -1,14 +1,14 @@
 <?php
 
-namespace App\Filament\Resources\VacanteResource\Pages;
+namespace App\Filament\Resources\VacancyResource\Pages;
 
-use App\Filament\Resources\VacanteResource;
+use App\Filament\Resources\VacancyResource;
 use Filament\Pages\Actions;
 use Filament\Resources\Pages\EditRecord;
 
-class EditVacante extends EditRecord
+class EditVacancy extends EditRecord
 {
-    protected static string $resource = VacanteResource::class;
+    protected static string $resource = VacancyResource::class;
 
     protected function getActions(): array
     {

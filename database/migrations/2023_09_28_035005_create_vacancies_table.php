@@ -11,15 +11,11 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('resultados', function (Blueprint $table) {
+        Schema::create('vacancies', function (Blueprint $table) {
             $table->id();
-            $table->unsignedBigInteger('evaluacion_id');
-            $table->decimal('puntaje', 8, 2);
-            $table->boolean('estado')->default(true);
-            $table->date('fecha');
+            $table->string('name')->unique()->max(30);
+            $table->integer('quantity')->default(1);
             $table->timestamps();
-            
-            $table->foreign('evaluacion_id')->references('id')->on('evaluacions');
         });
     }
 
@@ -28,6 +24,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('resultados');
+        Schema::dropIfExists('vacancies');
     }
 };

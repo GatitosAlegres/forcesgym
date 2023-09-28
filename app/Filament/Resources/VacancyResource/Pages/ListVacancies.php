@@ -1,14 +1,14 @@
 <?php
 
-namespace App\Filament\Resources\VacanteResource\Pages;
+namespace App\Filament\Resources\VacancyResource\Pages;
 
-use App\Filament\Resources\VacanteResource;
+use App\Filament\Resources\VacancyResource;
 use Filament\Pages\Actions;
 use Filament\Resources\Pages\ListRecords;
 
-class ListVacantes extends ListRecords
+class ListVacancies extends ListRecords
 {
-    protected static string $resource = VacanteResource::class;
+    protected static string $resource = VacancyResource::class;
 
     protected function getActions(): array
     {
