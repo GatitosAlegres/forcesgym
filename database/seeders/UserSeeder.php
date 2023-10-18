@@ -22,6 +22,25 @@ class UserSeeder extends Seeder
             'password' => bcrypt(env('FILAMENT_ADMIN_PASSWORD')),
         ]);
 
+        $gerente_operativo = User::create([
+            'name' => env('FILAMENT_GERENTE_OPERATIVO_NAME'),
+            'email' => env('FILAMENT_GERENTE_OPERATIVO_EMAIL'),
+            'password' => bcrypt(env('FILAMENT_ADMIN_PASSWORD')),
+        ]);
+
+        $recepcionista = User::create([
+            'name' => env('FILAMENT_RECEPCIONISTA_NAME'),
+            'email' => env('FILAMENT_RECEPCIONISTA_EMAIL'),
+            'password' => bcrypt(env('FILAMENT_ADMIN_PASSWORD')),
+        ]);
+
+        $jeferrhh = User::create([
+            'name' => env('FILAMENT_JEFE_RRHH_NAME'),
+            'email' => env('FILAMENT_JEFE_RRHH_EMAIL'),
+            'password' => bcrypt(env('FILAMENT_ADMIN_PASSWORD')),
+        ]);
+
+
         $super_admin->assignRole(Utils::getSuperAdminName());
 
         if (Utils::isFilamentUserRoleEnabled()) {
