@@ -4,6 +4,8 @@ namespace App\Filament\Resources;
 
 use App\Filament\Resources\ProductResource\Pages;
 use App\Filament\Resources\ProductResource\RelationManagers;
+use App\Filament\Resources\ProductResource\Widgets\ProductStats;
+use App\Filament\Widgets\ProductStats as WidgetsProductStats;
 use App\Models\Product;
 use Filament\Forms;
 use Filament\Resources\Form;
@@ -62,15 +64,9 @@ class ProductResource extends Resource
         return $table
             ->columns([
                 Tables\Columns\TextColumn::make('name')->label("Nombre"),
-                Tables\Columns\TextColumn::make('description')->label("Descripción"),
                 Tables\Columns\TextColumn::make('price')->label("Precio"),
                 Tables\Columns\TextColumn::make('stock'),
-                Tables\Columns\TextColumn::make('category.name')->label("Categoría"),
-                Tables\Columns\TextColumn::make('image'),
-                Tables\Columns\TextColumn::make('created_at')
-                    ->dateTime(),
-                Tables\Columns\TextColumn::make('updated_at')
-                    ->dateTime(),
+                Tables\Columns\TextColumn::make('category.name')->label("Categoría")
             ])
             ->filters([
                 //
@@ -81,6 +77,13 @@ class ProductResource extends Resource
             ->bulkActions([
                 Tables\Actions\DeleteBulkAction::make(),
             ]);
+    }
+
+    public static function getWidgets(): array
+    {
+        return [
+            ProductStats::class,
+        ];
     }
 
     public static function getRelations(): array
@@ -97,5 +100,10 @@ class ProductResource extends Resource
             'create' => Pages\CreateProduct::route('/create'),
             'edit' => Pages\EditProduct::route('/{record}/edit'),
         ];
+    }
+
+    protected static function getNavigationBadge(): ?string
+    {
+        return static::$model::count();
     }
 }
