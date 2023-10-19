@@ -29,15 +29,11 @@ class MembresiasResource extends Resource
         $roleName = 'cliente';
         return $form
             ->schema([
-                Forms\Components\Select::make('user_id')
-                    ->relationship('User', 'name')
-                    ->options(
-                        User::whereHas('roles', function ($query) use ($roleName) {
-                            $query->where('name', $roleName);
-                        })->pluck('name', 'id')
-                    )
-                    ->label('Cliente')
-                    ->required(),
+                Forms\Components\TextInput::make('nombreCliente')
+
+                    ->required()
+                    ->maxLength(50)
+                    ->rules('unique:membresias,nombreCliente', 'unique'),
                 Forms\Components\Select::make('tipo_membresia_id')
                     ->relationship('tipo_membresia', 'nombre_tipo_membresia')
                     ->required(),
@@ -54,7 +50,7 @@ class MembresiasResource extends Resource
     {
         return $table
             ->columns([
-                Tables\Columns\TextColumn::make('user.name')
+                Tables\Columns\TextColumn::make('nombreCliente')
                     ->label('Cliente'),
                 Tables\Columns\TextColumn::make('tipo_membresia.nombre_tipo_membresia')->sortable()->searchable()
                     ->label('Tipo de Membresia'),

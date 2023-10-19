@@ -11,7 +11,7 @@ class Membresias extends Model
     use HasFactory;
 
     protected $fillable = [
-        'user_id',
+        'nombreCliente',
         'tipo_membresia_id',
         'descripcion',
         'precio',
@@ -45,7 +45,7 @@ class Membresias extends Model
         self::created(function ($membresia) {
             // Crear un socio con los datos de la membresía
             $socio = $membresia->socio()->create([
-                'user_id' => $membresia->user_id,
+                'nombreCliente' => $membresia->nombreCliente,
                 'tipo_membresia_id' => $membresia->tipo_membresia_id,
                 'descripcion' => $membresia->descripcion,
                 'fecha_inscripcion' => $membresia->fecha_inicio,

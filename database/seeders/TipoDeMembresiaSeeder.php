@@ -19,7 +19,7 @@ class TipoDeMembresiaSeeder extends Seeder
                 'Mensual'=> 120,
             ],
             [
-                'Anual'=>2200,
+                'Anual'=>1400,
             ],
             [
                 'Casual'=>7,
