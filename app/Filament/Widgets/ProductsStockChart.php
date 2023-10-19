@@ -2,6 +2,7 @@
 
 namespace App\Filament\Widgets;
 
+use App\Models\Category;
 use App\Models\Product;
 use Leandrocfe\FilamentApexCharts\Widgets\ApexChartWidget;
 
@@ -21,15 +22,16 @@ class ProductsStockChart extends ApexChartWidget
      */
     protected static ?string $heading = 'Stock de Productos';
 
-    /**
-     * Chart options (series, labels, types, size, animations...)
-     * https://apexcharts.com/docs/options
-     *
-     * @return array
-     */
+    protected function getFilters(): ?array
+    {
+        $categories = Category::all()->pluck('name')->toArray();
+        return $categories;
+    }
+
     protected function getOptions(): array
     {
-        $products = Product::all();
+        $activeFilter = $this->filter + 1;
+        $products = Product::where('category_id', $activeFilter)->get();
 
         $seriesData = $products->pluck('stock')->toArray();
         $labels = $products->pluck('name')->toArray();
