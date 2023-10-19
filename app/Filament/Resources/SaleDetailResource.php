@@ -17,7 +17,7 @@ class SaleDetailResource extends Resource
 {
     protected static ?string $model = SaleDetail::class;
 
-    protected static ?string $navigationIcon = 'heroicon-o-collection';
+    protected static ?string $navigationIcon = 'heroicon-o-document-text';
 
     protected static ?string $navigationGroup  = 'Ventas';
 
