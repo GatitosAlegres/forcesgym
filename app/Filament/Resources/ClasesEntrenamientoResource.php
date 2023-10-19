@@ -24,15 +24,15 @@ class ClasesEntrenamientoResource extends Resource
     public static function form(Form $form): Form
     {
         $roleName = 'entrenador';
+        // Obtener los usuarios con los user_id especificados
+        $users = User::whereIn('id', [22, 23, 23, 21, 21, 20, 20, 19, 19, 18, 18, 17])->get();
+
+        // Crear un arreglo de opciones con los user_id y nombres
+        $options = $users->pluck('name', 'id')->toArray();
         return $form
             ->schema([
                 Forms\Components\Select::make('user_id')
-                    ->relationship('User', 'name')
-                    ->options(
-                        User::whereHas('roles', function ($query) use ($roleName) {
-                            $query->where('name', $roleName);
-                        })->pluck('name', 'id')
-                    )
+                    ->options($options)
                     ->label('Entrenador')
                     ->required(),
                 Forms\Components\Select::make('tipo_clase_id')

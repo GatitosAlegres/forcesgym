@@ -27,7 +27,7 @@ return new class extends Migration
             $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
 
             // Define the relationship with the tipo_clase model
-            $table->foreign('tipo_clase_id')->references('id')->on('tipo_clases');
+            $table->foreign('tipo_clase_id')->references('id')->on('tipo_clases')->onDelete('cascade');
 
         });
     }

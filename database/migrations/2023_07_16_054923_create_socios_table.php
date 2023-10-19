@@ -14,7 +14,7 @@ return new class extends Migration
         Schema::create('socios', function (Blueprint $table) {
             $table->id();
             $table->unsignedBigInteger('membresias_id'); // Cambia el nombre de la columna a 'membresias_id'
-            $table->unsignedBigInteger('user_id');
+            $table->string('nombreCliente')->unique();
             $table->unsignedBigInteger('tipo_membresia_id');
             $table->text('descripcion');
             $table->date('fecha_inscripcion')->nullable();
@@ -22,7 +22,6 @@ return new class extends Migration
 
             // Define the relationship with the membership model
             $table->foreign('membresias_id')->references('id')->on('membresias')->onDelete('cascade');
-            $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
             $table->foreign('tipo_membresia_id')->references('id')->on('tipo_de_membresias');
         });
 

@@ -25,8 +25,7 @@ class SocioResource extends Resource
     {
         return $form
             ->schema([
-                Forms\Components\Select::make('user_id')
-                    ->relationship('User', 'name')
+                Forms\Components\TextInput::make('nombreCliente')
                     ->required(),
                 Forms\Components\Select::make('tipo_membresia_id')
                     ->relationship('tipo_membresia', 'nombre_tipo_membresia')
@@ -42,8 +41,7 @@ class SocioResource extends Resource
     {
         return $table
             ->columns([
-                Tables\Columns\TextColumn::make('user.name')->sortable()->searchable()
-                    ->label('Cliente'),
+                Tables\Columns\TextColumn::make('nombreCliente'),
                 Tables\Columns\TextColumn::make('tipo_membresia.nombre_tipo_membresia')
                     ->label('Tipo de Membresia'),
                 Tables\Columns\TextColumn::make('descripcion'),
