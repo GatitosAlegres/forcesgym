@@ -18,9 +18,9 @@ class ProductResource extends Resource
 {
     protected static ?string $model = Product::class;
 
-    protected static ?string $navigationIcon = 'heroicon-o-collection';
+    protected static ?string $navigationIcon = 'heroicon-o-lightning-bolt';
 
-    protected static ?string $navigationGroup  = 'Gestión de inventario';
+    protected static ?string $navigationGroup  = 'Inventario';
 
     protected static ?string $label = 'Productos';
 
@@ -66,7 +66,7 @@ class ProductResource extends Resource
                 Tables\Columns\TextColumn::make('price')->label("Precio"),
                 Tables\Columns\TextColumn::make('stock'),
                 Tables\Columns\TextColumn::make('category.name')->label("Categoría"),
-                //Tables\Columns\TextColumn::make('image'),
+                Tables\Columns\TextColumn::make('image'),
                 Tables\Columns\TextColumn::make('created_at')
                     ->dateTime(),
                 Tables\Columns\TextColumn::make('updated_at')
