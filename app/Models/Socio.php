@@ -9,12 +9,7 @@ class Socio extends Model
 {
     use HasFactory;
 
-    protected $fillable = [
-        'user_id',
-        'tipo_membresia_id',
-        'descripcion',
-        'fecha_inscripcion',
-    ];
+    protected $guarded=[];
 
     public function user()
     {

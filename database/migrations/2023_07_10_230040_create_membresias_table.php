@@ -13,7 +13,7 @@ return new class extends Migration
     {
         Schema::create('membresias', function (Blueprint $table) {
             $table->id();
-            $table->unsignedBigInteger('user_id'); // Field for user ID
+            $table->string('nombreCliente')->unique();
             $table->unsignedBigInteger('tipo_membresia_id'); // Field for tipo_membresia ID
             $table->text('descripcion');
             $table->decimal('precio', 8, 2);
@@ -21,9 +21,6 @@ return new class extends Migration
             $table->date('fecha_inicio')->nullable();
             $table->date('fecha_fin')->nullable();
             $table->timestamps();
-
-            // Define the relationship with the user model
-            $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
 
             // Define the relationship with the membership_types model
             $table->foreign('tipo_membresia_id')->references('id')->on('tipo_de_membresias');

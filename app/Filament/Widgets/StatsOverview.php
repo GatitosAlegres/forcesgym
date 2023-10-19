@@ -4,6 +4,7 @@ namespace App\Filament\Widgets;
 
 use App\Models\Category;
 use App\Models\Product;
+use App\Models\Socio;
 use App\Models\Promotion;
 use App\Models\User;
 use App\Models\TipoClases;
@@ -27,10 +28,8 @@ class StatsOverview extends BaseWidget
                 ),
 
             Card::make(
-                'Clientes',
-                User::whereHas('roles', function ($query) {
-                    $query->where('name', 'cliente');
-                })->count()
+                'Socios',
+                Socio::count()
             )
                 ->description('Clientes registrados en la base de datos')
                 ->descriptionIcon('heroicon-o-user-group')
