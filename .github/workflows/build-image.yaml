@@ -27,11 +27,49 @@ jobs:
       - name: Set up Docker Buildx
         uses: docker/setup-buildx-action@v1
 
-      - name: Build and push
+      # Multi stage build and push
+
+      - name: Build and push FPM server image
         uses: docker/build-push-action@v2
         with:
           context: .
           file: ./Dockerfile
+          cache-from: |
+            type=gha,scope=fpm_server
+          cache-to: |
+            type=gha,mode=max,scope=fpm_server
+          target: fpm_server
           platforms: linux/amd64
           push: true
-          tags: ${{ secrets.DOCKER_HUB_USERNAME }}/forcesgym:latest
+          tags: ${{ secrets.DOCKER_HUB_USERNAME }}/forcesgym:fpm_server-latest
+
+      - name: Build and push Frontend image
+        uses: docker/build-push-action@v2
+        with:
+          context: .
+          file: ./Dockerfile
+          cache-from: |
+            type=gha,scope=frontend
+            type=gha,scope=fpm_server
+          cache-to: |
+            type=gha,mode=max,scope=frontend
+          target: frontend
+          platforms: linux/amd64
+          push: true
+          tags: ${{ secrets.DOCKER_HUB_USERNAME }}/forcesgym:frontend-latest
+
+      - name: Build and push Web server image
+        uses: docker/build-push-action@v2
+        with:
+          context: .
+          file: ./Dockerfile
+          cache-from: |
+            type=gha,scope=frontend
+            type=gha,scope=fpm_server
+            type=gha,scope=web_server
+          cache-to: |
+            type=gha,mode=max,scope=web_server
+          target: web_server
+          platforms: linux/amd64
+          push: true
+          tags: ${{ secrets.DOCKER_HUB_USERNAME }}/forcesgym:web_server-latest
