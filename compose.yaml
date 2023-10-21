@@ -3,8 +3,8 @@ services:
   laravel.fpm:
     build:
       context: .
-      target: fpm_server
-    image: forces_gym/fpm_server
+      target: fpm
+    image: forces_gym/fpm
     environment:
       APP_DEBUG: "true"
     networks:
@@ -12,8 +12,8 @@ services:
   laravel.web:
     build:
       context: .
-      target: web_server
-    image: forces_gym/web_server
+      target: web
+    image: forces_gym/web
     ports:
       - "8080:80"
     environment:

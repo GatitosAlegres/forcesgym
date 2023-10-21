@@ -18,6 +18,7 @@ ARG PHP_EXTS
 ARG USER
 ARG USER_ID
 ARG APP_NAME
+ARG APP_DEBUG = false
 
 WORKDIR /opt/apps/${APP_NAME}
 
@@ -76,6 +77,7 @@ RUN npm install && npm run build
 FROM nginx:${NGINX_VERSION} as web
 
 ARG APP_NAME
+ARG FPM_HOST
 
 WORKDIR /opt/apps/${APP_NAME}
 
