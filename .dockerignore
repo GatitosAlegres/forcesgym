@@ -11,6 +11,7 @@
 **/.DS_Store
 **/**pycache**
 **/.venv
+**/.env
 **/.classpath
 **/.dockerignore
 **/.git

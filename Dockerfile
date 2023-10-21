@@ -43,6 +43,8 @@ RUN mkdir -p /home/$USER/.composer && \
     chown -R $USER:$USER /home/$USER && \
     chown -R www-data:www-data /opt/apps/${APP_NAME}
 
+COPY --chown=www-data:www-data .env.example .env
+
 COPY --chown=www-data:www-data . .
 
 RUN composer install --no-interaction --no-dev --prefer-dist --optimize-autoloader
