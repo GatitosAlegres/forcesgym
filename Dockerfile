@@ -1,8 +1,8 @@
-ARG PHP_FPM_VERSION=7.2
-ARG NODEJS_VERSION=13-alpine3.10
+ARG PHP_FPM_VERSION=8.2
+ARG NODEJS_VERSION=lts-alpine3.18
 ARG NGINX_VERSION=alpine3.18
 
-ARG PHP_EXTS='bcmath ctype fileinfo mbstring pdo pdo_pgsql pgsql mysqli dom pcntl exif gd'
+ARG PHP_EXTS='bcmath ctype fileinfo mbstring pdo pdo_pgsql pdo_mysql pgsql mysqli dom pcntl exif gd zip'
 
 ARG USER=forcesuser
 ARG USER_ID=1000
@@ -28,6 +28,7 @@ RUN apt-get update && apt-get install -y \
     libonig-dev \
     libxml2-dev \
     libpq-dev \
+    libzip-dev \
     zip \
     unzip
 
@@ -35,7 +36,7 @@ RUN apt-get clean && rm -rf /var/lib/apt/lists/*
 
 RUN docker-php-ext-install ${PHP_EXTS}
 
-COPY --from=composer:1.6 /usr/bin/composer /usr/bin/composer
+COPY --from=composer:lts /usr/bin/composer /usr/bin/composer
 
 RUN useradd -G www-data,root -u $USER_ID -d /home/$USER $USER
 RUN mkdir -p /home/$USER/.composer && \
@@ -65,7 +66,7 @@ WORKDIR /opt/apps/${APP_NAME}
 
 COPY --from=fpm_server /opt/apps/${APP_NAME} /opt/apps/${APP_NAME}
 
-RUN npm install && npm run prod
+RUN npm install && npm run build
 
 
 # -------------------------- WEB SERVER - STAGING --------------------------
@@ -76,6 +77,6 @@ ARG APP_NAME
 
 WORKDIR /opt/apps/${APP_NAME}
 
-COPY ./infra/nginx/nginx.conf /etc/nginx/templates/default.conf.template
+COPY ./infraestructure/nginx/nginx.conf /etc/nginx/templates/default.conf.template
 
 COPY --from=frontend /opt/apps/${APP_NAME}/public /opt/apps/${APP_NAME}/public

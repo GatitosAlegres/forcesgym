@@ -21,13 +21,6 @@ services:
       FPM_HOST: "laravel.fpm:9000"
     networks:
       - forces_gym
-  laravel.frontend:
-    build:
-      context: .
-      target: frontend
-    image: forces_gym/frontend
-    networks:
-      - forces_gym
 networks:
   forces_gym:
     driver: bridge
