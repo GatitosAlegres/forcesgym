@@ -2,7 +2,7 @@ ARG PHP_FPM_VERSION=7.2
 ARG NODEJS_VERSION=13-alpine3.10
 ARG NGINX_VERSION=alpine3.18
 
-ARG PHP_EXTS='bcmath ctype fileinfo mbstring pdo pdo_pgsql pgsql dom pcntl exif gd'
+ARG PHP_EXTS='bcmath ctype fileinfo mbstring pdo pdo_pgsql pgsql mysqli dom pcntl exif gd'
 
 ARG USER=forcesuser
 ARG USER_ID=1000
