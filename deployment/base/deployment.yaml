@@ -16,7 +16,7 @@ spec:
         app: forcesgym
     spec:
       containers:
-      - name: forcesgym-fpm
+      - name: fpm
         image: 5george/forcesgym:fpm-latest
         ports:
         - containerPort: 9000
@@ -25,7 +25,7 @@ spec:
               name: environment
           - secretRef:
               name: secrets
-      - name: forcesgym-web
+      - name: web
         image: 5george/forcesgym:web-latest
         ports:
         - containerPort: 80
