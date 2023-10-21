@@ -1,0 +1,19 @@
+namespace: production
+namePrefix: production-
+resources:
+- ../../base
+configMapGenerator:
+- name: environment
+  envs:
+    - prod.env
+secretGenerator:
+- name: secrets
+  envs:
+  - prod.secrets.env
+patches:
+ - path: ingress-patch.yaml 
+   target:
+      kind: Ingress
+ - path: deployment-patch.yaml 
+   target:
+      kind: Deployment

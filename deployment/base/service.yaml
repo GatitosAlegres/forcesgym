@@ -1,0 +1,14 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: forcesgym
+  namespace: default
+  labels:
+    app: forcesgym
+spec:
+  type: ClusterIP
+  ports:
+  - port: 80
+    targetPort: 80
+  selector:
+    app: forcesgym
