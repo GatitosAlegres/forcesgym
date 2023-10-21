@@ -7,7 +7,7 @@ ARG PHP_EXTS='bcmath ctype fileinfo mbstring pdo pdo_pgsql pdo_mysql pgsql mysql
 ARG USER=forcesuser
 ARG USER_ID=1000
 
-ARG APP_NAME=forces_gym
+ARG APP_NAME=forcesgym
 
 # -------------------------- FPM - STAGING --------------------------
 

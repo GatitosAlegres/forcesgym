@@ -4,23 +4,29 @@ services:
     build:
       context: .
       target: fpm
-    image: forces_gym/fpm
+    image: forcesgym/fpm
     environment:
       APP_DEBUG: "true"
+      DB_CONNECTION: <DB_CONNECTION>
+      DB_HOST: <DB_HOST>
+      DB_PORT: <DB_PORT>
+      DB_DATABASE: <DB_DATABASE>
+      DB_USERNAME: <DB_USERNAME>
+      DB_PASSWORD: <DB_PASSWORD>
     networks:
-      - forces_gym
+      - forcesgym
   laravel.web:
     build:
       context: .
       target: web
-    image: forces_gym/web
+    image: forcesgym/web
     ports:
       - "8080:80"
     environment:
-      APP_NAME: "forces_gym"
+      APP_NAME: "forcesgym"
       FPM_HOST: "laravel.fpm:9000"
     networks:
-      - forces_gym
+      - forcesgym
 networks:
-  forces_gym:
+  forcesgym:
     driver: bridge
