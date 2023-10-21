@@ -35,13 +35,13 @@ jobs:
           context: .
           file: ./Dockerfile
           cache-from: |
-            type=gha,scope=fpm_server
+            type=gha,scope=fpm
           cache-to: |
-            type=gha,mode=max,scope=fpm_server
-          target: fpm_server
+            type=gha,mode=max,scope=fpm
+          target: fpm
           platforms: linux/amd64
           push: true
-          tags: ${{ secrets.DOCKER_HUB_USERNAME }}/forcesgym:fpm_server-latest
+          tags: ${{ secrets.DOCKER_HUB_USERNAME }}/forcesgym:fpm-latest
 
       - name: Build and push Frontend image
         uses: docker/build-push-action@v2
@@ -50,7 +50,7 @@ jobs:
           file: ./Dockerfile
           cache-from: |
             type=gha,scope=frontend
-            type=gha,scope=fpm_server
+            type=gha,scope=fpm
           cache-to: |
             type=gha,mode=max,scope=frontend
           target: frontend
@@ -65,11 +65,11 @@ jobs:
           file: ./Dockerfile
           cache-from: |
             type=gha,scope=frontend
-            type=gha,scope=fpm_server
-            type=gha,scope=web_server
+            type=gha,scope=fpm
+            type=gha,scope=web
           cache-to: |
-            type=gha,mode=max,scope=web_server
-          target: web_server
+            type=gha,mode=max,scope=web
+          target: web
           platforms: linux/amd64
           push: true
-          tags: ${{ secrets.DOCKER_HUB_USERNAME }}/forcesgym:web_server-latest
+          tags: ${{ secrets.DOCKER_HUB_USERNAME }}/forcesgym:web-latest

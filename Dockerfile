@@ -9,9 +9,9 @@ ARG USER_ID=1000
 
 ARG APP_NAME=forces_gym
 
-# -------------------------- FPM_SERVER - STAGING --------------------------
+# -------------------------- FPM - STAGING --------------------------
 
-FROM php:${PHP_FPM_VERSION}-fpm as fpm_server
+FROM php:${PHP_FPM_VERSION}-fpm as fpm
 
 ARG PHP_FPM_VERSION
 ARG PHP_EXTS
@@ -66,14 +66,14 @@ ARG APP_NAME
 
 WORKDIR /opt/apps/${APP_NAME}
 
-COPY --from=fpm_server /opt/apps/${APP_NAME} /opt/apps/${APP_NAME}
+COPY --from=fpm /opt/apps/${APP_NAME} /opt/apps/${APP_NAME}
 
 RUN npm install && npm run build
 
 
-# -------------------------- WEB SERVER - STAGING --------------------------
+# -------------------------- WEB - STAGING --------------------------
 
-FROM nginx:${NGINX_VERSION} as web_server
+FROM nginx:${NGINX_VERSION} as web
 
 ARG APP_NAME
 
