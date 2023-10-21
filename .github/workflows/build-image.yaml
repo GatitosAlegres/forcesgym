@@ -32,6 +32,6 @@ jobs:
         with:
           context: .
           file: ./Dockerfile
-          platforms: linux/amd64,linux/arm64
+          platforms: linux/amd64
           push: true
           tags: ${{ secrets.DOCKER_HUB_USERNAME }}/forcesgym:latest
