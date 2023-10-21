@@ -43,7 +43,7 @@ jobs:
           push: true
           tags: ${{ secrets.DOCKER_HUB_USERNAME }}/forcesgym:fpm-latest
 
-      - name: Build and push Frontend image
+      - name: Build Frontend image
         uses: docker/build-push-action@v2
         with:
           context: .
@@ -55,8 +55,7 @@ jobs:
             type=gha,mode=max,scope=frontend
           target: frontend
           platforms: linux/amd64
-          push: true
-          tags: ${{ secrets.DOCKER_HUB_USERNAME }}/forcesgym:frontend-latest
+          push: false
 
       - name: Build and push Web server image
         uses: docker/build-push-action@v2
