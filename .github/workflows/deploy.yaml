@@ -3,6 +3,8 @@ name: Deploy to Kubernetes cluster
 on:
   workflow_run:
     workflows: ["Build Docker image"]
+    types:
+      - completed
 
 env:
   PRODUCTION_MANIFEST_PATH: ${{ vars.PRODUCTION_MANIFEST_PATH }}
