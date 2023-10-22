@@ -58,7 +58,7 @@
                                 <p class="mt-4 text-lg text-gray-300">
                                     Bienvenido/a a ForcesGym. Somos el mejor centro de fitness y entrenamiento ubicado
                                     en
-                                    Guadalupe
+                                    Pacasmayo
                                     que se enfoca en llevarte al límite absoluto
                                 </p>
                             </div>
@@ -100,7 +100,7 @@
                                             </div>
                                             <div>
                                                 <h4 class="text-xl">
-                                                    El mejor equipo de entrenamiento de Guadalupe
+                                                    El mejor equipo de entrenamiento de Pacasmayo
                                                 </h4>
                                             </div>
                                         </div>
@@ -175,7 +175,7 @@
                                 <div class="pt-6 text-center">
                                     <h5 class="text-xl font-bold">Fiorella Sotoquispe</h5>
                                     <p class="mt-1 text-sm text-gray-500 uppercase font-semibold">
-                                        Culturista de Guadalupe
+                                        Culturista de Pacasmayo
                                     </p>
                                 </div>
                             </div>
