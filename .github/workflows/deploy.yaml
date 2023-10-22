@@ -4,6 +4,9 @@ on:
   workflow_run:
     workflows: ["Build Docker image"]
 
+env:
+  PRODUCTION_MANIFEST_PATH: ${{ vars.PRODUCTION_MANIFEST_PATH }}
+
 jobs:
   deploy:
     runs-on: ubuntu-latest
@@ -20,14 +23,14 @@ jobs:
         with:
           method: kubeconfig
           kubeconfig: ${{ secrets.KUBE_CONFIG }}
-      - name: Load Secrets from prod.env
+
+      - name: Load Secrets
         env:
           PROD_ENV: ${{ secrets.PROD_ENV }}
           PROD_SECRETS_ENV: ${{ secrets.PROD_SECRETS_ENV }}
-          PATH: ${{ vars.PRODUCTION_MANIFEST_PATH }}
         run: |
-          echo "$PROD_ENV" > $PATH/prod.env
-          echo "$PROD_SECRETS_ENV" > $PATH/prod.secrets.env
+          echo "$PROD_ENV" > $PRODUCTION_MANIFEST_PATH/prod.env
+          echo "$PROD_SECRETS_ENV" > $PRODUCTION_MANIFEST_PATH/prod.secrets.env
 
       - name: Install Kustomize
         run: |
@@ -36,7 +39,5 @@ jobs:
         shell: bash
 
       - name: Deploy to production
-        env:
-          MANIFEST_PATH: ${{ vars.PRODUCTION_MANIFEST_PATH }}
         run: |
-          kubectl apply -k $GITHUB_WORKSPACE/$MANIFEST_PATH
+          kubectl apply -k $GITHUB_WORKSPACE/$PRODUCTION_MANIFEST_PATH
