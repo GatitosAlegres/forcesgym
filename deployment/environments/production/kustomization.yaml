@@ -1,5 +1,4 @@
 namespace: production
-namePrefix: production-
 resources:
 - ../../base
 configMapGenerator:

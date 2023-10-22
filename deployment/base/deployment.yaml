@@ -18,6 +18,7 @@ spec:
       containers:
       - name: fpm
         image: 5george/forcesgym:fpm-latest
+        imagePullPolicy: Always
         ports:
         - containerPort: 9000
         envFrom:
@@ -27,6 +28,7 @@ spec:
               name: secrets
       - name: web
         image: 5george/forcesgym:web-latest
+        imagePullPolicy: Always
         ports:
         - containerPort: 80
         envFrom:
