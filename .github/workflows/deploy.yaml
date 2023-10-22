@@ -28,6 +28,7 @@ jobs:
         shell: bash
 
       - name: Deploy to production
+        env:
+          MANIFEST_PATH: ${{ vars.PRODUCTION_MANIFEST_PATH }}
         run: |
-          kubectl apply -k ${{ vars.PRODUCTION_MANIFEST_PATH }}
-        working-directory: $GITHUB_WORKSPACE
+          kubectl apply -k $GITHUB_WORKSPACE/$MANIFEST_PATH
