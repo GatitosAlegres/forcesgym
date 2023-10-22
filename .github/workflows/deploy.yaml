@@ -20,6 +20,14 @@ jobs:
         with:
           method: kubeconfig
           kubeconfig: ${{ secrets.KUBE_CONFIG }}
+      - name: Load Secrets from prod.env
+        env:
+          PROD_ENV: ${{ secrets.PROD_ENV }}
+          PROD_SECRETS_ENV: ${{ secrets.PROD_SECRETS_ENV }}
+          PATH: ${{ vars.PRODUCTION_MANIFEST_PATH }}
+        run: |
+          echo "$PROD_ENV" > $PATH/prod.env
+          echo "$PROD_SECRETS_ENV" > $PATH/prod.secrets.env
 
       - name: Install Kustomize
         run: |
