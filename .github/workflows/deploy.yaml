@@ -1,0 +1,33 @@
+name: Deploy to Kubernetes cluster
+
+on:
+  workflow_run:
+    workflows: ["Build Docker image"]
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+
+      - name: Set up Kubernetes CLI
+        uses: azure/setup-kubectl@v1
+        with:
+          version: "1.16.2"
+
+      - name: Setup Kube config
+        uses: Azure/k8s-set-context@v1
+        with:
+          method: kubeconfig
+          kubeconfig: ${{ secrets.KUBE_CONFIG }}
+
+      - name: Install Kustomize
+        run: |
+          curl -s "https://raw.githubusercontent.com/kubernetes-sigs/kustomize/master/hack/install_kustomize.sh" | bash
+          sudo mv kustomize /usr/local/bin/
+        shell: bash
+
+      - name: Deploy to production
+        run: |
+          kubectl apply -k ${{ vars.PRODUCTION_MANIFEST_PATH }}
+        working-directory: $GITHUB_WORKSPACE
