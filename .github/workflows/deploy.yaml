@@ -42,4 +42,5 @@ jobs:
 
       - name: Deploy to production
         run: |
-          kubectl apply --force -k $GITHUB_WORKSPACE/$PRODUCTION_MANIFEST_PATH
+          kubectl delete -k $GITHUB_WORKSPACE/$PRODUCTION_MANIFEST_PATH
+          kubectl apply -k $GITHUB_WORKSPACE/$PRODUCTION_MANIFEST_PATH
