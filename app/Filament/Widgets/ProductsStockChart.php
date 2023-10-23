@@ -8,19 +8,11 @@ use Leandrocfe\FilamentApexCharts\Widgets\ApexChartWidget;
 
 class ProductsStockChart extends ApexChartWidget
 {
-    /**
-     * Chart Id
-     *
-     * @var string
-     */
     protected static string $chartId = 'productsStockChart';
 
-    /**
-     * Widget Title
-     *
-     * @var string|null
-     */
     protected static ?string $heading = 'Stock de Productos';
+
+    protected static ?int $sort = 3;
 
     protected function getFilters(): ?array
     {

@@ -13,9 +13,27 @@ class CategorySeeder extends Seeder
     public function run(): void
     {
         $categoryNames = [
-            "Cardio", "Fuerza", "Yoga", "Pilates", "Aeróbicos", "Recuperación", "Accesorios", "Boxeo", 
-            "Pliometría", "Equilibrio", "Suplementos Nutricionales", "Polos", "Casacas","Leggings", "Zapatillas", "Nutrición", "Electrónica", 
-            "Hidratación", "Resistencia", "Libros", "Cuadernos", "Toma-Todos"
+            "Cardio", 
+            "Fuerza", 
+            "Yoga", 
+            "Pilates", 
+            "Aeróbicos", 
+            "Recuperación", 
+            "Boxeo", 
+            "Pliometría", 
+            "Equilibrio", 
+            "Suplementos Nutricionales", 
+            "Polos", 
+            "Casacas",
+            "Leggings", 
+            "Zapatillas", 
+            "Nutrición", 
+            "Electrónica", 
+            "Hidratación", 
+            "Resistencia", 
+            "Libros", 
+            "Cuadernos", 
+            "Toma-Todos"
         ];
 
         foreach ($categoryNames as $key => $name) {

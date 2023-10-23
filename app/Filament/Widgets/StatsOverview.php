@@ -13,6 +13,9 @@ use Filament\Widgets\StatsOverviewWidget as BaseWidget;
 
 class StatsOverview extends BaseWidget
 {
+
+    protected static ?int $sort = 2;
+
     protected function getCards(): array
     {
         return [
@@ -44,6 +47,7 @@ class StatsOverview extends BaseWidget
                 ->description('Categorias registradas en la base de datos')
                 ->descriptionIcon('heroicon-o-collection')
                 ->color('success'),
+
             Card::make(
                 'Usuarios',
                 User::count()

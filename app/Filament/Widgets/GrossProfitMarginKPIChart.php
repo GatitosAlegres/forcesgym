@@ -8,26 +8,12 @@ use Leandrocfe\FilamentApexCharts\Widgets\ApexChartWidget;
 
 class GrossProfitMarginKPIChart extends ApexChartWidget
 {
-    /**
-     * Chart Id
-     *
-     * @var string
-     */
     protected static string $chartId = 'grossProfitMarginKPIChart';
 
-    /**
-     * Widget Title
-     *
-     * @var string|null
-     */
     protected static ?string $heading = 'KPI Margen de Ganancia';
 
-    /**
-     * Chart options (series, labels, types, size, animations...)
-     * https://apexcharts.com/docs/options
-     *
-     * @return array
-     */
+    protected static ?int $sort = 8;
+
     protected function getOptions(): array
     {
         $sales = Sale::all();
