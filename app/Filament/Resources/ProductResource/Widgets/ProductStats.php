@@ -19,7 +19,7 @@ class ProductStats extends BaseWidget
                 Card::make('Stock de todos los productos', Product::sum('stock'))
                 ->chart([17, 16, 14, 15, 14, 13, 12])
                 ->color('primary'),
-            Card::make('Dinero invertido', '$/. ' . number_format(Product::sum('price'), 2))
+            Card::make('Dinero invertido', '$/. ' . number_format(Product::sum('purchase_price'), 2))
                 ->chart([15, 4, 10, 2, 12, 4, 12])
                 ->color('danger'),
         ];

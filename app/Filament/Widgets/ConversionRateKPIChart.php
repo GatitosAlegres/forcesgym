@@ -9,24 +9,15 @@ use Leandrocfe\FilamentApexCharts\Widgets\ApexChartWidget;
 
 class ConversionRateKPIChart extends ApexChartWidget
 {
-    /**
-     * Chart Id
-     *
-     * @var string
-     */
     protected static string $chartId = 'conversionRateKPIChart';
 
-    /**
-     * Widget Title
-     *
-     * @var string|null
-     */
     protected static ?string $heading = 'KPI Tasa de Conversión';
+
+    protected static ?int $sort = 6;
 
     protected function getOptions(): array
     {
         $shoppingCount = Compra::count();
-        //$clients = User::where('rol', 'Cliente')->get();
         $clients = Socio::count();
         if ($clients==0){
             $conversionRate = 0;

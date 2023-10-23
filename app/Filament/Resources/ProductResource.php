@@ -15,6 +15,9 @@ use Filament\Tables;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
 use App\Models\Category;
+use Filament\Forms\Components\Section;
+use Filament\Tables\Columns\BadgeColumn;
+use Filament\Tables\Filters\Filter;
 
 class ProductResource extends Resource
 {
@@ -30,32 +33,71 @@ class ProductResource extends Resource
     {
         return $form
             ->schema([
-                Forms\Components\Select::make('category_id')
-                    ->options(
-                        \App\Models\Category::all()->pluck('name', 'id')
-                    )
-                    ->required()
-                    ->name('Categoria'),
-                Forms\Components\TextInput::make('name')
-                    ->required()
-                    ->maxLength(255)
-                    ->name('Nombre'),
-                Forms\Components\Textarea::make('description')
-                    ->required()
-                    ->maxLength(65535)
-                    ->name('Descripción'),
-                Forms\Components\TextInput::make('price')
-                    ->numeric()
-                    ->name('Precio')
-                    ->required(),
-                Forms\Components\TextInput::make('stock')
-                    ->numeric()
-                    ->name('Stock')
-                    ->required(),
-                Forms\Components\FileUpload::make('image')
-                    ->required()
-                    ->acceptedFileTypes(['image/*'])
-                    ->name('Imagen')
+                Forms\Components\Group::make()
+                    ->schema([
+                        Forms\Components\Card::make()
+                            ->schema([
+                                Forms\Components\TextInput::make('name')
+                                    ->required()
+                                    ->maxLength(20)
+                                    ->name('Nombre'),
+
+                                Forms\Components\MarkdownEditor::make('description')
+                                    ->required()
+                                    ->maxLength(65535)
+                                    ->name('Descripción')
+                            ]),
+
+                        Section::make('Precios ($/.)')
+                            ->schema([
+                                Forms\Components\TextInput::make('purchase_price')
+                                    ->numeric()
+                                    ->minValue(1)
+                                    ->name('Precio de Compra')
+                                    ->helperText('Costo de compra del producto')
+                                    ->required(),
+
+                                Forms\Components\TextInput::make('sale_price')
+                                    ->numeric()
+                                    ->minValue(1)
+                                    ->name('Precio de Venta')
+                                    ->helperText('Precio de venta al público, será visible.')
+                                    ->required(),
+                            ])->columns(2),
+                    ])->columns(2),
+
+                Forms\Components\Group::make()
+                    ->schema([
+                        Forms\Components\Section::make('Imagen')
+                            ->schema([
+                                Forms\Components\FileUpload::make('image')
+                                    ->acceptedFileTypes(['image/*'])
+                                    ->name('Imagen')
+                            ]),
+
+                        Section::make('Asociaciones e Inventario')
+                            ->schema([
+                                Forms\Components\Select::make('category_id')
+                                    ->options(
+                                        \App\Models\Category::all()->pluck('name', 'id')
+                                    )
+                                    ->required()
+                                    ->name('Categoria'),
+
+                                Forms\Components\TextInput::make('stock')
+                                    ->numeric()
+                                    ->minValue(1)
+                                    ->name('Stock')
+                                    ->required(),
+
+                                Forms\Components\TextInput::make('security_stock')
+                                    ->numeric()
+                                    ->minValue(1)
+                                    ->name('Stock de Seguridad')
+                                    ->helperText('Stock de aviso para reponer.')
+                                    ->required(),
+                            ])->columns(2),
+                    ]),
             ]);
     }
 
@@ -63,13 +105,24 @@ class ProductResource extends Resource
     {
         return $table
             ->columns([
-                Tables\Columns\TextColumn::make('name')->label("Nombre"),
-                Tables\Columns\TextColumn::make('price')->label("Precio"),
-                Tables\Columns\TextColumn::make('stock'),
-                Tables\Columns\TextColumn::make('category.name')->label("Categoría")
+                Tables\Columns\ImageColumn::make('image')->label("Imagen"),
+                Tables\Columns\TextColumn::make('name')->label("Nombre")->searchable()->sortable(),
+                Tables\Columns\TextColumn::make('purchase_price')->label("Precio de Compra"),
+                Tables\Columns\TextColumn::make('sale_price')->label("Precio de Venta"),
+                Tables\Columns\TextColumn::make('stock')->label("Stock"),
+                Tables\Columns\BadgeColumn::make('security_stock')->colors([
+                    'danger',
+                ])->label("Stock de Seguridad")->alignCenter(),
             ])
             ->filters([
-                //
+                Tables\Filters\SelectFilter::make('category_id')
+                    ->options(
+                        \App\Models\Category::all()->pluck('name', 'id')
+                    )
+                    ->label('Categoria')
+                    ->placeholder('Todos')
+                    ->multiple()
+                    ->searchable(),
             ])
             ->actions([
                 Tables\Actions\EditAction::make(),

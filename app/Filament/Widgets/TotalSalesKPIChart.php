@@ -7,19 +7,11 @@ use Leandrocfe\FilamentApexCharts\Widgets\ApexChartWidget;
 
 class TotalSalesKPIChart extends ApexChartWidget
 {
-    /**
-     * Chart Id
-     *
-     * @var string
-     */
     protected static string $chartId = 'totalSalesKPIChart';
 
-    /**
-     * Widget Title
-     *
-     * @var string|null
-     */
     protected static ?string $heading = 'KPI Ventas';
+
+    protected static ?int $sort = 7;
 
     protected function getOptions(): array
     {

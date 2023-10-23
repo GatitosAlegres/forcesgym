@@ -8,26 +8,12 @@ use App\Models\Vacancy;
 
 class VacantCandidateChart extends ApexChartWidget
 {
-    /**
-     * Chart Id
-     *
-     * @var string
-     */
     protected static string $chartId = 'vacantCandidateChart';
 
-    /**
-     * Widget Title
-     *
-     * @var string|null
-     */
     protected static ?string $heading = 'Vacante vs Candidato';
 
-    /**
-     * Chart options (series, labels, types, size, animations...)
-     * https://apexcharts.com/docs/options
-     *
-     * @return array
-     */
+    protected static ?int $sort = 5;
+
     protected function getOptions(): array
     {
         // Inicializar un arreglo para almacenar los resultados
@@ -40,8 +26,6 @@ class VacantCandidateChart extends ApexChartWidget
             $dataCandidates[$vacancy->id] = $candidatesForVacancy->count();
         }
 
-        //dd($dataCandidates);
-        // Obtener los nombres de las vacantes
         $dataVacancies = Vacancy::pluck('name')->toArray();
 
         return [

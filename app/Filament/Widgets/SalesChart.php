@@ -8,28 +8,13 @@ use App\Models\SaleDetail;
 
 class SalesChart extends ApexChartWidget
 {
-    /**
-     * Chart Id
-     *
-     * @var string
-     */
     protected static string $chartId = 'salesChart';
 
-    /**
-     * Widget Title
-     *
-     * @var string|null
-     */
     protected static ?string $heading = 'Ventas';
 
-    /**
-     * Chart options (series, labels, types, size, animations...)
-     * https://apexcharts.com/docs/options
-     *
-     * @return array
-     */
+    protected static ?int $sort = 4;
 
-     protected function getFilters(): ?array
+    protected function getFilters(): ?array
      {
          $months = ["Enero","Febrero","Marzo","Abril","Mayo","Junio","Julio","Agosto","Setiembre","Octubre","Noviembre","Dieciembre"];
 
