@@ -14,6 +14,7 @@ return new class extends Migration
         Schema::create('candidates', function (Blueprint $table) {
             $table->id();
             $table->foreignId('vacancy_id')->constrained()->onDelete('cascade')->onUpdate('cascade');
+            $table->foreignId('gender_id')->constrained()->onDelete('cascade')->onUpdate('cascade');
             $table->string('dni')->unique()->max(8);
             $table->string('firstname')->max(50);
             $table->string('lastname')->max(50);

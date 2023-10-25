@@ -68,6 +68,10 @@ class VacancyResource extends Resource
         ];
     }
     
+    protected static function getNavigationBadge(): ?string {
+        return Vacancy::query()->count();
+    }
+
     public static function getPages(): array
     {
         return [
