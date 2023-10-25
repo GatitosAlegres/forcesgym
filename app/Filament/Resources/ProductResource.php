@@ -18,6 +18,7 @@ use App\Models\Category;
 use Filament\Forms\Components\Section;
 use Filament\Tables\Columns\BadgeColumn;
 use Filament\Tables\Filters\Filter;
+use Filament\Notifications\Notification;
 
 class ProductResource extends Resource
 {
@@ -109,7 +110,24 @@ class ProductResource extends Resource
                 Tables\Columns\TextColumn::make('name')->label("Nombre")->searchable()->sortable(),
                 Tables\Columns\TextColumn::make('purchase_price')->label("Precio de Compra"),
                 Tables\Columns\TextColumn::make('sale_price')->label("Precio de Venta"),
-                Tables\Columns\TextColumn::make('stock')->label("Stock"),
+                Tables\Columns\TextColumn::make('stock')->label("Stock")
+                /* ->functions([
+                    function ($record) {
+                        if ($record->stock <= $record->security_stock) {
+                            return Notification::make()
+                                ->title('')
+                                ->body('')
+                                ->icon('')
+                                ->iconColor('')
+                                ->actions([
+                                    
+                                ])
+                                ->send();
+                        }
+                        return $record->stock;
+                    },
+                ]) */
+                ->alignCenter(),
                 Tables\Columns\BadgeColumn::make('security_stock')->colors([
                     'danger',
                 ])->label("Stock de Seguridad")->alignCenter(),
