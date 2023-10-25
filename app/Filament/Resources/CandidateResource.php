@@ -35,6 +35,13 @@ class CandidateResource extends Resource
                     ->required()
                     ->placeholder('Seleccione una vacante')
                     ->name('Vacante'),
+                Forms\Components\Select::make('gender_id')
+                    ->options(
+                        \App\Models\Gender::all()->pluck('name', 'id')
+                    )
+                    ->required()
+                    ->placeholder('Seleccione un género')
+                    ->name('Género'),
                 Forms\Components\TextInput::make('dni')
                     ->required()
                     ->maxLength(255),
@@ -73,13 +80,14 @@ class CandidateResource extends Resource
         return $table
             ->columns([
                 Tables\Columns\TextColumn::make('vacancy.name')->label('Vacante'),
-                Tables\Columns\TextColumn::make('dni'),
-                Tables\Columns\TextColumn::make('firstname'),
-                Tables\Columns\TextColumn::make('lastname'),
-                Tables\Columns\TextColumn::make('email'),
-                Tables\Columns\TextColumn::make('phone'),
-                Tables\Columns\TextColumn::make('address'),
-                Tables\Columns\TextColumn::make('curriculum_url'),
+                Tables\Columns\TextColumn::make('dni')->label('DNI'),
+                Tables\Columns\TextColumn::make('gender.name')->label('Género'),
+                Tables\Columns\TextColumn::make('firstname')->label('Nombres'),
+                Tables\Columns\TextColumn::make('lastname')->label('Apellidos'),
+                Tables\Columns\TextColumn::make('email')->label('Correo'),
+                Tables\Columns\TextColumn::make('phone')->label('Teléfono'),
+                Tables\Columns\TextColumn::make('address')->label('Dirección'),
+                Tables\Columns\TextColumn::make('curriculum_url')->label('Curriculum'),
                 Tables\Columns\TextColumn::make('created_at')
                     ->dateTime(),
                 Tables\Columns\TextColumn::make('updated_at')
@@ -103,6 +111,10 @@ class CandidateResource extends Resource
         ];
     }
     
+    protected static function getNavigationBadge(): ?string {
+        return Candidate::query()->count();
+    }
+
     public static function getPages(): array
     {
         return [

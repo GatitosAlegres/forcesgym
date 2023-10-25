@@ -15,4 +15,9 @@ class Candidate extends Model
     {
         return $this->belongsTo(Vacancy::class);
     }
+
+    public function gender()
+    {
+        return $this->belongsTo(Gender::class);
+    }
 }
