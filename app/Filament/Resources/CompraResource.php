@@ -47,6 +47,12 @@ class CompraResource extends Resource
 
                 Forms\Components\Card::make()
                     ->schema([
+                        Forms\Components\Placeholder::make('invoice_number')
+                            ->label('Proveedor')
+                            ->content(fn (Compra $record): ?string => $record->invoice?->supplier->name),
+                        Forms\Components\Placeholder::make('warranty_code')
+                            ->label('Expiración de Garantia')
+                            ->content(fn (Compra $record): ?string => $record->warranty?->expiration_date),
                         Forms\Components\Placeholder::make('total_price')
                             ->label('Monto total')
                             ->content(fn (Compra $record): ?string => $record->currency . ' ' . $record->total_price),
@@ -64,8 +70,12 @@ class CompraResource extends Resource
     {
         return $table
             ->columns([
-                Tables\Columns\TextColumn::make('number')
-                ->label('N° Compra'),
+                Tables\Columns\TextColumn::make('guia_remision.guia_code')
+                    ->label('Guia de remisión'),
+                Tables\Columns\TextColumn::make('invoice.invoice_number')
+                    ->label('Número de factura'),
+                Tables\Columns\TextColumn::make('warranty.warranty_code')
+                    ->label('Código de garantia'),
                 Tables\Columns\TextColumn::make('issue_date')
                     ->date()
                     ->label('Fecha de emisión'),
@@ -83,6 +93,21 @@ class CompraResource extends Resource
                     ->dateTime(),
                 Tables\Columns\TextColumn::make('updated_at')
                     ->dateTime(),
+            ])
+            ->filters([
+
+                Tables\Filters\SelectFilter::make('guia_remision_id')
+                    ->placeholder('Guia de remisión')
+                    ->options(\App\Models\GuiaRemision::all()->pluck('guia_code', 'id')),
+            ])
+            ->actions([
+                Tables\Actions\Action::make('Download Pdf')
+                    ->icon('heroicon-o-document-download')
+                    ->url(fn (Compra $record) => route('purchase.pdf.download', $record))
+                    ->openUrlInNewTab(),
+                Tables\Actions\EditAction::make(),
+                Tables\Actions\DeleteAction::make(),
+
             ])
             ->bulkActions([
                 Tables\Actions\DeleteBulkAction::make(),
@@ -175,6 +200,112 @@ class CompraResource extends Resource
                 ->default(now())
                 ->required()
                 ->label('Fecha de emisión'),
+
+            Forms\Components\Select::make('guia_remision_id')
+                ->relationship('guia_remision', 'guia_code')
+                ->required()
+                ->searchable()
+                ->createOptionForm([
+                    Forms\Components\TextInput::make('guia_code')
+                        ->default('GR-')
+                        ->required()
+                        ->maxLength(255)
+                        ->label('Código de Guia'),
+                    Forms\Components\FileUpload::make('file_path')
+                        ->required()
+                        ->acceptedFileTypes(['application/pdf', 'application/msword', 'application/vnd.ms-excel', 'image/*'])
+                        ->label('Archivo'),
+                    Forms\Components\TextInput::make('RUC_carrier')
+                        ->required()
+                        ->numeric()
+                        ->maxLength(255)
+                        ->label('RUC de transportista'),
+                    Forms\Components\TextInput::make('weight')
+                        ->numeric()
+                        ->required()
+                        ->label('Peso'),
+                    Forms\Components\DatePicker::make('delivery_date')
+                        ->required()
+                        ->label('Fecha de entrega'),
+                    Forms\Components\MarkdownEditor::make('observations')
+                        ->columnSpan('full')
+                        ->label('Observaciones'),
+                    Forms\Components\Toggle::make('according')
+                        ->required()
+                        ->label('Conforme')
+                ])
+                ->createOptionAction(function (Forms\Components\Actions\Action $action) {
+                    return $action
+                        ->modalHeading('Crear Guia de remisión')
+                        ->modalButton('Crear Guia de remisión')
+                        ->modalWidth('lg');
+                })
+                ->label('Guia de remisión'),
+
+            Forms\Components\Select::make('invoice_id')
+                ->relationship('invoice', 'invoice_number')
+                ->required()
+                ->searchable()
+                ->createOptionForm([
+                    Forms\Components\TextInput::make('invoice_number')
+                        ->required()
+                        ->default('FAC-')
+                        ->maxLength(255)
+                        ->name('Número de factura'),
+                    Forms\Components\FileUpload::make('file_path')
+                        ->required()
+                        ->acceptedFileTypes(['application/pdf', 'application/msword', 'application/vnd.ms-excel', 'image/*'])
+                        ->name('Archivo'),
+                    Forms\Components\Select::make('supplier_id')
+                        ->options(\App\Models\Supplier::all()->pluck('name', 'id'))
+                        ->required()
+                        ->name('Proveedor'),
+                    Forms\Components\DatePicker::make('due_date')
+                        ->required()
+                        ->label('Fecha de vencimiento'),
+                    Forms\Components\TextInput::make('total_amount')
+                        ->required()
+                        ->numeric()
+                        ->name('Monto total'),
+                    Forms\Components\Toggle::make('paid')
+                        ->required()
+                        ->name('Pagado'),
+                ])
+                ->createOptionAction(function (Forms\Components\Actions\Action $action) {
+                    return $action
+                        ->modalHeading('Crear Factura')
+                        ->modalButton('Crear Factura')
+                        ->modalWidth('lg');
+                })
+                ->label('Factura'),
+            Forms\Components\Select::make('warranty_id')
+                ->relationship('warranty', 'warranty_code')
+                ->required()
+                ->searchable()
+                ->createOptionForm([
+                    Forms\Components\TextInput::make('warranty_code')
+                        ->required()
+                        ->default('GT-')
+                        ->maxLength(255)
+                        ->label('Codigo de garantia'),
+                    Forms\Components\DatePicker::make('initial_date')
+                        ->required()
+                        ->label('Fecha de inicio'),
+                    Forms\Components\DatePicker::make('expiration_date')
+                        ->required()
+                        ->label('Fecha de vencimiento'),
+                    Forms\Components\FileUpload::make('file_path')
+                        ->required()
+                        ->acceptedFileTypes(['application/pdf', 'application/msword', 'application/vnd.ms-excel', 'image/*'])
+                        ->name('Archivo'),
+                ])
+                ->createOptionAction(function (Forms\Components\Actions\Action $action) {
+                    return $action
+                        ->modalHeading('Crear Garantia')
+                        ->modalButton('Crear Garantia')
+                        ->modalWidth('lg');
+                })
+                ->label('Garantia'),
             Forms\Components\Select::make('status')
                 ->options([
                     'nuevo' => 'Nuevo',
