@@ -14,10 +14,13 @@ return new class extends Migration
         Schema::create('sales', function (Blueprint $table) {
             $table->id();
             $table->date('date');
-            $table->unsignedBigInteger('user_id');
-            $table->foreign('user_id')->references('id')->on('users')->cascadeOnDelete();
+            //$table->unsignedBigInteger('user_id');
+            $table->unsignedBigInteger('cliente_id');
             $table->decimal('amount', 10, 2)->nullable();
             $table->timestamps();
+            //$table->foreign('user_id')->references('id')->on('users')->cascadeOnDelete();
+            $table->foreign('cliente_id')->references('id')->on('clientes')->cascadeOnDelete();
+
         });
     }
 
