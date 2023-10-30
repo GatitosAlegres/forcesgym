@@ -6,7 +6,8 @@ use App\Filament\Resources\SaleResource\Pages;
 use App\Filament\Resources\SaleResource\RelationManagers;
 use App\Models\Product;
 use App\Models\Sale;
-use App\Models\User;
+use App\Models\Cliente;
+//use App\Models\User;
 use Filament\Forms;
 use Filament\Forms\Components\Repeater;
 use Filament\Forms\Components\TextInput;
@@ -32,18 +33,18 @@ class SaleResource extends Resource
 
     public static function form(Form $form): Form
     {
-        $roleName = 'cliente';
+        //$roleName = 'cliente';
 
         return $form
             ->schema([
-                Forms\Components\Select::make('user_id')
-                    ->label('Usuario')
+                Forms\Components\Select::make('cliente_id')
                     ->options(
-                        User::whereHas('roles', function ($query) use ($roleName) {
-                            $query->where('name', $roleName);
-                        })->pluck('name', 'id')
+                        \App\Models\Cliente::all()->pluck('nombre','id')
+
                     )
-                    ->required(),
+                    ->required()
+                    ->placeholder('Seleccione una cliente')
+                    ->name('Cliente'),
                 Forms\Components\DateTimePicker::make('date')
                     ->default(now())
                     ->label('Fecha y hora')
@@ -65,7 +66,7 @@ class SaleResource extends Resource
                                             function ($state, callable $set) {
                                                 $product = Product::find($state);
                                                 if ($product) {
-                                                    $set('price_unitary', $product->price);
+                                                    $set('price_unitary', $product->sale_price);
                                                 }
                                             }
                                         )
@@ -92,8 +93,8 @@ class SaleResource extends Resource
     {
         return $table
             ->columns([
-                Tables\Columns\TextColumn::make('user.name')
-                    ->label('Usuario'),
+                Tables\Columns\TextColumn::make('clientes.nombre')
+                    ->label('Cliente'),
                 Tables\Columns\TextColumn::make('date')
                     ->date()->label('Fecha y hora'),
                 Tables\Columns\TextColumn::make('amount')->label('Monto')

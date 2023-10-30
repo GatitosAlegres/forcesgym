@@ -11,17 +11,14 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('horarios', function (Blueprint $table) {
+        Schema::create('clientes', function (Blueprint $table) {
             $table->id();
-            $table->unsignedBigInteger('asesoramiento_id');
-            $table->string('modalidad')->enum(['Diario','Interdiario']);
-            $table->string('descripcion');
-            
-            
             $table->timestamps();
-
-            $table->foreign('asesoramiento_id')->references('id')->on('asesoramientos');
-            
+            $table->string('nombre')->unique()->max(40);
+            $table->string('dni')->unique()->max(8);
+            $table->string('email')->unique()->max(30);
+            $table->string('telefono')->unique()->max(9);
+            $table->string('direccion')->unique()->max(50);
         });
     }
 
@@ -30,6 +27,7 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('horarios');
+        Schema::dropIfExists('clientes');
     }
 };
+

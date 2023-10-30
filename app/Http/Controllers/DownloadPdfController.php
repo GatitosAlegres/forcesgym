@@ -10,13 +10,20 @@ use LaravelDaily\Invoices\Invoice;
 use LaravelDaily\Invoices\Classes\Party;
 use LaravelDaily\Invoices\Classes\InvoiceItem;
 
+
 class DownloadPdfController extends Controller
 {
+
     public function downloadSale(Sale $record)
     {
         $customer = new Party([
-            'name'          => $record->user->name,
-            'custom_fields' => [],
+            //'name'          => $record->user->name,
+            'name' => $record->clientes->nombre,
+            'custom_fields' => [
+            'Dirección' => $record->clientes->direccion,
+            'Correo' => $record->clientes->email,
+            'Teléfono' => $record->clientes->telefono,
+            ],
         ]);
 
         $client = new Party([
@@ -32,7 +39,7 @@ class DownloadPdfController extends Controller
         foreach ($record->saleDetails as $saleDetail) {
             $item = new InvoiceItem();
             $item->title($saleDetail->product->name)
-                ->pricePerUnit($saleDetail->product->price)
+                ->pricePerUnit($saleDetail->product->sale_price)
                 ->quantity($saleDetail->quantity);
 
             array_push($items, $item);
@@ -59,11 +66,13 @@ class DownloadPdfController extends Controller
             ->currencyFormat('{SYMBOL}{VALUE}')
             ->currencyThousandsSeparator('.')
             ->currencyDecimalPoint(',')
-            ->filename($client->name . ' ' . $customer->name)
+            ->filename($client->nombre . ' ' . $customer->nombre)
             ->addItems($items)
             ->notes($notes)
             ->logo(public_path('img/logo.png'))
+            
             ->save('public');
+
 
         $link = $invoice->url();
 
@@ -131,5 +140,8 @@ class DownloadPdfController extends Controller
         $date1 = Carbon::parse($date1);
         $date2 = Carbon::parse($date2);
         return $date1->diffInDays($date2);
+
+
     }
+
 }
