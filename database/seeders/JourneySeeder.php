@@ -13,7 +13,7 @@ class JourneySeeder extends Seeder
      */
     public function run(): void
     {
-        $journeys = ['Mañana', 'Tarde', 'Noche'];
+        $journeys = ['Jornada completa', 'Jornada parcial'];
 
         foreach ($journeys as $journey) {
             Journey::create([

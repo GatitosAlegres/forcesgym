@@ -15,6 +15,15 @@ return new class extends Migration
             $table->id();
             $table->foreignId('vacancy_id')->constrained()->onDelete('cascade')->onUpdate('cascade');
             $table->foreignId('gender_id')->constrained()->onDelete('cascade')->onUpdate('cascade');
+
+            $table->unsignedBigInteger('journey_id')->nullable();
+            
+            $table->foreign('journey_id')->references('id')->on('journeys')->onDelete('cascade')->onUpdate('cascade');
+            $table->foreignId('day_id')->constrained()->onDelete('cascade')->onUpdate('cascade')->nullable();
+            $table->foreignId('contract_duration_id')->constrained()->onDelete('cascade')->onUpdate('cascade')->nullable();
+
+
+
             $table->string('dni')->unique()->max(8);
             $table->string('firstname')->max(50);
             $table->string('lastname')->max(50);

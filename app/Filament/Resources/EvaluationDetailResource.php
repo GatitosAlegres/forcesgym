@@ -20,7 +20,7 @@ class EvaluationDetailResource extends Resource
 {
     protected static ?string $model = EvaluationDetail::class;
 
-    protected static ?string $navigationIcon = 'heroicon-o-collection';
+    protected static ?string $navigationIcon = 'heroicon-o-document-search';
 
     protected static ?string $navigationGroup  = 'Recursos Humanos';
 

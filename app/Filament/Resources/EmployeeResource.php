@@ -10,6 +10,7 @@ use Filament\Resources\Form;
 use Filament\Resources\Resource;
 use Filament\Resources\Table;
 use Filament\Tables;
+
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
 
@@ -17,7 +18,7 @@ class EmployeeResource extends Resource
 {
     protected static ?string $model = Employee::class;
 
-    protected static ?string $navigationIcon = 'heroicon-o-collection';
+    protected static ?string $navigationIcon = 'heroicon-o-briefcase';
 
     protected static ?string $navigationGroup  = 'Recursos Humanos';
 
@@ -27,46 +28,79 @@ class EmployeeResource extends Resource
     {
         return $form
             ->schema([
-                Forms\Components\TextInput::make('interview_id')
-                    ->required(),
-                Forms\Components\TextInput::make('vacancy_id')
-                    ->required(),
-                Forms\Components\TextInput::make('first_journey_id'),
-                Forms\Components\TextInput::make('second_journey_id'),
-                Forms\Components\TextInput::make('day_id')
-                    ->required(),
-                Forms\Components\TextInput::make('gender_id')
-                    ->required(),
-                Forms\Components\TextInput::make('code')
-                    ->required()
-                    ->maxLength(255),
                 Forms\Components\TextInput::make('dni')
                     ->required()
-                    ->maxLength(255),
+                    ->maxLength(8)
+                    ->name('Dni'),
+
+                Forms\Components\Select::make('contract_duration_id')
+                    ->options(
+                        \App\Models\ContractDuration::all()->pluck('name', 'id')
+                    )
+                    ->required()
+                    ->placeholder('Seleccione duración del contrato')
+                    ->name('Duracion del contrato'),
+
+
+                Forms\Components\Select::make('vacancy_id')
+                    ->options(
+                        \App\Models\Vacancy::all()->pluck('name', 'id')
+                    )
+                    ->required()
+                    ->placeholder('Seleccione área de trabajo')
+                    ->name('Vacante'),
+
+                Forms\Components\Select::make('journey_id')
+                    ->options(
+                        \App\Models\Journey::all()->pluck('name', 'id')
+                    )
+                    ->required()
+                    ->placeholder('Seleccione un tipo de jornada')
+                    ->name('Jornada'),
+
+                Forms\Components\Select::make('day_id')
+                    ->options(
+                        \App\Models\Day::all()->pluck('day', 'id')
+                    )
+                    ->required()
+                    ->placeholder('Seleccione horario de trabajo')
+                    ->name('Jornada'), 
+
+                Forms\Components\Select::make('gender_id')
+                    ->options(
+                        \App\Models\Gender::all()->pluck('name', 'id')
+                    )
+                    ->required()
+                    ->placeholder('Seleccione un género')
+                    ->name('Género'),
+
                 Forms\Components\TextInput::make('firstname')
                     ->required()
-                    ->maxLength(255),
+                    ->maxLength(255)
+                    ->name('Nombres'),
                 Forms\Components\TextInput::make('lastname')
                     ->required()
-                    ->maxLength(255),
+                    ->maxLength(255)
+                    ->name('Apellidos'),
                 Forms\Components\TextInput::make('email')
                     ->email()
                     ->required()
-                    ->maxLength(255),
+                    ->maxLength(255)
+                    ->name('Correo electrónico'),
                 Forms\Components\TextInput::make('phone')
                     ->tel()
+                    ->prefix('+51')
                     ->required()
-                    ->maxLength(255),
+                    ->maxLength(9)
+                    ->name('Teléfono'),
                 Forms\Components\TextInput::make('address')
                     ->required()
-                    ->maxLength(255),
-                Forms\Components\TextInput::make('fotochek_url')
-                    ->maxLength(255),
-                Forms\Components\DatePicker::make('date_start')
-                    ->required(),
-                Forms\Components\DatePicker::make('date_end'),
-                Forms\Components\TextInput::make('salary')
-                    ->required(),
+                    ->maxLength(255)
+                    ->name('Dirección'),
+                Forms\Components\Toggle::make('payroll')
+                    ->name('Ingresar a planilla'),
+                Forms\Components\Toggle::make('fee')
+                    ->name('Recibo por honorarios'),
             ]);
     }
 
@@ -74,27 +108,35 @@ class EmployeeResource extends Resource
     {
         return $table
             ->columns([
-                Tables\Columns\TextColumn::make('interview_id'),
-                Tables\Columns\TextColumn::make('vacancy_id'),
-                Tables\Columns\TextColumn::make('first_journey_id'),
-                Tables\Columns\TextColumn::make('second_journey_id'),
-                Tables\Columns\TextColumn::make('day_id'),
-                Tables\Columns\TextColumn::make('gender_id'),
-                Tables\Columns\TextColumn::make('code'),
-                Tables\Columns\TextColumn::make('dni'),
-                Tables\Columns\TextColumn::make('firstname'),
-                Tables\Columns\TextColumn::make('lastname'),
-                Tables\Columns\TextColumn::make('email'),
-                Tables\Columns\TextColumn::make('phone'),
-                Tables\Columns\TextColumn::make('address'),
-                Tables\Columns\TextColumn::make('fotochek_url'),
-                Tables\Columns\TextColumn::make('date_start')
-                    ->date(),
-                Tables\Columns\TextColumn::make('date_end')
-                    ->date(),
-                Tables\Columns\TextColumn::make('salary'),
+                Tables\Columns\IconColumn::make('payroll')
+                    ->boolean()
+                    ->label('Registro en planilla'),
+                Tables\Columns\IconColumn::make('fee')
+                    ->boolean()
+                    ->label('Recibo por honorarios'),
+                Tables\Columns\TextColumn::make('dni')
+                    ->label('Dni'),
+                Tables\Columns\TextColumn::make('firstname')
+                    ->label('Nombre'),
+                Tables\Columns\TextColumn::make('lastname')
+                    ->label('Apellidos'),
+                Tables\Columns\TextColumn::make('email')
+                    ->label('Correo electrónico'),
+                Tables\Columns\TextColumn::make('phone')
+                    ->label('Teléfono'),
+                Tables\Columns\TextColumn::make('address')
+                    ->label('Dirección'),
+                Tables\Columns\TextColumn::make('vacancy.name')
+                    ->label('Vacante'),
+                Tables\Columns\TextColumn::make('journey.name')
+                    ->label('Jornada'),
+                Tables\Columns\TextColumn::make('day.day')
+                    ->label('Horario'),
+                Tables\Columns\TextColumn::make('gender.name')
+                    ->label('Género'),
                 Tables\Columns\TextColumn::make('created_at')
-                    ->dateTime(),
+                    ->dateTime()
+                    ->label('Ingreso'),
                 Tables\Columns\TextColumn::make('updated_at')
                     ->dateTime(),
             ])
@@ -108,15 +150,16 @@ class EmployeeResource extends Resource
                 Tables\Actions\DeleteBulkAction::make(),
             ]);
     }
-    
+
     public static function getRelations(): array
     {
         return [
             //
         ];
     }
-    
-    protected static function getNavigationBadge(): ?string {
+
+    protected static function getNavigationBadge(): ?string
+    {
         return Employee::query()->count();
     }
 
@@ -127,5 +170,5 @@ class EmployeeResource extends Resource
             'create' => Pages\CreateEmployee::route('/create'),
             'edit' => Pages\EditEmployee::route('/{record}/edit'),
         ];
-    }    
+    }
 }

@@ -46,5 +46,9 @@ class DatabaseSeeder extends Seeder
         $this->call(DaySeeder::class);
 
         $this->call(JourneySeeder::class);
+
+        $this->call(ContractDurationSeeder::class);
+
+        $this->call(PayrollTypeSeeder::class);
     }
 }
