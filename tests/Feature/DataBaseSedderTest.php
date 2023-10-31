@@ -7,5 +7,10 @@ uses(RefreshDatabase::class);
 
 test('Database seed works sucessful', function () {
 
-    $this->seed();
+    try {
+        $this->seed();
+        $this->assertTrue(true);
+    } catch (Exception $e) {
+        $this->fail('Error in database seeding: ' . $e->getMessage());
+    }
 });
