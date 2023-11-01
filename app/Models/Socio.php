@@ -11,9 +11,10 @@ class Socio extends Model
 
     protected $guarded=[];
 
-    public function user()
+
+    public function asistencia_detalle()
     {
-        return $this->belongsTo(User::class);
+        return $this->hasMany(AsistenciaDetalle::class);
     }
 
     public function tipo_membresia()

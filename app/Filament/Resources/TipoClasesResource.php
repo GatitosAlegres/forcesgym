@@ -62,6 +62,10 @@ class TipoClasesResource extends Resource
         ];
     }
 
+    protected static function getNavigationBadge(): ?string {
+        return TipoClases::query()->count();
+    }
+
     public static function getPages(): array
     {
         return [
