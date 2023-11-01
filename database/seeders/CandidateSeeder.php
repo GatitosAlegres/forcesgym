@@ -2,27 +2,27 @@
 
 namespace Database\Seeders;
 
-use App\Models\Employee;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
+use App\Models\Candidate;
 
-class EmployeeSeeder extends Seeder
+class CandidateSeeder extends Seeder
 {
     /**
      * Run the database seeds.
      */
     public function run(): void
     {
-        $nombresMasculinos = ['Luis Miguel', 'Javier Ignacio', 'Daniel Eduardo', 'Carlos Enrique', 'Martín Sebastián'];
-        $nombresFemeninos = ['Andrea Carolina', 'Patricia Estefanía', 'Karla Alejandra', 'Natalia Antonia', 'Sofía Valentina'];
-        $apellidos = ['Rodríguez García','López Martínez','González Pérez','Fernández Sánchez
-        ','Torres López', 'Pérez González','Martínez Rodríguez','Sánchez Fernández','García Torres','Soto Martínez'];
+         // Listas de nombres ficticios
+        $nombresMasculinos = ['Juan José', 'Carlos Alberto', 'Luis Antonio'];
+        $nombresFemeninos = ['Laura Valentina', 'María Fernanda', 'Ana Sofía'];
+        $apellidos = ['Pérez García', 'Martínez Gómez', 'Vargas Ruiz', 'Cerna Alvarado', 'Salcedo Mendoza', 'Montoya Terrones'];
 
         $generos = [1, 2];
         $dias = [1, 2, 3, 4];
         $jornadas = [1, 2];
 
-        for ($i = 1; $i <= 10; $i++) {
+        for ($i = 1; $i <= 6; $i++) {
             $nombreAleatorio = '';
             $generoAleatorio = 0;
 
@@ -38,7 +38,7 @@ class EmployeeSeeder extends Seeder
             $journeyAleatorio = ($dayAleatorio === 1 || $dayAleatorio === 2) ? 1 : 2; 
             $apellidoAleatorio = $apellidos[array_rand($apellidos)];
 
-            Employee::create([
+            Candidate::create([
                 'vacancy_id' => rand(1, 4),
                 'gender_id' => $generoAleatorio,
                 'journey_id' => $journeyAleatorio, 
@@ -49,9 +49,8 @@ class EmployeeSeeder extends Seeder
                 'lastname' => $apellidoAleatorio,
                 'email' => strtolower(str_replace(' ', '_', $nombreAleatorio)) . $i . '@ejemplo.com',
                 'phone' => strval(rand(900000000, 999999999)),
-                'address' => 'Av. Los Tulipanes - Calle  ' . $i,
-                'fee' => 0,
-                'payroll' => 0,
+                'address' => 'Av. Jiron Prado - Calle ' . $i,
+                'curriculum_url' => 'curriculum' . ($i + 10) . '.pdf',
             ]);
         }
     }
