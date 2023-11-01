@@ -13,6 +13,7 @@ use Filament\Tables;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
 use App\Models\Socio;
+use pxlrbt\FilamentExcel\Actions\Tables\ExportBulkAction;
 
 class AsistenciaDetalleResource extends Resource
 {
@@ -59,6 +60,7 @@ class AsistenciaDetalleResource extends Resource
             ])
             ->bulkActions([
                 Tables\Actions\DeleteBulkAction::make(),
+                ExportBulkAction::make()
             ]);
     }
 
