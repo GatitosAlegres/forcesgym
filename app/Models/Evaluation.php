@@ -13,7 +13,7 @@ class Evaluation extends Model
 
     public function candidate()
     {
-        return $this->belongsTo(Candidate::class);
+        return $this->hasOne(Candidate::class);
     }
 
     public function evaluationDetails()

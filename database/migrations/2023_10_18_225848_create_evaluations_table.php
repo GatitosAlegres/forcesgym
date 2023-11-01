@@ -15,7 +15,7 @@ return new class extends Migration
             $table->id();
             $table->string('code')->unique();
             $table->string('recruiter')->max(80);
-            $table->foreignId('candidate_id')->constrained()->onDelete('cascade')->onUpdate('cascade');
+            $table->foreignId('candidate_id')->constrained()->onDelete('cascade')->onUpdate('cascade')->unique();
             $table->boolean('state')->default(0);
             $table->timestamps();
         });

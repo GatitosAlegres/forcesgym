@@ -22,8 +22,6 @@ return new class extends Migration
             $table->foreignId('day_id')->constrained()->onDelete('cascade')->onUpdate('cascade')->nullable();
             $table->foreignId('contract_duration_id')->constrained()->onDelete('cascade')->onUpdate('cascade')->nullable();
 
-
-
             $table->string('dni')->unique()->max(8);
             $table->string('firstname')->max(50);
             $table->string('lastname')->max(50);
