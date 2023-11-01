@@ -42,6 +42,7 @@ jobs:
         run: vendor/bin/pest
 
   build:
+    needs: test
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
@@ -106,6 +107,7 @@ jobs:
           tags: ${{ secrets.DOCKER_HUB_USERNAME }}/forcesgym:web-latest
 
   deploy:
+    needs: build
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
