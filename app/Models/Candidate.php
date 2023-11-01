@@ -20,4 +20,24 @@ class Candidate extends Model
     {
         return $this->belongsTo(Gender::class);
     }
+
+    public function journey()
+    {
+        return $this->belongsTo(Journey::class);
+    }
+
+    public function day()
+    {
+        return $this->belongsTo(Day::class);
+    }
+
+    public function contractDuration()
+    {
+        return $this->belongsTo(ContractDuration::class);
+    }
+
+    public function employee()
+    {
+        return $this->hasOne(Employee::class);
+    }
 }

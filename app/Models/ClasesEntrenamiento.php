@@ -36,6 +36,12 @@ class ClasesEntrenamiento extends Model
         return $this->belongsTo(TipoClases::class);
     }
 
+    public function asistencia()
+    {
+        // Verifica que la clave foránea 'clases_entrenamiento_id' sea la correcta
+        return $this->hasOne(Asistencia::class, 'clase_entrenamiento_id');
+    }
+
 
     protected static function boot()
     {
@@ -43,6 +49,12 @@ class ClasesEntrenamiento extends Model
 
 
         self::created(function ($clase) {
+            // Crear un registro de asistencia con los datos de la clase
+            $asistencia = Asistencia::create([
+                'clase_entrenamiento_id' => $clase->id,
+                'fecha' => $clase->fecha,
+                'estado' => $clase->activo,
+            ]);
 
             // Obtener la descripción del tipo de clase desde la tabla tipo_clases
             $tipoClaseDescripcion = $clase->tipo_clase->nombre_tipo_clase;
@@ -60,5 +72,12 @@ class ClasesEntrenamiento extends Model
             ]);
         });
 
+        self::deleting(function ($clase) {
+            // Eliminar la asistencia asociada a la clase de entrenamiento
+            $clase->asistencia()->delete();
+
+            // Puedes realizar otras acciones necesarias antes de eliminar la clase
+            // ...
+        });
     }
 }

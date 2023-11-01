@@ -15,6 +15,7 @@ use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
 use App\Filament\Resources\MembresiasResource\Widgets\StatsOverview;
 use App\Models\User;
+use pxlrbt\FilamentExcel\Actions\Tables\ExportBulkAction;
 
 
 class MembresiasResource extends Resource
@@ -76,6 +77,7 @@ class MembresiasResource extends Resource
             ])
             ->bulkActions([
                 Tables\Actions\DeleteBulkAction::make(),
+                ExportBulkAction::make()
             ]);
     }
 
