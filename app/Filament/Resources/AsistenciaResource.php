@@ -2,9 +2,11 @@
 
 namespace App\Filament\Resources;
 
-use App\Filament\Resources\SocioResource\Pages;
-use App\Filament\Resources\SocioResource\RelationManagers;
-use App\Models\Socio;
+use App\Filament\Resources\AsistenciaResource\Pages;
+use App\Filament\Resources\AsistenciaResource\RelationManagers;
+use App\Filament\Resources\AsistenciaResource\RelationManagers\AsistenciaDetalleRelationManager;
+use App\Models\AsistenciaDetalle;
+use App\Models\Asistencia;
 use Filament\Forms;
 use Filament\Resources\Form;
 use Filament\Resources\Resource;
@@ -13,11 +15,11 @@ use Filament\Tables;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
 
-class SocioResource extends Resource
+class AsistenciaResource extends Resource
 {
-    protected static ?string $model = Socio::class;
+    protected static ?string $model = Asistencia::class;
 
-    protected static ?string $navigationIcon = 'heroicon-o-collection';
+    protected static ?string $navigationIcon = 'heroicon-o-clipboard';
     protected static ?string $navigationGroup  = 'Gestion de clases';
 
 
@@ -25,15 +27,13 @@ class SocioResource extends Resource
     {
         return $form
             ->schema([
-                Forms\Components\TextInput::make('nombreCliente')
+                Forms\Components\Select::make('codigo_clase')
+                    ->relationship('clase_entrenamiento', 'codigo')
                     ->required(),
-                Forms\Components\Select::make('tipo_membresia_id')
-                    ->relationship('tipo_membresia', 'nombre_tipo_membresia')
+                Forms\Components\DatePicker::make('fecha')
                     ->required(),
-                Forms\Components\TextInput::make('descripcion')
-                    ->required()
-                    ->maxLength(65535),
-                Forms\Components\DatePicker::make('fecha_inscripcion'),
+                Forms\Components\Toggle::make('estado')
+                    ->required(),
             ]);
     }
 
@@ -41,12 +41,12 @@ class SocioResource extends Resource
     {
         return $table
             ->columns([
-                Tables\Columns\TextColumn::make('nombreCliente'),
-                Tables\Columns\TextColumn::make('tipo_membresia.nombre_tipo_membresia')
-                    ->label('Tipo de Membresia'),
-                Tables\Columns\TextColumn::make('descripcion'),
-                Tables\Columns\TextColumn::make('fecha_inscripcion')
+                Tables\Columns\TextColumn::make('clase_entrenamiento.codigo')
+                    ->label('Codigo de Clase'),
+                Tables\Columns\TextColumn::make('fecha')
                     ->date(),
+                Tables\Columns\IconColumn::make('estado')
+                    ->boolean(),
                 Tables\Columns\TextColumn::make('created_at')
                     ->dateTime(),
                 Tables\Columns\TextColumn::make('updated_at')
@@ -66,20 +66,20 @@ class SocioResource extends Resource
     public static function getRelations(): array
     {
         return [
-            //
+            AsistenciaDetalleRelationManager::class,
         ];
     }
 
     protected static function getNavigationBadge(): ?string {
-        return Socio::query()->count();
+        return Asistencia::query()->count();
     }
 
     public static function getPages(): array
     {
         return [
-            'index' => Pages\ListSocios::route('/'),
-            'create' => Pages\CreateSocio::route('/create'),
-            'edit' => Pages\EditSocio::route('/{record}/edit'),
+            'index' => Pages\ListAsistencias::route('/'),
+            'create' => Pages\CreateAsistencia::route('/create'),
+            'edit' => Pages\EditAsistencia::route('/{record}/edit'),
         ];
     }
 }
