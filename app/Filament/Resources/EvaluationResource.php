@@ -16,7 +16,7 @@ use Illuminate\Database\Eloquent\SoftDeletingScope;
 use pxlrbt\FilamentExcel\Actions\Tables\ExportBulkAction;
 use App\Models\EvaluationDetail;
 use App\Models\EvaluationType;
-use App\Models\Compra;
+use App\Models\Purchase;
 
 class EvaluationResource extends Resource
 {
@@ -92,7 +92,8 @@ class EvaluationResource extends Resource
         ];
     }
 
-    protected static function getNavigationBadge(): ?string {
+    protected static function getNavigationBadge(): ?string
+    {
         return Evaluation::query()->count();
     }
 

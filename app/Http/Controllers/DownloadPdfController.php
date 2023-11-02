@@ -4,7 +4,7 @@ namespace App\Http\Controllers;
 
 use Carbon\Carbon;
 use App\Models\Sale;
-use App\Models\Compra;
+use App\Models\Purchase;
 use Illuminate\Http\Request;
 use LaravelDaily\Invoices\Invoice;
 use LaravelDaily\Invoices\Classes\Party;
@@ -18,11 +18,11 @@ class DownloadPdfController extends Controller
     {
         $customer = new Party([
             //'name'          => $record->user->name,
-            'name' => $record->clientes->nombre,
+            'name' => $record->customers->nombre,
             'custom_fields' => [
-            'Dirección' => $record->clientes->direccion,
-            'Correo' => $record->clientes->email,
-            'Teléfono' => $record->clientes->telefono,
+                'Dirección' => $record->customers->direccion,
+                'Correo' => $record->customers->email,
+                'Teléfono' => $record->customers->telefono,
             ],
         ]);
 
@@ -70,7 +70,7 @@ class DownloadPdfController extends Controller
             ->addItems($items)
             ->notes($notes)
             ->logo(public_path('img/logo.png'))
-            
+
             ->save('public');
 
 
@@ -79,7 +79,7 @@ class DownloadPdfController extends Controller
         return $invoice->stream();
     }
 
-    public function downloadPurchase(Compra $record)
+    public function downloadPurchase(Purchase $record)
     {
         $supplier = new Party([
             'name'          => $record->invoice->supplier->name,
@@ -140,8 +140,5 @@ class DownloadPdfController extends Controller
         $date1 = Carbon::parse($date1);
         $date2 = Carbon::parse($date2);
         return $date1->diffInDays($date2);
-
-
     }
-
 }

@@ -5,6 +5,7 @@ namespace Database\Seeders;
 // use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 
 use App\Models\EvaluationType;
+use App\Models\MembershipType;
 use Illuminate\Database\Seeder;
 
 class DatabaseSeeder extends Seeder
@@ -21,24 +22,24 @@ class DatabaseSeeder extends Seeder
 
         $this->call(UserSeeder::class);
 
-        $this->call(CandidatoSeeder::class);
+        $this->call(CandidateSeeder::class);
 
-        //$this->call(MembresiasSeeder::class);
+        //$this->call(MembershipSeeder::class);
 
         $this->call(CategorySeeder::class);
 
         $this->call(VacancySeeder::class);
 
-        $this->call(TipoClasesSeeder::class);
+        $this->call(ClassTypeSeeder::class);
 
-        $this->call(TipoDeMembresiaSeeder::class);
+        $this->call(MembershipTypeSeeder::class);
 
         $this->call(SupplierSeeder::class);
 
         $this->call(ProductSeeder::class);
 
-        $this->call(ClasesEntrenamientoSeeder::class);
-    
+        $this->call(TrainingClassSeeder::class);
+
         $this->call(GenderSeeder::class);
 
         $this->call(EvaluationTypeSeeder::class);

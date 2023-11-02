@@ -15,7 +15,7 @@ return new class extends Migration
             $table->id();
             $table->unsignedBigInteger('product_id');
             $table->foreign('product_id')->references('id')->on('products')->cascadeOnDelete();
-            $table->string('discount_type', 20);
+            $table->string('discount_type', 100);
             $table->decimal('discount_amount', 8, 2);
             $table->date('start_date');
             $table->date('end_date');

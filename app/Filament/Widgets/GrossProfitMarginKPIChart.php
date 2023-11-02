@@ -2,7 +2,7 @@
 
 namespace App\Filament\Widgets;
 
-use App\Models\Compra;
+use App\Models\Purchase;
 use App\Models\Sale;
 use Leandrocfe\FilamentApexCharts\Widgets\ApexChartWidget;
 
@@ -18,7 +18,7 @@ class GrossProfitMarginKPIChart extends ApexChartWidget
     {
         $sales = Sale::all();
         $totalRevenue = $sales->sum('amount');
-        $shopping = Compra::all();
+        $shopping = Purchase::all();
         $totalExpenses = $shopping->sum('total_price');
         $grossProfitMargin = $totalRevenue - $totalExpenses;
 
