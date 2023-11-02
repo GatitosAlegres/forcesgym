@@ -18,6 +18,7 @@ use App\Models\EvaluationDetail;
 use App\Models\EvaluationType;
 use App\Models\Purchase;
 
+
 class EvaluationResource extends Resource
 {
     protected static ?string $model = Evaluation::class;
@@ -82,6 +83,7 @@ class EvaluationResource extends Resource
             ])
             ->bulkActions([
                 Tables\Actions\DeleteBulkAction::make(),
+                ExportBulkAction::make()
             ]);
     }
 

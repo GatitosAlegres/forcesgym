@@ -22,13 +22,21 @@ class DatabaseSeeder extends Seeder
 
         $this->call(UserSeeder::class);
 
+        $this->call(VacancySeeder::class);
+
+        $this->call(GenderSeeder::class);
+
+        $this->call(JourneySeeder::class);
+
+        $this->call(DaySeeder::class);
+
+        $this->call(ContractDurationSeeder::class);
+
         $this->call(CandidateSeeder::class);
 
         //$this->call(MembershipSeeder::class);
 
         $this->call(CategorySeeder::class);
-
-        $this->call(VacancySeeder::class);
 
         $this->call(ClassTypeSeeder::class);
 
@@ -38,18 +46,15 @@ class DatabaseSeeder extends Seeder
 
         $this->call(ProductSeeder::class);
 
-        $this->call(TrainingClassSeeder::class);
-
-        $this->call(GenderSeeder::class);
+        //$this->call(TrainingClassSeeder::class);
 
         $this->call(EvaluationTypeSeeder::class);
 
-        $this->call(DaySeeder::class);
-
-        $this->call(JourneySeeder::class);
-
-        $this->call(ContractDurationSeeder::class);
 
         $this->call(PayrollTypeSeeder::class);
+
+        $this->call(CandidateSeeder::class);
+
+        $this->call(EmployeeSeeder::class);
     }
 }

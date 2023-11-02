@@ -12,6 +12,7 @@ use Filament\Resources\Table;
 use Filament\Tables;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
+use pxlrbt\FilamentExcel\Actions\Tables\ExportBulkAction;
 
 class InterviewResource extends Resource
 {
@@ -25,12 +26,17 @@ class InterviewResource extends Resource
 
     public static function form(Form $form): Form
     {
+
+        $availibleEvaluation = Interview::pluck('evaluation_id')->toArray();
+
+        $availibleEvaluation = \App\Models\Evaluation::whereNotIn('id', $availibleEvaluation)
+            ->pluck('code', 'id')
+            ->toArray();
+
         return $form
             ->schema([
                 Forms\Components\Select::make('evaluation_id')
-                    ->options(
-                        \App\Models\Evaluation::all()->pluck('code', 'id')
-                    )
+                    ->options($availibleEvaluation)
                     ->required()
                     ->placeholder('Seleccione una evaluación')
                     ->name('Evaluación'),
@@ -38,7 +44,7 @@ class InterviewResource extends Resource
                     ->required()
                     ->datalist([
                         'Juan Perez García',
-                        'Marco Cabrera Sánchez',	
+                        'Marco Cabrera Sánchez',
                         'Pedro González López',
                         'Luis Hernández Martínez',
                     ])
@@ -93,9 +99,10 @@ class InterviewResource extends Resource
             ])
             ->bulkActions([
                 Tables\Actions\DeleteBulkAction::make(),
+                ExportBulkAction::make()
             ]);
     }
-    
+
     public static function getRelations(): array
     {
         return [
@@ -103,10 +110,11 @@ class InterviewResource extends Resource
         ];
     }
 
-    protected static function getNavigationBadge(): ?string {
+    protected static function getNavigationBadge(): ?string
+    {
         return Interview::query()->count();
     }
-    
+
     public static function getPages(): array
     {
         return [
@@ -114,5 +122,5 @@ class InterviewResource extends Resource
             'create' => Pages\CreateInterview::route('/create'),
             'edit' => Pages\EditInterview::route('/{record}/edit'),
         ];
-    }    
+    }
 }

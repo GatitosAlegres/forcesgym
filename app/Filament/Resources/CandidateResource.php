@@ -13,6 +13,7 @@ use Filament\Tables;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
 use App\Models\Vacancy;
+use pxlrbt\FilamentExcel\Actions\Tables\ExportBulkAction;
 
 class CandidateResource extends Resource
 {
@@ -130,6 +131,7 @@ class CandidateResource extends Resource
             ])
             ->bulkActions([
                 Tables\Actions\DeleteBulkAction::make(),
+                ExportBulkAction::make()
             ]);
     }
 

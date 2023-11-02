@@ -47,4 +47,10 @@ class Employee extends Model
     {
         return $this->belongsTo(Interview::class);
     }
+
+    public function clase_entrenamiento()
+    {
+        // Verifica que la clave foránea 'clases_entrenamiento_id' sea la correcta
+        return $this->hasOne(TrainingClass::class, 'clase_entrenamiento_id');
+    }
 }

@@ -13,6 +13,8 @@ use Filament\Tables;
 
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
+use pxlrbt\FilamentExcel\Actions\Tables\ExportBulkAction;
+
 
 class EmployeeResource extends Resource
 {
@@ -64,7 +66,7 @@ class EmployeeResource extends Resource
                     )
                     ->required()
                     ->placeholder('Seleccione horario de trabajo')
-                    ->name('Jornada'), 
+                    ->name('Horario laboral'), 
 
                 Forms\Components\Select::make('gender_id')
                     ->options(
@@ -147,7 +149,8 @@ class EmployeeResource extends Resource
                 Tables\Actions\EditAction::make(),
             ])
             ->bulkActions([
-                Tables\Actions\DeleteBulkAction::make(),
+                Tables\Actions\DeleteBulkAction::make(), 
+                ExportBulkAction::make()
             ]);
     }
 

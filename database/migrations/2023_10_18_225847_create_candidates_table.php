@@ -22,12 +22,10 @@ return new class extends Migration
             $table->foreignId('day_id')->constrained()->onDelete('cascade')->onUpdate('cascade')->nullable();
             $table->foreignId('contract_duration_id')->constrained()->onDelete('cascade')->onUpdate('cascade')->nullable();
 
-
-
             $table->string('dni')->unique()->max(8);
             $table->string('firstname')->max(50);
             $table->string('lastname')->max(50);
-            $table->string('email')->unique()->max(50);
+            $table->string('email')->max(50);
             $table->string('phone')->max(9)->unique();
             $table->string('address')->max(100);
             $table->string('curriculum_url');
