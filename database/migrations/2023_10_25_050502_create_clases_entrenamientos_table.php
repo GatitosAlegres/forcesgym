@@ -13,7 +13,7 @@ return new class extends Migration
     {
         Schema::create('clases_entrenamientos', function (Blueprint $table) {
             $table->id();
-            $table->unsignedBigInteger('user_id');//instructor
+            $table->unsignedBigInteger('employee_id')->nullable();//instructor
             $table->unsignedBigInteger('tipo_clase_id'); // Field for tipo_clase ID
             $table->string('codigo');
             $table->string('descripcion');
@@ -24,7 +24,7 @@ return new class extends Migration
             $table->timestamps();
 
             // Define the relationship with the user model
-            $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
+            $table->foreign('employee_id')->references('id')->on('employees')->onDelete('cascade')->onUpdate('cascade');
 
             // Define the relationship with the tipo_clase model
             $table->foreign('tipo_clase_id')->references('id')->on('tipo_clases')->onDelete('cascade');

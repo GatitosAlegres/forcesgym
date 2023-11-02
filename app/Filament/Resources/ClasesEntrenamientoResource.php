@@ -12,7 +12,8 @@ use Filament\Resources\Table;
 use Filament\Tables;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
-use App\Models\User;
+use App\Models\Vacancy;
+use App\Models\Employee;
 use pxlrbt\FilamentExcel\Actions\Tables\ExportBulkAction;
 
 
@@ -26,18 +27,19 @@ class ClasesEntrenamientoResource extends Resource
 
     public static function form(Form $form): Form
     {
-        $roleName = 'entrenador';
-        // Obtener los usuarios con los user_id especificados
-        $users = User::whereIn('id', [22, 23, 23, 21, 21, 20, 20, 19, 19, 18, 18, 17])->get();
+                // Obtener los usuarios con los vacancy_id igual a 1
+        $users = Employee::where('vacancy_id', 1)->get();
 
-        // Crear un arreglo de opciones con los user_id y nombres
-        $options = $users->pluck('name', 'id')->toArray();
+        // Crear un arreglo de opciones con los nombres y los IDs
+        $options = $users->pluck('firstname', 'employee_id')->toArray();
         return $form
             ->schema([
-                Forms\Components\Select::make('user_id')
-                    ->options($options)
-                    ->label('Entrenador')
-                    ->required(),
+                Forms\Components\Select::make('employee_id')
+                ->options(
+                    \App\Models\Employee::where('vacancy_id', 2)->pluck('firstname', 'id')
+                )
+                ->label('Entrenador')
+                ->required(),
                 Forms\Components\Select::make('tipo_clase_id')
                     ->relationship('tipo_clase', 'nombre_tipo_clase')
                     ->required(),
@@ -61,7 +63,7 @@ class ClasesEntrenamientoResource extends Resource
     {
         return $table
             ->columns([
-                Tables\Columns\TextColumn::make('user.name')
+                Tables\Columns\TextColumn::make('employee.firstname')
                     ->label('Entrenador'),
                 Tables\Columns\TextColumn::make('tipo_clase.nombre_tipo_clase')->sortable()->searchable()
                     ->label('Tipo de Clase'),
