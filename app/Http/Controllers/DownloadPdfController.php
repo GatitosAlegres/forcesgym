@@ -70,7 +70,7 @@ class DownloadPdfController extends Controller
             ->addItems($items)
             ->notes($notes)
             ->logo(public_path('img/logo.png'))
-            
+
             ->save('public');
 
 

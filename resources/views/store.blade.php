@@ -10,7 +10,7 @@
                     <div class="caption mt-2 text-center">
                         <h4>{{ $product->name }}</h4>
                         <p>{{ $product->description }}</p>
-                        <p><strong>Price: </strong> S/{{ $product->price }}</p>
+                        <p><strong>Price: </strong> S/{{ $product->sale_price }}</p>
                         <p class="btn-holder">
                             <a href="{{ route('add_to_cart', $product->id) }}"
                                 class="btn bg-success text-white btn-block text-center" role="button">
