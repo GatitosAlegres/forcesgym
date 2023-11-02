@@ -13,7 +13,7 @@ class ClasesEntrenamiento extends Model
     use HasFactory;
 
     protected $fillable = [
-        'user_id',
+        'employee_id',
         'tipo_clase_id',
         'codigo',
         'descripcion',
@@ -23,9 +23,9 @@ class ClasesEntrenamiento extends Model
         'activo',
     ];
 
-    public function user()
+    public function employee()
     {
-        return $this->belongsTo(User::class);
+        return $this->belongsTo(Employee::class);
     }
 
     //conectar con timeX
@@ -41,8 +41,6 @@ class ClasesEntrenamiento extends Model
         // Verifica que la clave foránea 'clases_entrenamiento_id' sea la correcta
         return $this->hasOne(Asistencia::class, 'clase_entrenamiento_id');
     }
-
-
     protected static function boot()
     {
         parent::boot();
