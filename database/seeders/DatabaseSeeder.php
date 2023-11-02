@@ -50,17 +50,14 @@ class DatabaseSeeder extends Seeder
 
         $this->call(EvaluationTypeSeeder::class);
 
-
-<<<<<<< HEAD
         $this->call(JourneySeeder::class);
 
         $this->call(ProductRecordSheetSeeder::class);
-=======
+
         $this->call(PayrollTypeSeeder::class);
 
         $this->call(CandidateSeeder::class);
 
         $this->call(EmployeeSeeder::class);
->>>>>>> master
     }
 }
