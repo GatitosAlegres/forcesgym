@@ -16,7 +16,7 @@
             <a class="navbar-brand d-flex justify-content-start" href="{{ route('inicio') }}">
                 <strong class="ms-5 text-white">Reto GYM</strong>
             </a>
-            
+
             <div class="d-flex justify-content-end">
                 <div class="row">
                     <div class="col-lg-12 col-sm-12 col-12">
@@ -38,7 +38,7 @@
                                         @php $total += $details['price'] * $details['quantity'] @endphp
                                     @endforeach
                                     <div class="col-lg-12 col-sm-12 col-12 total-section text-center">
-                                        <p class="fw-bold">Total: <span class="text-success">$/.
+                                        <p class="fw-bold">Total: <span class="text-success">S/.
                                                 {{ $total }}</span></p>
                                     </div>
                                 </div>
@@ -51,7 +51,7 @@
                                             <div class="col-lg-8 col-sm-8 col-8 cart-detail-product">
                                                 <p class="fw-bold">{{ $details['name'] }}</p>
                                                 <p class="price text-success fw-bold">
-                                                    $/. {{ $details['price'] }}
+                                                    S/. {{ $details['price'] }}
                                                 </p>
                                                 <p class="count fw-bold">
                                                     Cantidad: {{ $details['quantity'] }}

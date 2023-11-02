@@ -35,14 +35,14 @@
                             <h6>{{ $details['name'] }}</h6>
                         </td>
                         <td data-th="Price">
-                            <h6>$/. {{ $details['price'] }}</h6>
+                            <h6>S/. {{ $details['price'] }}</h6>
                         </td>
                         <td data-th="Quantity" style="width: 50px">
                             <input type="number" value="{{ $details['quantity'] }}"
                                 class="form-control quantity cart_update" min="1" />
                         </td>
                         <td data-th="Subtotal">
-                            $/. {{ $details['price'] * $details['quantity'] }}
+                            S/. {{ $details['price'] * $details['quantity'] }}
                         </td>
                         <td class="actions" data-th="">
                             <button class="btn btn-outline-danger rounded-circle cart_remove w-auto h-75">
@@ -62,7 +62,7 @@
                 <td colspan="7" style="text-align:right;">
                     <h3>
                         <strong class="me-3">
-                            Total: $/. {{ $total }}
+                            Total: S/. {{ $total }}
                         </strong>
                     </h3>
                 </td>
