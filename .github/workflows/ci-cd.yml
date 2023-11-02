@@ -1,0 +1,143 @@
+name: CI/CD
+
+on:
+  push:
+    branches: [master]
+  pull_request:
+    branches: [master]
+
+env:
+  PRODUCTION_MANIFEST_PATH: ${{ vars.PRODUCTION_MANIFEST_PATH }}
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: shivammathur/setup-php@15c43e89cdef867065b0213be354c2841860869e
+        with:
+          php-version: "8.1"
+      - uses: actions/checkout@v3
+
+      - name: Copy .env
+        run: php -r "file_exists('.env') || copy('.env.example', '.env');"
+
+      - name: Install Dependencies
+        run: composer install -q --no-ansi --no-interaction --no-scripts --no-progress --prefer-dist
+
+      - name: Generate key
+        run: php artisan key:generate
+
+      - name: Directory Permissions
+        run: chmod -R 777 storage bootstrap/cache
+
+      - name: Create Database
+        run: |
+          mkdir -p database
+          touch database/database.sqlite
+
+      - name: Execute test (Unit and Features tests) via Pest
+        env:
+          DB_CONNECTION: sqlite
+          DB_DATABASE: database/database.sqlite
+        run: vendor/bin/pest
+
+  build:
+    needs: test
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+
+      - name: Set up QEMU
+        uses: docker/setup-qemu-action@master
+        with:
+          platforms: all
+
+      - name: Login to Docker Hub
+        uses: docker/login-action@v3
+        with:
+          username: ${{ secrets.DOCKER_HUB_USERNAME }}
+          password: ${{ secrets.DOCKER_HUB_ACCESS_TOKEN }}
+
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v1
+
+      - name: Build and push FPM server image
+        uses: docker/build-push-action@v2
+        with:
+          context: .
+          file: ./Dockerfile
+          cache-from: |
+            type=gha,scope=fpm
+          cache-to: |
+            type=gha,mode=max,scope=fpm
+          target: fpm
+          platforms: linux/amd64
+          push: true
+          tags: ${{ secrets.DOCKER_HUB_USERNAME }}/forcesgym:fpm-latest
+
+      - name: Build Frontend image
+        uses: docker/build-push-action@v2
+        with:
+          context: .
+          file: ./Dockerfile
+          cache-from: |
+            type=gha,scope=frontend
+            type=gha,scope=fpm
+          cache-to: |
+            type=gha,mode=max,scope=frontend
+          target: frontend
+          platforms: linux/amd64
+          push: false
+
+      - name: Build and push Web server image
+        uses: docker/build-push-action@v2
+        with:
+          context: .
+          file: ./Dockerfile
+          cache-from: |
+            type=gha,scope=frontend
+            type=gha,scope=fpm
+            type=gha,scope=web
+          cache-to: |
+            type=gha,mode=max,scope=web
+          target: web
+          platforms: linux/amd64
+          push: true
+          tags: ${{ secrets.DOCKER_HUB_USERNAME }}/forcesgym:web-latest
+
+  deploy:
+    needs: build
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+
+      - name: Set up Kubernetes CLI
+        uses: azure/setup-kubectl@v3
+        with:
+          version: "latest"
+
+      - name: Setup Kube config
+        uses: Azure/k8s-set-context@v1
+        with:
+          method: kubeconfig
+          kubeconfig: ${{ secrets.KUBE_CONFIG }}
+
+      - name: Load Secrets
+        env:
+          PROD_ENV: ${{ secrets.PROD_ENV }}
+          PROD_SECRETS_ENV: ${{ secrets.PROD_SECRETS_ENV }}
+        run: |
+          echo "$PROD_ENV" > $PRODUCTION_MANIFEST_PATH/prod.env
+          echo "$PROD_SECRETS_ENV" > $PRODUCTION_MANIFEST_PATH/prod.secrets.env
+
+      - name: Install Kustomize
+        run: |
+          curl -s "https://raw.githubusercontent.com/kubernetes-sigs/kustomize/master/hack/install_kustomize.sh" | bash
+          sudo mv kustomize /usr/local/bin/
+        shell: bash
+
+      - name: Deploy to production
+        run: |
+          kubectl delete -k $GITHUB_WORKSPACE/$PRODUCTION_MANIFEST_PATH
+          kubectl apply -k $GITHUB_WORKSPACE/$PRODUCTION_MANIFEST_PATH

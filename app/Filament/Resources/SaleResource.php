@@ -6,7 +6,7 @@ use App\Filament\Resources\SaleResource\Pages;
 use App\Filament\Resources\SaleResource\RelationManagers;
 use App\Models\Product;
 use App\Models\Sale;
-use App\Models\Cliente;
+use App\Models\Customer;
 //use App\Models\User;
 use Filament\Forms;
 use Filament\Forms\Components\Repeater;
@@ -39,7 +39,7 @@ class SaleResource extends Resource
             ->schema([
                 Forms\Components\Select::make('cliente_id')
                     ->options(
-                        \App\Models\Cliente::all()->pluck('nombre','id')
+                        \App\Models\Customer::all()->pluck('nombre', 'id')
 
                     )
                     ->required()
@@ -93,7 +93,7 @@ class SaleResource extends Resource
     {
         return $table
             ->columns([
-                Tables\Columns\TextColumn::make('clientes.nombre')
+                Tables\Columns\TextColumn::make('customers.nombre')
                     ->label('Cliente'),
                 Tables\Columns\TextColumn::make('date')
                     ->date()->label('Fecha y hora'),

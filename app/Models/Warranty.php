@@ -11,8 +11,8 @@ class Warranty extends Model
 
     protected $guarded = [];
 
-    public function compras()
+    public function purchases()
     {
-        return $this->hasOne(Compra::class);
+        return $this->hasOne(Purchase::class);
     }
 }

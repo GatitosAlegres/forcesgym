@@ -2,8 +2,8 @@
 
 namespace App\Filament\Widgets;
 
-use App\Models\Compra;
-use App\Models\Socio;
+use App\Models\Purchase;
+use App\Models\Partner;
 use App\Models\User;
 use Leandrocfe\FilamentApexCharts\Widgets\ApexChartWidget;
 
@@ -17,13 +17,12 @@ class ConversionRateKPIChart extends ApexChartWidget
 
     protected function getOptions(): array
     {
-        $shoppingCount = Compra::count();
-        $clients = Socio::count();
-        if ($clients==0){
+        $shoppingCount = Purchase::count();
+        $clients = Partner::count();
+        if ($clients == 0) {
             $conversionRate = 0;
-        }
-        else{
-            $conversionRate = ($shoppingCount/$clients)*100;
+        } else {
+            $conversionRate = ($shoppingCount / $clients) * 100;
         }
 
         return [

@@ -16,13 +16,14 @@ use Illuminate\Database\Eloquent\SoftDeletingScope;
 use pxlrbt\FilamentExcel\Actions\Tables\ExportBulkAction;
 use App\Models\EvaluationDetail;
 use App\Models\EvaluationType;
-use App\Models\Compra;
+use App\Models\Purchase;
+
 
 class EvaluationResource extends Resource
 {
     protected static ?string $model = Evaluation::class;
 
-    protected static ?string $navigationIcon = 'heroicon-o-collection';
+    protected static ?string $navigationIcon = 'heroicon-o-document';
 
     protected static ?string $navigationGroup  = 'Recursos Humanos';
 
@@ -82,6 +83,7 @@ class EvaluationResource extends Resource
             ])
             ->bulkActions([
                 Tables\Actions\DeleteBulkAction::make(),
+                ExportBulkAction::make()
             ]);
     }
 
@@ -92,7 +94,8 @@ class EvaluationResource extends Resource
         ];
     }
 
-    protected static function getNavigationBadge(): ?string {
+    protected static function getNavigationBadge(): ?string
+    {
         return Evaluation::query()->count();
     }
 

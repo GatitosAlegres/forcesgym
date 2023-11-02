@@ -18,6 +18,6 @@ class Invoice extends Model
 
     public function compra()
     {
-        return $this->hasOne(Compra::class);
+        return $this->hasOne(Purchase::class);
     }
 }
