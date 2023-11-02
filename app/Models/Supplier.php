@@ -25,4 +25,9 @@ class Supplier extends Model
     {
         return $this->hasMany(CreditNote::class);
     }
+
+    public function products()
+    {
+        return $this->hasMany(Product::class);
+    }
 }

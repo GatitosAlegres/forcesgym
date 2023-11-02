@@ -21,6 +21,11 @@ class Product extends Model
         return $this->hasOne(Discount::class);
     }
 
+    public function supplier()
+    {
+        return $this->belongsTo(Supplier::class);
+    }
+
     public function offer()
     {
         return $this->hasOne(Offer::class);
