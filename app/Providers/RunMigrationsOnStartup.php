@@ -20,6 +20,8 @@ class RunMigrationsOnStartup extends ServiceProvider
      */
     public function boot(): void
     {
-        Artisan::call('migrate', ['--force' => true]);
+        if ($this->app->environment('production')) {
+            Artisan::call('migrate', ['--force' => true]);
+        }
     }
 }
