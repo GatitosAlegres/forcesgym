@@ -33,18 +33,25 @@ class SaleResource extends Resource
 
     public static function form(Form $form): Form
     {
-        //$roleName = 'cliente';
-
         return $form
             ->schema([
                 Forms\Components\Select::make('cliente_id')
-                    ->options(
-                        \App\Models\Customer::all()->pluck('nombre', 'id')
-
-                    )
+                    ->relationship('customer', 'nombre')
                     ->required()
                     ->placeholder('Seleccione una cliente')
-                    ->name('Cliente'),
+                    ->name('Cliente')
+                    ->createOptionForm([
+                        Forms\Components\TextInput::make('nombre')
+                            ->required(),
+                        Forms\Components\TextInput::make('dni')
+                            ->required(),
+                        Forms\Components\TextInput::make('email')
+                            ->required(),
+                        Forms\Components\TextInput::make('telefono')
+                            ->required(),
+                        Forms\Components\TextInput::make('direccion')
+                            ->required(),
+                    ]),
                 Forms\Components\DateTimePicker::make('date')
                     ->default(now())
                     ->label('Fecha y hora')

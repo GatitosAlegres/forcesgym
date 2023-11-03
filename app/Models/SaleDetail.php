@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\Date;
 
 class SaleDetail extends Model
 {
@@ -30,8 +31,30 @@ class SaleDetail extends Model
             $sale = Sale::find($saleDetail->sale_id);
 
             $sale->amount += $saleDetail->sub_amount;
-
+        
+            $product = Product::find($saleDetail->product_id);
+            $product->stock -= $saleDetail->quantity;
             $sale->save();
+            Kardex::create([
+                'code_item' => 'KAR-' . Date::now()->format('Y') . '-00000' . Kardex::count(),
+                'created_at' => now(),
+                'current_stock' => $saleDetail->product->stock - $saleDetail->quantity,
+                'document' => '',
+                'input_quantity' => 0,
+                'movement_date' => now(),
+                'output_quantity' => $saleDetail->quantity,
+                'previous_stock' => $saleDetail->product->stock,
+                'product_id' => $saleDetail->product_id,
+                'product_record_sheet_id' => ProductRecordSheet::where('product_id', $saleDetail->product_id)->first()->id,
+                'responsible_id' => auth()->user()->id,
+                'state' => '',
+                'supplier_id' => $saleDetail->sale->client_id,
+                'total_price' => $saleDetail->sub_amount,
+                'type_document' => 'Venta',
+                'type_movement' => 'Salida',
+                'unit_price' => $saleDetail->price_unitary,
+            ]);
+            $product->save();
         });
 
         self::updating(function($saleDetail){
