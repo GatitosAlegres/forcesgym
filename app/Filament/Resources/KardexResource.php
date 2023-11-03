@@ -4,6 +4,7 @@ namespace App\Filament\Resources;
 
 use App\Filament\Resources\KardexResource\Pages;
 use App\Filament\Resources\KardexResource\RelationManagers;
+use App\Filament\Resources\KardexResource\Widgets\KardexStats;
 use App\Models\Kardex;
 use App\Models\ProductRecordSheet;
 use Closure;
@@ -217,6 +218,18 @@ class KardexResource extends Resource
         return [
             //
         ];
+    }
+
+    public static function getWidgets(): array
+    {
+        return [
+            KardexStats::class,
+        ];
+    }
+
+    public static function getNavigationBadge(): ?string
+    {
+        return static::$model::count();
     }
 
     public static function getPages(): array

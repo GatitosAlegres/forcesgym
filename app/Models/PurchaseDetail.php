@@ -60,6 +60,10 @@ class PurchaseDetail extends Model
                 'unit_price' => $compradetalle->unit_price,
                 'updated_at' => now(),
             ]);
+
+            $product = Product::find($compradetalle->product_id);
+            $product->stock = $compradetalle->product->stock + $compradetalle->quantity;
+            $product->save();
         });
 
         self::updating(function ($compradetalle) {

@@ -7,11 +7,6 @@ body {
     position: relative;
 }
 
-.img_thumbnail img {
-    width: 100%;
-    height: 50%;
-}
-
 .dropdown {
     float: left;
     padding-left: 150px;

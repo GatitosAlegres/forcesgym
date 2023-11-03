@@ -1,7 +1,7 @@
 @extends('layout')
 
 @section('content')
-    <table class="table table-dark table-hover" id="cart">
+    <table class="table table-hover" id="cart">
         <thead>
             <tr>
                 <th class="text-center" scope="col">#</th>
@@ -102,7 +102,7 @@
             var ele = $(this);
 
             $.ajax({
-                url: '{{ route('update_cart') }}',
+                url: "{{ route('update_cart') }}",
                 method: "patch",
                 data: {
                     _token: '{{ csrf_token() }}',
@@ -122,7 +122,7 @@
 
             if (confirm("Do you really want to remove?")) {
                 $.ajax({
-                    url: '{{ route('remove_from_cart') }}',
+                    url: "{{ route('remove_from_cart') }}",
                     method: "DELETE",
                     data: {
                         _token: '{{ csrf_token() }}',

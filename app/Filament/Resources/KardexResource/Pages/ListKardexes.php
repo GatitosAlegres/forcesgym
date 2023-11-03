@@ -9,11 +9,16 @@ use Filament\Resources\Pages\ListRecords;
 class ListKardexes extends ListRecords
 {
     protected static string $resource = KardexResource::class;
-
+    
     protected function getActions(): array
     {
         return [
             Actions\CreateAction::make(),
         ];
+    }
+
+    protected function getHeaderWidgets(): array
+    {
+        return KardexResource::getWidgets();
     }
 }
