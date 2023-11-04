@@ -49,7 +49,7 @@ class PurchaseResource extends Resource
                     ->schema([
                         Forms\Components\Placeholder::make('invoice_number')
                             ->label('Proveedor')
-                            ->content(fn (Purchase $record): ?string => $record->invoice?->supplier->name),
+                            ->content(fn (Purchase $record): ?string => $record->supplier->name),
                         Forms\Components\Placeholder::make('warranty_code')
                             ->label('Expiración de Garantia')
                             ->content(fn (Purchase $record): ?string => $record->warranty?->expiration_date),
@@ -57,7 +57,7 @@ class PurchaseResource extends Resource
                             ->label('Monto total')
                             ->content(fn (Purchase $record): ?string => $record->currency . ' ' . $record->total_price),
                         Forms\Components\Placeholder::make('created_at')
-                            ->label('Created at')
+                            ->label('Creado en')
                             ->content(fn (Purchase $record): ?string => $record->created_at?->diffForHumans()),
                     ])
                     ->columnSpan(['lg' => 1])
@@ -74,6 +74,8 @@ class PurchaseResource extends Resource
                     ->label('Guia de remisión'),
                 Tables\Columns\TextColumn::make('invoice.invoice_number')
                     ->label('Número de factura'),
+                Tables\Columns\TextColumn::make('supplier.name')
+                    ->label('Proveedor'),
                 Tables\Columns\TextColumn::make('warranty.warranty_code')
                     ->label('Código de garantia'),
                 Tables\Columns\TextColumn::make('issue_date')
@@ -157,13 +159,6 @@ class PurchaseResource extends Resource
                             ])
                             ->name('Producto'),
 
-                        Forms\Components\Select::make('supplier_id')
-                            ->options(\App\Models\Supplier::all()->pluck('name', 'id'))
-                            ->columnSpan([
-                                'md' => 4,
-                            ])
-                            ->name('Proveedor'),
-
                         Forms\Components\TextInput::make('quantity')
                             ->numeric()
                             ->columnSpan([
@@ -195,7 +190,10 @@ class PurchaseResource extends Resource
                 ->disabled()
                 ->required()
                 ->label('Número de compra'),
-
+            Forms\Components\Select::make('supplier_id')
+                ->options(\App\Models\Supplier::all()->pluck('name', 'id'))
+                ->required()
+                ->label('Proveedor'),
             Forms\Components\DatePicker::make('issue_date')
                 ->default(now())
                 ->required()
