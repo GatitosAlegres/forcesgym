@@ -14,5 +14,7 @@ contraseña: password
 # Desarrollo
 
 * Solo si agregaste un nuevo modelo a la base de datos [migracion] ejecuta:
-<br>
-`php artisan shield:seeder --generate`
+
+```sh
+php artisan shield:seeder --generate
+```
