@@ -32,6 +32,10 @@ class CreditNoteResource extends Resource
                     ->options(\App\Models\Supplier::all()->pluck('name', 'id'))
                     ->required()
                     ->label('Proveedor'),
+                Forms\Components\Select::make('purchase_id')
+                    ->options(\App\Models\Purchase::all()->pluck('number', 'id'))
+                    ->required()
+                    ->label('Compra'),
                 Forms\Components\DatePicker::make('issue_date')
                     ->required()
                     ->label('Fecha de emisión')

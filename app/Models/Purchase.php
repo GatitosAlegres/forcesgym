@@ -30,4 +30,9 @@ class Purchase extends Model
     {
         return $this->belongsTo(Warranty::class);
     }
+
+    public function credit_note()
+    {
+        return $this->hasMany(CreditNote::class);
+    }
 }

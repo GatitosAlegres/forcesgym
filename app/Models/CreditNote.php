@@ -15,4 +15,9 @@ class CreditNote extends Model
     {
         return $this->belongsTo(Supplier::class);
     }
+
+    public function purchase()
+    {
+        return $this->belongsTo(Purchase::class);
+    }
 }
