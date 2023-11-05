@@ -13,10 +13,6 @@ class CartController extends Controller
     {
         $products = Product::all();
 
-        foreach ($products as $product) {
-            $product->image = asset('storage/' . $product->image);
-        }
-
         return view('store', compact('products'));
     }
 
