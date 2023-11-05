@@ -9,8 +9,16 @@ use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 
 class ProductSeeder extends Seeder
 {
+
+    private function getProductImage($name)
+    {
+        return 'products/' . $name;
+    }
+
     public function run(): void
     {
+
+
         $products = [
 
             [
@@ -28,7 +36,7 @@ class ProductSeeder extends Seeder
                 "requires_shipping" => 1,
 
                 "security_stock" => rand(1, 10),
-                "image" => "https://http2.mlstatic.com/D_NQ_NP_716395-MPE52473668921_112022-V.webp",
+                "image" => $this->getProductImage('cinta_correr.webp'),
                 "category_id" => 1,
             ],
             [
@@ -45,7 +53,7 @@ class ProductSeeder extends Seeder
                 "requires_shipping" => 1,
 
                 "security_stock" => rand(1, 10),
-                "image" => "https://http2.mlstatic.com/D_NQ_NP_915122-MLA70676439993_072023-V.webp",
+                "image" => $this->getProductImage('juego_mancuernas.webp'),
                 "category_id" => 2
             ],
             [
@@ -62,7 +70,7 @@ class ProductSeeder extends Seeder
                 "requires_shipping" => 1,
 
                 "security_stock" => rand(1, 10),
-                "image" => "https://http2.mlstatic.com/D_NQ_NP_963396-MPE43438549132_092020-V.webp",
+                "image" => $this->getProductImage('tapete_yoga.webp'),
                 "category_id" => 3
             ],
             [
@@ -79,7 +87,7 @@ class ProductSeeder extends Seeder
                 "requires_shipping" => 1,
 
                 "security_stock" => rand(1, 10),
-                "image" => "https://http2.mlstatic.com/D_NQ_NP_904472-MPE52560267029_112022-V.webp",
+                "image" => $this->getProductImage('guantes_boxeo.webp'),
                 "category_id" => 7
             ],
             [
@@ -96,7 +104,7 @@ class ProductSeeder extends Seeder
                 "requires_shipping" => 1,
 
                 "security_stock" => rand(1, 10),
-                "image" => "https://http2.mlstatic.com/D_NQ_NP_649382-MPE51246551900_082022-V.webp",
+                "image" => $this->getProductImage('suplemento_proteico.webp'),
                 "category_id" => 10
             ],
             [
@@ -113,7 +121,7 @@ class ProductSeeder extends Seeder
                 "requires_shipping" => 1,
 
                 "security_stock" => rand(1, 10),
-                "image" => "https://http2.mlstatic.com/D_NQ_NP_648559-MPE70351429650_072023-V.webp",
+                "image" => $this->getProductImage('bicicleta_estatica.webp'),
                 "category_id" => 1
             ],
             [
@@ -130,7 +138,7 @@ class ProductSeeder extends Seeder
                 "requires_shipping" => 1,
 
                 "security_stock" => rand(1, 10),
-                "image" => "https://http2.mlstatic.com/D_NQ_NP_688694-MPE69502000642_052023-W.webp",
+                "image" => $this->getProductImage('leggings.webp'),
                 "category_id" => 13
             ],
             [
@@ -147,7 +155,7 @@ class ProductSeeder extends Seeder
                 "requires_shipping" => 1,
 
                 "security_stock" => rand(1, 10),
-                "image" => "https://http2.mlstatic.com/D_NQ_NP_605709-MPE54956081543_042023-V.webp",
+                "image" => $this->getProductImage('zapatillas.webp'),
                 "category_id" => 14
             ],
             [
@@ -164,7 +172,7 @@ class ProductSeeder extends Seeder
                 "requires_shipping" => 1,
 
                 "security_stock" => rand(1, 10),
-                "image" => "https://http2.mlstatic.com/D_NQ_NP_662901-MPE71030399519_082023-V.webp",
+                "image" => $this->getProductImage('shaker.webp'),
                 "category_id" => 21,
             ],
             [
@@ -181,7 +189,7 @@ class ProductSeeder extends Seeder
                 "requires_shipping" => 1,
 
                 "security_stock" => rand(1, 10),
-                "image" => "https://http2.mlstatic.com/D_NQ_NP_767987-MPE43775259263_102020-V.webp",
+                "image" => $this->getProductImage('libro_entrenamiento.webp'),
                 "category_id" => 19
             ],
             [
@@ -198,7 +206,7 @@ class ProductSeeder extends Seeder
                 "requires_shipping" => 1,
 
                 "security_stock" => rand(1, 10),
-                "image" => "https://http2.mlstatic.com/D_NQ_NP_934238-MPE46776060919_072021-V.webp",
+                "image" => $this->getProductImage('eliptica.webp'),
                 "category_id" => 1
             ],
             [
@@ -215,7 +223,7 @@ class ProductSeeder extends Seeder
                 "requires_shipping" => 1,
 
                 "security_stock" => rand(1, 10),
-                "image" => "https://http2.mlstatic.com/D_NQ_NP_694851-MPE70068560908_062023-V.webp",
+                "image" => $this->getProductImage('pesas_ajustables.webp'),
                 "category_id" => 2
             ],
             [
@@ -232,7 +240,7 @@ class ProductSeeder extends Seeder
                 "requires_shipping" => 1,
 
                 "security_stock" => rand(1, 10),
-                "image" => "https://http2.mlstatic.com/D_NQ_NP_604801-MPE69673425074_052023-V.webp",
+                "image" => $this->getProductImage('bloque_yoga.webp'),
                 "category_id" => 3
             ],
             [
@@ -249,7 +257,7 @@ class ProductSeeder extends Seeder
                 "requires_shipping" => 1,
 
                 "security_stock" => rand(1, 10),
-                "image" => "https://http2.mlstatic.com/D_NQ_NP_964049-MPE52968911734_122022-V.webp",
+                "image" => $this->getProductImage('pelota_pilates.webp'),
                 "category_id" => 4
             ],
             [
@@ -266,7 +274,7 @@ class ProductSeeder extends Seeder
                 "requires_shipping" => 1,
 
                 "security_stock" => rand(1, 10),
-                "image" => "https://http2.mlstatic.com/D_NQ_NP_807067-MPE72106227837_102023-V.webp",
+                "image" => $this->getProductImage('step.webp'),
                 "category_id" => 5
             ],
             [
@@ -283,7 +291,7 @@ class ProductSeeder extends Seeder
                 "requires_shipping" => 1,
 
                 "security_stock" => rand(1, 10),
-                "image" => "https://http2.mlstatic.com/D_NQ_NP_861821-MPE69822753091_062023-V.webp",
+                "image" => $this->getProductImage('masajeador_rodillos.webp'),
                 "category_id" => 6
             ],
             [
@@ -300,7 +308,7 @@ class ProductSeeder extends Seeder
                 "requires_shipping" => 1,
 
                 "security_stock" => rand(1, 10),
-                "image" => "https://http2.mlstatic.com/D_NQ_NP_728452-MPE69822791855_062023-V.webp",
+                "image" => $this->getProductImage('banda_resistencia.webp'),
                 "category_id" => 17
             ],
             [
@@ -317,7 +325,7 @@ class ProductSeeder extends Seeder
                 "requires_shipping" => 1,
 
                 "security_stock" => rand(1, 10),
-                "image" => "https://http2.mlstatic.com/D_NQ_NP_761672-MPE52670198289_112022-V.webp",
+                "image" => $this->getProductImage('saco_boxeo.webp'),
                 "category_id" => 7
             ],
             [
@@ -334,7 +342,7 @@ class ProductSeeder extends Seeder
                 "requires_shipping" => 1,
 
                 "security_stock" => rand(1, 10),
-                "image" => "https://http2.mlstatic.com/D_NQ_NP_776938-MLA52631829911_112022-V.webp",
+                "image" => $this->getProductImage('caja_plyo.webp'),
                 "category_id" => 8
             ],
             [
@@ -351,7 +359,7 @@ class ProductSeeder extends Seeder
                 "requires_shipping" => 1,
 
                 "security_stock" => rand(1, 10),
-                "image" => "https://http2.mlstatic.com/D_NQ_NP_801449-MPE43231521781_082020-V.webp",
+                "image" => $this->getProductImage('bosu_balance_trainer.webp'),
                 "category_id" => 9
             ],
             [
@@ -368,7 +376,7 @@ class ProductSeeder extends Seeder
                 "requires_shipping" => 1,
 
                 "security_stock" => rand(1, 10),
-                "image" => "https://http2.mlstatic.com/D_NQ_NP_833364-MPE70248816831_072023-V.webp",
+                "image" => $this->getProductImage('proteina_polvo.webp'),
                 "category_id" => 10
             ],
             [
@@ -385,7 +393,7 @@ class ProductSeeder extends Seeder
                 "requires_shipping" => 1,
 
                 "security_stock" => rand(1, 10),
-                "image" => "https://http2.mlstatic.com/D_NQ_NP_809542-MPE49385170748_032022-V.webp",
+                "image" => $this->getProductImage('camiseta.webp'),
                 "category_id" => 11
             ],
             [
@@ -402,7 +410,7 @@ class ProductSeeder extends Seeder
                 "requires_shipping" => 1,
 
                 "security_stock" => rand(1, 10),
-                "image" => "https://http2.mlstatic.com/D_NQ_NP_915231-MPE54692886388_032023-V.webp",
+                "image" => $this->getProductImage('zapatillas_entrenamiento.webp'),
                 "category_id" => 14
             ],
             [
@@ -419,10 +427,10 @@ class ProductSeeder extends Seeder
                 "requires_shipping" => 1,
 
                 "security_stock" => rand(1, 10),
-                "image" => "https://http2.mlstatic.com/D_NQ_NP_633435-MPE69777332589_062023-V.webp",
+                "image" => $this->getProductImage('botella_agua.webp'),
                 "category_id" => 17
             ],
-            
+
             [
                 "name" => "Botella de Proteína con Compartimentos",
                 "description" => "Botella de proteína con compartimentos para almacenar polvo y suplementos antes de mezclarlos.",
@@ -437,7 +445,7 @@ class ProductSeeder extends Seeder
                 "requires_shipping" => 1,
 
                 "security_stock" => rand(1, 10),
-                "image" => "https://http2.mlstatic.com/D_NQ_NP_760774-MPE54946592025_042023-V.webp",
+                "image" => $this->getProductImage('botella_proteina_compartimientos.webp'),
                 "category_id" => 21
             ],
             [
@@ -454,7 +462,7 @@ class ProductSeeder extends Seeder
                 "requires_shipping" => 1,
 
                 "security_stock" => rand(1, 10),
-                "image" => "https://http2.mlstatic.com/D_NQ_NP_891135-MPE71974563383_092023-V.webp",
+                "image" => $this->getProductImage('bicicleta_spinning_peloton.webp'),
                 "category_id" => 1
             ],
             [
@@ -471,7 +479,7 @@ class ProductSeeder extends Seeder
                 "requires_shipping" => 1,
 
                 "security_stock" => rand(1, 10),
-                "image" => "https://http2.mlstatic.com/D_NQ_NP_735177-MPE71093280346_082023-V.webp",
+                "image" => $this->getProductImage('cuerda_saltar.webp'),
                 "category_id" => 5
             ],
             [
@@ -488,7 +496,7 @@ class ProductSeeder extends Seeder
                 "requires_shipping" => 1,
 
                 "security_stock" => rand(1, 10),
-                "image" => "https://http2.mlstatic.com/D_NQ_NP_774914-MPE69105477945_042023-V.webp",
+                "image" => $this->getProductImage('casaca_deportiva.webp'),
                 "category_id" => 12
             ],
             [
@@ -505,7 +513,7 @@ class ProductSeeder extends Seeder
                 "requires_shipping" => 1,
 
                 "security_stock" => rand(1, 10),
-                "image" => "https://http2.mlstatic.com/D_NQ_NP_623005-MPE44531606035_012021-V.webp",
+                "image" => $this->getProductImage('casaca_impermeable.webp'),
                 "category_id" => 12
             ],
             [
@@ -522,7 +530,7 @@ class ProductSeeder extends Seeder
                 "requires_shipping" => 1,
 
                 "security_stock" => rand(1, 10),
-                "image" => "https://http2.mlstatic.com/D_NQ_NP_985481-MPE54849144739_042023-V.webp",
+                "image" => $this->getProductImage('casaca_acolchada.webp'),
                 "category_id" => 12
             ],
             [
@@ -539,7 +547,7 @@ class ProductSeeder extends Seeder
                 "requires_shipping" => 1,
 
                 "security_stock" => rand(1, 10),
-                "image" => "https://http2.mlstatic.com/D_NQ_NP_975481-MPE50219649439_062022-V.webp",
+                "image" => $this->getProductImage('casaca_entrenamiento.webp'),
                 "category_id" => 12
             ],
             [
@@ -556,7 +564,7 @@ class ProductSeeder extends Seeder
                 "requires_shipping" => 1,
 
                 "security_stock" => rand(1, 10),
-                "image" => "https://http2.mlstatic.com/D_NQ_NP_833364-MPE70248816831_072023-V.webp",
+                "image" => $this->getProductImage('proteina_polvo.webp'),
                 "category_id" => 15
             ],
             [
@@ -573,7 +581,7 @@ class ProductSeeder extends Seeder
                 "requires_shipping" => 1,
 
                 "security_stock" => rand(1, 10),
-                "image" => "https://http2.mlstatic.com/D_NQ_NP_657993-MPE47055202181_082021-V.webp",
+                "image" => $this->getProductImage('bcca_capsulas.webp'),
                 "category_id" => 15
             ],
             [
@@ -590,7 +598,7 @@ class ProductSeeder extends Seeder
                 "requires_shipping" => 1,
 
                 "security_stock" => rand(1, 10),
-                "image" => "https://http2.mlstatic.com/D_NQ_NP_684511-MPE49452721897_032022-V.webp",
+                "image" => $this->getProductImage('multivitaminico.webp'),
                 "category_id" => 15
             ],
             [
@@ -607,7 +615,7 @@ class ProductSeeder extends Seeder
                 "requires_shipping" => 1,
 
                 "security_stock" => rand(1, 10),
-                "image" => "https://http2.mlstatic.com/D_NQ_NP_637249-MLU71085053185_082023-V.webp",
+                "image" => $this->getProductImage('omega3.webp'),
                 "category_id" => 15
             ]
         ];
