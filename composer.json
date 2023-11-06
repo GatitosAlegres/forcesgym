@@ -21,6 +21,7 @@
         "leandrocfe/filament-apex-charts": "2.0",
         "nesbot/carbon": "^2.68",
         "phpoffice/phpspreadsheet": "^1.29",
+        "predis/predis": "^2.2",
         "psr/simple-cache": "2.0",
         "pxlrbt/filament-excel": "^1.1",
         "spatie/laravel-permission": "^5.10",
