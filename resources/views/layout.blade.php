@@ -37,8 +37,10 @@
                             <div class="dropdown-menu" aria-labelledby="dLabel">
                                 <div class="row total-header-section">
                                     <div class="col-lg-12 col-sm-12 col-12 total-section text-center">
-                                        <p class="fw-bold">Total: <span class="text-success">S/.
-                                                {{ session('cart')->calculateTotal() }}</span></p>
+                                        @if (session('cart'))
+                                            <p class="fw-bold">Total: <span class="text-success">S/.
+                                                    {{ session('cart')->calculateTotal() }}</span></p>
+                                        @endif
                                     </div>
                                 </div>
                                 @if (session('cart'))
