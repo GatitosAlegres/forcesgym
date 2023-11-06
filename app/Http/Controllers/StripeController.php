@@ -13,11 +13,11 @@ class StripeController extends Controller
 
         \Stripe\Stripe::setApiKey(config('stripe.sk'));
 
-        foreach (session('cart') as $id => $details) {
+        foreach (session('cart')->getItems() as $item) {
 
-            $name = $details['name'];
-            $total = $details['price'];
-            $quantity = $details['quantity'];
+            $name = $item->product->name;
+            $total = $item->price;
+            $quantity = $item->quantity;
 
             $unit_amount = "$total";
             $unit_amount = round($unit_amount, 2) * 100;
@@ -27,7 +27,7 @@ class StripeController extends Controller
                     'product_data' => [
                         'name' => $name,
                     ],
-                    'currency'     => 'USD',
+                    'currency'     => 'PEN',
                     'unit_amount'  => $unit_amount,
                 ],
                 'quantity' => $quantity
