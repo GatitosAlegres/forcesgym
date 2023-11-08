@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Category;
 use App\Models\Product;
 use App\Models\Sale;
 use App\Models\SaleDetail;
@@ -12,18 +13,16 @@ class CartController extends Controller
     public function index()
     {
         $products = Product::all();
+        $categories = Category::all();
 
-        foreach ($products as $product) {
-            $product->image = asset('storage/' . $product->image);
-        }
-
-        return view('store', compact('products'));
+        return view('shop.store', compact('products', 'categories'));
     }
 
     public function cart()
     {
-        return view('cart');
+        return view('shop.cart');
     }
+
     public function addToCart($id)
     {
         $product = Product::findOrFail($id);

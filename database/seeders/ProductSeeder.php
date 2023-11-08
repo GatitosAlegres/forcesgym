@@ -19,7 +19,7 @@ class ProductSeeder extends Seeder
                 "purchase_price" => 1499.99,
                 "sale_price" => 1699.99,
 
-                "stock" => 0,
+                "stock" => rand(8, 29),
                 "backorder" => rand(0, 1),
                 "barcode" => mt_rand(1000000000000, 9999999999999),
 
@@ -36,7 +36,7 @@ class ProductSeeder extends Seeder
                 "description" => "Mancuernas de alta calidad para ejercicios de fuerza, con agarre cómodo.",
                 "purchase_price" => 199.99,
                 "sale_price" => 219.99,
-                "stock" => 0,
+                "stock" => rand(8, 29),
                 "backorder" => rand(0, 1),
                 "barcode" => mt_rand(1000000000000, 9999999999999),
 
@@ -53,7 +53,7 @@ class ProductSeeder extends Seeder
                 "description" => "Tapete de yoga antideslizante con material ecológico, ideal para prácticas de yoga y estiramientos.",
                 "purchase_price" => 439.99,
                 "sale_price" => 459.99,
-                "stock" => 0,
+                "stock" => rand(8, 29),
                 "backorder" => rand(0, 1),
                 "barcode" => mt_rand(1000000000000, 9999999999999),
 
@@ -70,7 +70,7 @@ class ProductSeeder extends Seeder
                 "description" => "Guantes de boxeo de alta resistencia, ideales para entrenamientos intensos.",
                 "purchase_price" => 79.99,
                 "sale_price" => 99.99,
-                "stock" => 0,
+                "stock" => rand(8, 29),
                 "backorder" => rand(0, 1),
                 "barcode" => mt_rand(1000000000000, 9999999999999),
 
@@ -87,7 +87,7 @@ class ProductSeeder extends Seeder
                 "description" => "Proteína en polvo de alta calidad para el desarrollo muscular y la recuperación.",
                 "purchase_price" => 349.99,
                 "sale_price" => 369.99,
-                "stock" => 0,
+                "stock" => rand(8, 29),
                 "backorder" => rand(0, 1),
                 "barcode" => mt_rand(1000000000000, 9999999999999),
 
@@ -104,7 +104,7 @@ class ProductSeeder extends Seeder
                 "description" => "Bicicleta estática, con pantalla LCD y múltiples niveles de resistencia.",
                 "purchase_price" => 2799.99,
                 "sale_price" => 2999.99,
-                "stock" => 0,
+                "stock" => rand(8, 29),
                 "backorder" => rand(0, 1),
                 "barcode" => mt_rand(1000000000000, 9999999999999),
 
@@ -121,7 +121,7 @@ class ProductSeeder extends Seeder
                 "description" => "Leggings de alta calidad ideales para sesiones de yoga y entrenamiento.",
                 "purchase_price" => 249.99,
                 "sale_price" => 269.99,
-                "stock" => 0,
+                "stock" => rand(8, 29),
                 "backorder" => rand(0, 1),
                 "barcode" => mt_rand(1000000000000, 9999999999999),
 
@@ -138,7 +138,7 @@ class ProductSeeder extends Seeder
                 "description" => "Zapatillas deportivas para correr con comodidad y estilo.",
                 "purchase_price" => 329.99,
                 "sale_price" => 349.99,
-                "stock" => 0,
+                "stock" => rand(8, 29),
                 "backorder" => rand(0, 1),
                 "barcode" => mt_rand(1000000000000, 9999999999999),
 
@@ -155,7 +155,7 @@ class ProductSeeder extends Seeder
                 "description" => "Shaker para preparar batidos de proteína con facilidad en el gimnasio.",
                 "purchase_price" => 19.99,
                 "sale_price" => 29.99,
-                "stock" => 0,
+                "stock" => rand(8, 29),
                 "backorder" => rand(0, 1),
                 "barcode" => mt_rand(1000000000000, 9999999999999),
 
@@ -172,7 +172,7 @@ class ProductSeeder extends Seeder
                 "description" => "Libro de entrenamiento con rutinas y consejos de los expertos en fitness.",
                 "purchase_price" => 84.99,
                 "sale_price" => 104.99,
-                "stock" => 0,
+                "stock" => rand(8, 29),
                 "backorder" => rand(0, 1),
                 "barcode" => mt_rand(1000000000000, 9999999999999),
 
@@ -189,7 +189,7 @@ class ProductSeeder extends Seeder
                 "description" => "Elíptica de alta gama con pantalla táctil y múltiples programas de entrenamiento.",
                 "purchase_price" => 1199.99,
                 "sale_price" => 1399.99,
-                "stock" => 0,
+                "stock" => rand(8, 29),
                 "backorder" => rand(0, 1),
                 "barcode" => mt_rand(1000000000000, 9999999999999),
 
@@ -206,7 +206,7 @@ class ProductSeeder extends Seeder
                 "description" => "Set de pesas ajustables con incrementos de peso, perfecto para entrenamiento de fuerza en casa.",
                 "purchase_price" => 399.99,
                 "sale_price" => 419.99,
-                "stock" => 0,
+                "stock" => rand(8, 29),
                 "backorder" => rand(0, 1),
                 "barcode" => mt_rand(1000000000000, 9999999999999),
 
@@ -223,7 +223,7 @@ class ProductSeeder extends Seeder
                 "description" => "Bloque de yoga de alta densidad para mejorar la flexibilidad y el equilibrio en tus posturas.",
                 "purchase_price" => 174.99,
                 "sale_price" => 194.99,
-                "stock" => 0,
+                "stock" => rand(8, 29),
                 "backorder" => rand(0, 1),
                 "barcode" => mt_rand(1000000000000, 9999999999999),
 
@@ -240,7 +240,7 @@ class ProductSeeder extends Seeder
                 "description" => "Pelota de Pilates para fortalecer el núcleo y mejorar la estabilidad.",
                 "purchase_price" => 69.99,
                 "sale_price" => 89.99,
-                "stock" => 0,
+                "stock" => rand(8, 29),
                 "backorder" => rand(0, 1),
                 "barcode" => mt_rand(1000000000000, 9999999999999),
 
@@ -257,7 +257,7 @@ class ProductSeeder extends Seeder
                 "description" => "Step ajustable para ejercicios aeróbicos y de resistencia.",
                 "purchase_price" => 149.99,
                 "sale_price" => 169.99,
-                "stock" => 0,
+                "stock" => rand(8, 29),
                 "backorder" => rand(0, 1),
                 "barcode" => mt_rand(1000000000000, 9999999999999),
 
@@ -274,7 +274,7 @@ class ProductSeeder extends Seeder
                 "description" => "Masajeador de rodillos para liberar la tensión muscular y mejorar la recuperación.",
                 "purchase_price" => 349.99,
                 "sale_price" => 369.99,
-                "stock" => 0,
+                "stock" => rand(8, 29),
                 "backorder" => rand(0, 1),
                 "barcode" => mt_rand(1000000000000, 9999999999999),
 
@@ -291,7 +291,7 @@ class ProductSeeder extends Seeder
                 "description" => "Banda de resistencia con múltiples niveles de resistencia para entrenamientos versátiles.",
                 "purchase_price" => 179.99,
                 "sale_price" => 199.99,
-                "stock" => 0,
+                "stock" => rand(8, 29),
                 "backorder" => rand(0, 1),
                 "barcode" => mt_rand(1000000000000, 9999999999999),
 
@@ -308,7 +308,7 @@ class ProductSeeder extends Seeder
                 "description" => "Saco de boxeo con cadena de montaje, ideal para entrenamiento de golpeo.",
                 "purchase_price" => 209.99,
                 "sale_price" => 229.99,
-                "stock" => 0,
+                "stock" => rand(8, 29),
                 "backorder" => rand(0, 1),
                 "barcode" => mt_rand(1000000000000, 9999999999999),
 
@@ -325,7 +325,7 @@ class ProductSeeder extends Seeder
                 "description" => "Caja plyo suave para entrenamiento de pliometría con menor riesgo de lesiones.",
                 "purchase_price" => 69.99,
                 "sale_price" => 89.99,
-                "stock" => 0,
+                "stock" => rand(8, 29),
                 "backorder" => rand(0, 1),
                 "barcode" => mt_rand(1000000000000, 9999999999999),
 
@@ -342,7 +342,7 @@ class ProductSeeder extends Seeder
                 "description" => "Bosu Balance Trainer para mejorar el equilibrio, la coordinación y la fuerza en casa o en el gimnasio.",
                 "purchase_price" => 89.99,
                 "sale_price" => 109.99,
-                "stock" => 0,
+                "stock" => rand(8, 29),
                 "backorder" => rand(0, 1),
                 "barcode" => mt_rand(1000000000000, 9999999999999),
 
@@ -359,7 +359,7 @@ class ProductSeeder extends Seeder
                 "description" => "Proteína en polvo de suero de leche para apoyar el crecimiento muscular y la recuperación.",
                 "purchase_price" => 204.99,
                 "sale_price" => 224.99,
-                "stock" => 0,
+                "stock" => rand(8, 29),
                 "backorder" => rand(0, 1),
                 "barcode" => mt_rand(1000000000000, 9999999999999),
 
@@ -376,7 +376,7 @@ class ProductSeeder extends Seeder
                 "description" => "Camiseta deportiva de alto rendimiento para entrenamientos intensos.",
                 "purchase_price" => 24.99,
                 "sale_price" => 44.99,
-                "stock" => 0,
+                "stock" => rand(8, 29),
                 "backorder" => rand(0, 1),
                 "barcode" => mt_rand(1000000000000, 9999999999999),
 
@@ -393,7 +393,7 @@ class ProductSeeder extends Seeder
                 "description" => "Zapatillas de entrenamiento con amortiguación para comodidad durante los ejercicios.",
                 "purchase_price" => 399.99,
                 "sale_price" => 419.99,
-                "stock" => 0,
+                "stock" => rand(8, 29),
                 "backorder" => rand(0, 1),
                 "barcode" => mt_rand(1000000000000, 9999999999999),
 
@@ -410,7 +410,7 @@ class ProductSeeder extends Seeder
                 "description" => "Botella de agua aislada para mantener tus bebidas frías o calientes durante tus entrenamientos.",
                 "purchase_price" => 29.99,
                 "sale_price" => 49.99,
-                "stock" => 0,
+                "stock" => rand(8, 29),
                 "backorder" => rand(0, 1),
                 "barcode" => mt_rand(1000000000000, 9999999999999),
 
@@ -427,7 +427,7 @@ class ProductSeeder extends Seeder
                 "description" => "Reloj deportivo con GPS y seguimiento de actividad para mejorar tu entrenamiento.",
                 "purchase_price" => 249.99,
                 "sale_price" => 269.99,
-                "stock" => 0,
+                "stock" => rand(8, 29),
                 "backorder" => rand(0, 1),
                 "barcode" => mt_rand(1000000000000, 9999999999999),
 
@@ -444,7 +444,7 @@ class ProductSeeder extends Seeder
                 "description" => "Cuerda de salto con sistema de intercambio de pesos para entrenamiento de 1 y resistencia.",
                 "purchase_price" => 34.99,
                 "sale_price" => 54.99,
-                "stock" => 0,
+                "stock" => rand(8, 29),
                 "backorder" => rand(0, 1),
                 "barcode" => mt_rand(1000000000000, 9999999999999),
 
@@ -461,7 +461,7 @@ class ProductSeeder extends Seeder
                 "description" => "Libro de yoga con instrucciones y ejercicios para principiantes que desean comenzar su práctica.",
                 "purchase_price" => 94.99,
                 "sale_price" => 114.99,
-                "stock" => 0,
+                "stock" => rand(8, 29),
                 "backorder" => rand(0, 1),
                 "barcode" => mt_rand(1000000000000, 9999999999999),
 
@@ -478,7 +478,7 @@ class ProductSeeder extends Seeder
                 "description" => "Cuaderno de entrenamiento para llevar un registro detallado de tus sesiones y progresos en el gimnasio.",
                 "purchase_price" => 19.99,
                 "sale_price" => 39.99,
-                "stock" => 0,
+                "stock" => rand(8, 29),
                 "backorder" => rand(0, 1),
                 "barcode" => mt_rand(1000000000000, 9999999999999),
 
@@ -495,7 +495,7 @@ class ProductSeeder extends Seeder
                 "description" => "Botella de proteína con compartimentos para almacenar polvo y suplementos antes de mezclarlos.",
                 "purchase_price" => 99.99,
                 "sale_price" => 119.99,
-                "stock" => 0,
+                "stock" => rand(8, 29),
                 "backorder" => rand(0, 1),
                 "barcode" => mt_rand(1000000000000, 9999999999999),
 
@@ -512,7 +512,7 @@ class ProductSeeder extends Seeder
                 "description" => "Bicicleta de spinning Peloton con pantalla táctil para clases virtuales en tiempo real.",
                 "purchase_price" => 1999.99,
                 "sale_price" => 2199.99,
-                "stock" => 0,
+                "stock" => rand(8, 29),
                 "backorder" => rand(0, 1),
                 "barcode" => mt_rand(1000000000000, 9999999999999),
 
@@ -529,7 +529,7 @@ class ProductSeeder extends Seeder
                 "description" => "Banco de pesas ajustable para entrenamiento de fuerza versátil en casa.",
                 "purchase_price" => 379.99,
                 "sale_price" => 399.99,
-                "stock" => 0,
+                "stock" => rand(8, 29),
                 "backorder" => rand(0, 1),
                 "barcode" => mt_rand(1000000000000, 9999999999999),
 
@@ -546,7 +546,7 @@ class ProductSeeder extends Seeder
                 "description" => "Esterilla de yoga con marcas de alineación para mejorar la postura y la práctica de yoga.",
                 "purchase_price" => 169.99,
                 "sale_price" => 189.99,
-                "stock" => 0,
+                "stock" => rand(8, 29),
                 "backorder" => rand(0, 1),
                 "barcode" => mt_rand(1000000000000, 9999999999999),
 
@@ -563,7 +563,7 @@ class ProductSeeder extends Seeder
                 "description" => "Rueda de Pilates para fortalecer el núcleo y mejorar la flexibilidad.",
                 "purchase_price" => 92.99,
                 "sale_price" => 112.99,
-                "stock" => 0,
+                "stock" => rand(8, 29),
                 "backorder" => rand(0, 1),
                 "barcode" => mt_rand(1000000000000, 9999999999999),
 
@@ -580,7 +580,7 @@ class ProductSeeder extends Seeder
                 "description" => "Cuerda de saltar ajustable para ejercicios de 1 y agilidad.",
                 "purchase_price" => 74.99,
                 "sale_price" => 94.99,
-                "stock" => 0,
+                "stock" => rand(8, 29),
                 "backorder" => rand(0, 1),
                 "barcode" => mt_rand(1000000000000, 9999999999999),
 
@@ -597,7 +597,7 @@ class ProductSeeder extends Seeder
                 "description" => "Rodillo de espuma para liberar la tensión muscular y mejorar la movilidad.",
                 "purchase_price" => 119.99,
                 "sale_price" => 139.99,
-                "stock" => 0,
+                "stock" => rand(8, 29),
                 "backorder" => rand(0, 1),
                 "barcode" => mt_rand(1000000000000, 9999999999999),
 
@@ -614,7 +614,7 @@ class ProductSeeder extends Seeder
                 "description" => "Guantes de levantamiento con muñequera ajustable para proteger tus manos y muñecas.",
                 "purchase_price" => 122.99,
                 "sale_price" => 142.99,
-                "stock" => 0,
+                "stock" => rand(8, 29),
                 "backorder" => rand(0, 1),
                 "barcode" => mt_rand(1000000000000, 9999999999999),
 
@@ -631,7 +631,7 @@ class ProductSeeder extends Seeder
                 "description" => "Saco de boxeo de alta resistencia para golpeo y entrenamiento de artes marciales.",
                 "purchase_price" => 149.99,
                 "sale_price" => 169.99,
-                "stock" => 0,
+                "stock" => rand(8, 29),
                 "backorder" => rand(0, 1),
                 "barcode" => mt_rand(1000000000000, 9999999999999),
 
@@ -648,7 +648,7 @@ class ProductSeeder extends Seeder
                 "description" => "Proteína en polvo vegana para apoyar el crecimiento muscular y la recuperación con ingredientes naturales.",
                 "purchase_price" => 149.99,
                 "sale_price" => 169.99,
-                "stock" => 0,
+                "stock" => rand(8, 29),
                 "backorder" => rand(0, 1),
                 "barcode" => mt_rand(1000000000000, 9999999999999),
 
@@ -665,7 +665,7 @@ class ProductSeeder extends Seeder
                 "description" => "Mallas deportivas con tejido transpirable y ajuste cómodo para entrenamientos intensos.",
                 "purchase_price" => 59.99,
                 "sale_price" => 79.99,
-                "stock" => 0,
+                "stock" => rand(8, 29),
                 "backorder" => rand(0, 1),
                 "barcode" => mt_rand(1000000000000, 9999999999999),
 
@@ -682,7 +682,7 @@ class ProductSeeder extends Seeder
                 "description" => "Zapatillas diseñadas para levantamiento de pesas y entrenamiento de alta intensidad.",
                 "purchase_price" => 225.99,
                 "sale_price" => 245.99,
-                "stock" => 0,
+                "stock" => rand(8, 29),
                 "backorder" => rand(0, 1),
                 "barcode" => mt_rand(1000000000000, 9999999999999),
 
@@ -699,7 +699,7 @@ class ProductSeeder extends Seeder
                 "description" => "Botella de agua con sistema de hidratación a prueba de fugas, perfecta para deportes al aire libre.",
                 "purchase_price" => 57.99,
                 "sale_price" => 77.99,
-                "stock" => 0,
+                "stock" => rand(8, 29),
                 "backorder" => rand(0, 1),
                 "barcode" => mt_rand(1000000000000, 9999999999999),
 
@@ -716,7 +716,7 @@ class ProductSeeder extends Seeder
                 "description" => "Smartwatch con seguimiento de actividad, ritmo cardíaco y funciones de salud y bienestar.",
                 "purchase_price" => 129.99,
                 "sale_price" => 149.99,
-                "stock" => 0,
+                "stock" => rand(8, 29),
                 "backorder" => rand(0, 1),
                 "barcode" => mt_rand(1000000000000, 9999999999999),
 
@@ -733,7 +733,7 @@ class ProductSeeder extends Seeder
                 "description" => "Banda de resistencia para ejercicios de fortalecimiento y rehabilitación.",
                 "purchase_price" => 59.99,
                 "sale_price" => 79.99,
-                "stock" => 0,
+                "stock" => rand(8, 29),
                 "backorder" => rand(0, 1),
                 "barcode" => mt_rand(1000000000000, 9999999999999),
 
@@ -750,7 +750,7 @@ class ProductSeeder extends Seeder
                 "description" => "Libro de nutrición deportiva con pautas y recetas para una alimentación equilibrada y rendimiento óptimo.",
                 "purchase_price" => 64.99,
                 "sale_price" => 84.99,
-                "stock" => 0,
+                "stock" => rand(8, 29),
                 "backorder" => rand(0, 1),
                 "barcode" => mt_rand(1000000000000, 9999999999999),
 
@@ -767,7 +767,7 @@ class ProductSeeder extends Seeder
                 "description" => "Agenda de entrenamiento con planificación de rutinas, seguimiento de progresos y objetivos.",
                 "purchase_price" => 17.99,
                 "sale_price" => 37.99,
-                "stock" => 0,
+                "stock" => rand(8, 29),
                 "backorder" => rand(0, 1),
                 "barcode" => mt_rand(1000000000000, 9999999999999),
 
@@ -784,7 +784,7 @@ class ProductSeeder extends Seeder
                 "description" => "Botella con infusor de frutas para disfrutar de agua saborizada durante tus entrenamientos.",
                 "purchase_price" => 32.99,
                 "sale_price" => 52.99,
-                "stock" => 0,
+                "stock" => rand(8, 29),
                 "backorder" => rand(0, 1),
                 "barcode" => mt_rand(1000000000000, 9999999999999),
 
@@ -801,7 +801,7 @@ class ProductSeeder extends Seeder
                 "description" => "Casaca deportiva para mantenerte abrigado antes y después del entrenamiento.",
                 "purchase_price" => 159.99,
                 "sale_price" => 179.99,
-                "stock" => 0,
+                "stock" => rand(8, 29),
                 "backorder" => rand(0, 1),
                 "barcode" => mt_rand(1000000000000, 9999999999999),
 
@@ -818,7 +818,7 @@ class ProductSeeder extends Seeder
                 "description" => "Casaca impermeable para actividades al aire libre, con protección contra la lluvia y el viento.",
                 "purchase_price" => 179.99,
                 "sale_price" => 199.99,
-                "stock" => 0,
+                "stock" => rand(8, 29),
                 "backorder" => rand(0, 1),
                 "barcode" => mt_rand(1000000000000, 9999999999999),
 
@@ -835,7 +835,7 @@ class ProductSeeder extends Seeder
                 "description" => "Casaca acolchada para mantener el calor en climas fríos, con estilo deportivo y comodidad.",
                 "purchase_price" => 169.99,
                 "sale_price" => 189.99,
-                "stock" => 0,
+                "stock" => rand(8, 29),
                 "backorder" => rand(0, 1),
                 "barcode" => mt_rand(1000000000000, 9999999999999),
 
@@ -852,7 +852,7 @@ class ProductSeeder extends Seeder
                 "description" => "Casaca de entrenamiento con tejido transpirable y diseño ergonómico para movimientos sin restricciones.",
                 "purchase_price" => 249.99,
                 "sale_price" => 269.99,
-                "stock" => 0,
+                "stock" => rand(8, 29),
                 "backorder" => rand(0, 1),
                 "barcode" => mt_rand(1000000000000, 9999999999999),
 
@@ -869,7 +869,7 @@ class ProductSeeder extends Seeder
                 "description" => "Proteína en polvo con 24 gramos de proteína por porción.",
                 "purchase_price" => 29.99,
                 "sale_price" => 49.99,
-                "stock" => 0,
+                "stock" => rand(8, 29),
                 "backorder" => rand(0, 1),
                 "barcode" => mt_rand(1000000000000, 9999999999999),
 
@@ -886,7 +886,7 @@ class ProductSeeder extends Seeder
                 "description" => "Suplemento de BCAA en cápsulas para recuperación muscular y resistencia.",
                 "purchase_price" => 99.99,
                 "sale_price" => 119.99,
-                "stock" => 0,
+                "stock" => rand(8, 29),
                 "backorder" => rand(0, 1),
                 "barcode" => mt_rand(1000000000000, 9999999999999),
 
@@ -903,7 +903,7 @@ class ProductSeeder extends Seeder
                 "description" => "Multivitamínico con vitaminas esenciales y minerales para un apoyo nutricional completo.",
                 "purchase_price" => 144.99,
                 "sale_price" => 164.99,
-                "stock" => 0,
+                "stock" => rand(8, 29),
                 "backorder" => rand(0, 1),
                 "barcode" => mt_rand(1000000000000, 9999999999999),
 
@@ -920,7 +920,7 @@ class ProductSeeder extends Seeder
                 "description" => "Suplemento de aceite de pescado Omega-3 para salud cardiovascular y bienestar general.",
                 "purchase_price" => 119.99,
                 "sale_price" => 139.99,
-                "stock" => 0,
+                "stock" => rand(8, 29),
                 "backorder" => rand(0, 1),
                 "barcode" => mt_rand(1000000000000, 9999999999999),
 

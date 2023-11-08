@@ -18,7 +18,7 @@ class CategoryResource extends Resource
 
     protected static ?string $navigationGroup  = 'Inventario';
 
-    protected static ?string $label = 'Categorías';
+    protected static ?string $label = 'Categoría';
 
     public static function form(Form $form): Form
     {
@@ -27,7 +27,7 @@ class CategoryResource extends Resource
                 Forms\Components\TextInput::make('name')
                     ->required()
                     ->maxLength(255)
-                    ->name('Nombre')
+                    ->name('Nombre'),
             ]);
     }
 
@@ -35,11 +35,16 @@ class CategoryResource extends Resource
     {
         return $table
             ->columns([
-                Tables\Columns\TextColumn::make('name')->label("Nombre"),
+                Tables\Columns\TextColumn::make('name')
+                    ->label("Nombre")
+                    ->searchable()
+                    ->sortable(),
                 Tables\Columns\TextColumn::make('created_at')
-                    ->dateTime(),
+                    ->dateTime()
+                    ->toggleable(),
                 Tables\Columns\TextColumn::make('updated_at')
-                    ->dateTime(),
+                    ->dateTime()
+                    ->toggleable(),
             ])
             ->filters([
                 //

@@ -23,6 +23,7 @@ use Filament\Forms\Components\TextInput;
 use Filament\Tables\Columns\BadgeColumn;
 use Filament\Tables\Filters\Filter;
 use Filament\Notifications\Notification;
+use pxlrbt\FilamentExcel\Actions\Tables\ExportBulkAction;
 
 class ProductResource extends Resource
 {
@@ -32,7 +33,7 @@ class ProductResource extends Resource
 
     protected static ?string $navigationGroup  = 'Inventario';
 
-    protected static ?string $label = 'Productos';
+    protected static ?string $label = 'Producto';
 
     public static function form(Form $form): Form
     {
@@ -263,7 +264,8 @@ class ProductResource extends Resource
                 Tables\Actions\EditAction::make(),
             ])
             ->bulkActions([
-                Tables\Actions\DeleteBulkAction::make()
+                Tables\Actions\DeleteBulkAction::make(),
+                ExportBulkAction::make(),
             ]);
     }
 
@@ -287,6 +289,7 @@ class ProductResource extends Resource
             'index' => Pages\ListProducts::route('/'),
             'create' => Pages\CreateProduct::route('/create'),
             'edit' => Pages\EditProduct::route('/{record}/edit'),
+            'report' => Pages\ReportProducts::route('/report'),
         ];
     }
 
