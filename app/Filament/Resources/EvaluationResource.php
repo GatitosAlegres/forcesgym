@@ -60,11 +60,14 @@ class EvaluationResource extends Resource
     {
         return $table
             ->columns([
-                Tables\Columns\TextColumn::make('candidate.dni')
-                    ->searchable()
-                    ->sortable(),
                 Tables\Columns\TextColumn::make('code')
                     ->label('Código'),
+                Tables\Columns\TextColumn::make('candidate.dni')
+                    ->searchable()
+                    ->sortable()
+                    ->label('DNI'),
+                Tables\Columns\TextColumn::make('candidate.fullname')
+                    ->label('Nombre del candidato'),
                 Tables\Columns\TextColumn::make('recruiter')
                     ->label('Reclutador'),
                 Tables\Columns\IconColumn::make('state')
@@ -80,6 +83,12 @@ class EvaluationResource extends Resource
             ])
             ->actions([
                 Tables\Actions\EditAction::make(),
+                Tables\Actions\Action::make('Download Pdf')
+                    ->icon('heroicon-o-document-download')
+                    ->url(fn (Evaluation $record) => route('purchase.pdf.download', $record))
+                    ->openUrlInNewTab(),
+                Tables\Actions\EditAction::make(),
+                Tables\Actions\DeleteAction::make(),
             ])
             ->bulkActions([
                 Tables\Actions\DeleteBulkAction::make(),
@@ -172,7 +181,7 @@ class EvaluationResource extends Resource
         return [
             Forms\Components\Select::make('candidate_id')
                 ->options(
-                    \App\Models\Candidate::all()->pluck('dni', 'id')
+                    \App\Models\Candidate::all()->pluck('fullname', 'id')
                 )
                 ->required()
                 ->placeholder('Seleccione al candidato')

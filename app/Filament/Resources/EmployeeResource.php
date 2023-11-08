@@ -76,14 +76,10 @@ class EmployeeResource extends Resource
                     ->placeholder('Seleccione un género')
                     ->name('Género'),
 
-                Forms\Components\TextInput::make('firstname')
+                Forms\Components\TextInput::make('fullname')
                     ->required()
                     ->maxLength(255)
-                    ->name('Nombres'),
-                Forms\Components\TextInput::make('lastname')
-                    ->required()
-                    ->maxLength(255)
-                    ->name('Apellidos'),
+                    ->name('Nombre Completo'),
                 Forms\Components\TextInput::make('email')
                     ->email()
                     ->required()
@@ -118,10 +114,8 @@ class EmployeeResource extends Resource
                     ->label('Recibo por honorarios'),
                 Tables\Columns\TextColumn::make('dni')
                     ->label('Dni'),
-                Tables\Columns\TextColumn::make('firstname')
-                    ->label('Nombre'),
-                Tables\Columns\TextColumn::make('lastname')
-                    ->label('Apellidos'),
+                Tables\Columns\TextColumn::make('fullname')
+                    ->label('Nombre completo'),
                 Tables\Columns\TextColumn::make('email')
                     ->label('Correo electrónico'),
                 Tables\Columns\TextColumn::make('phone')

@@ -39,10 +39,5 @@ class Candidate extends Model
     public function employee()
     {
         return $this->hasOne(Employee::class);
-    }                                   
-
-    public function evaluations()
-    {
-        return $this->belongsTo(Evaluation::class);
-    }
+    }         
 }                               
