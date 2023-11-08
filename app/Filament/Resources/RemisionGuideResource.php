@@ -76,8 +76,8 @@ class RemisionGuideResource extends Resource
                         'success',
                     ])
                     ->action(
-                        fn (RemisionGuide $record) => $record->file_url
-                            ? PDFController::redirectToPDFViewer($record->file_url)
+                        fn (RemisionGuide $record) => $record->artifact_url
+                            ? PDFController::redirectToPDFViewer($record->artifact_url)
                             : null
                     )
                     ->label('Archivo'),

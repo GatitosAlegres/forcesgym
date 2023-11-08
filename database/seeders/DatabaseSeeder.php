@@ -57,5 +57,13 @@ class DatabaseSeeder extends Seeder
         $this->call(EmployeeSeeder::class);
 
         $this->call(EvaluationSeeder::class);
+
+        $this->call(InvoiceSeeder::class);
+
+        $this->call(RemisionGuideSeeder::class);
+
+        $this->call(WarrantySeeder::class);
+
+        $this->call(PurchaseSeeder::class);
     }
 }

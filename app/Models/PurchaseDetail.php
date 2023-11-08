@@ -46,7 +46,7 @@ class PurchaseDetail extends Model
                 'previous_stock' => $compradetalle->product->stock,
                 'product_id' => $compradetalle->product_id,
                 'product_record_sheet_id' => ProductRecordSheet::where('product_id', $compradetalle->product_id)->first()->id,
-                'responsible_id' => auth()->user()->id,
+                'responsible_id' => auth()->user()->id ?? User::first()->id,
                 'state' => '',
                 'supplier_id' => $compra->supplier->id,
                 'total_price' => $compradetalle->total,
