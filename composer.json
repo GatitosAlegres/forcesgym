@@ -10,6 +10,7 @@
         "bezhansalleh/filament-shield": "^2.4",
         "buildix/timex": "^1.1",
         "dompdf/dompdf": "^2.0",
+        "fakerphp/faker": "^1.9.1",
         "filament/filament": "^2.17",
         "flowframe/laravel-trend": "^0.1.5",
         "guzzlehttp/guzzle": "^7.2",
@@ -30,7 +31,6 @@
     "require-dev": {
         "barryvdh/laravel-debugbar": "^3.8",
         "doctrine/dbal": "^3.6",
-        "fakerphp/faker": "^1.9.1",
         "laravel/pint": "^1.0",
         "laravel/sail": "^1.18",
         "mockery/mockery": "^1.4.4",
