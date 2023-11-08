@@ -27,14 +27,21 @@ class CustomerResource extends Resource
         return $form
             ->schema([
                 Forms\Components\TextInput::make('nombre')
-                    ->required(),
+                    ->maxLength(50)
+                    ->required()
+                    ->label('Nombre/Razón Social'),
                 Forms\Components\TextInput::make('dni')
-                    ->required(),
+                    ->maxLength(11)
+                    ->required()
+                    ->label('DNI/RUC'),
                 Forms\Components\TextInput::make('email')
+                    ->maxLength(30)
                     ->required(),
                 Forms\Components\TextInput::make('telefono')
+                    ->maxLength(9)
                     ->required(),
                 Forms\Components\TextInput::make('direccion')
+                    ->maxLength(50)
                     ->required(),
             ]);
     }
@@ -68,6 +75,10 @@ class CustomerResource extends Resource
         return [
             //
         ];
+    }
+    protected static function getNavigationBadge(): ?string
+    {
+        return static::getModel()::query()->count();
     }
 
     public static function getPages(): array
