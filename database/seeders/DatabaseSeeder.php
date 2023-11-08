@@ -26,13 +26,9 @@ class DatabaseSeeder extends Seeder
 
         $this->call(GenderSeeder::class);
 
-        $this->call(JourneySeeder::class);
-
         $this->call(DaySeeder::class);
 
         $this->call(ContractDurationSeeder::class);
-
-        $this->call(CandidateSeeder::class);
 
         //$this->call(MembershipSeeder::class);
 
@@ -59,5 +55,7 @@ class DatabaseSeeder extends Seeder
         $this->call(CandidateSeeder::class);
 
         $this->call(EmployeeSeeder::class);
+
+        $this->call(EvaluationSeeder::class);
     }
 }

@@ -79,7 +79,6 @@ class PayrollResource extends Resource
             ])
             ->bulkActions([
                 Tables\Actions\DeleteBulkAction::make(),
-                ExportBulkAction::make()
             ]);
     }
 
