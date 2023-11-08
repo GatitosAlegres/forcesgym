@@ -15,34 +15,33 @@
         </thead>
         <tbody>
             @php
-                $total = 0;
                 $count = 0;
             @endphp
             @if (session('cart'))
-                @foreach (session('cart') as $id => $details)
+                @foreach (session('cart')->getItems() as $item)
                     @php
-                        $total += $details['price'] * $details['quantity'];
                         $count += 1;
                     @endphp
-                    <tr data-id="{{ $id }}" class="text-center">
+                    <tr data-id="{{ $item->product->id }}" class="text-center">
                         <th scope="row" class="">{{ $count }}</th>
                         <td data-th="Image" class="w-25">
                             <div class="container-fluid">
-                                <img class="img-fluid w-50 h-50" src="{{ $details['image'] }}" alt="{{ $details['name'] }}">
+                                <img class="img-fluid w-50 h-50" src="{{ $item->product->image_url }}"
+                                    alt="{{ $item->product->name }}">
                             </div>
                         </td>
                         <td data-th="Product">
-                            <h6>{{ $details['name'] }}</h6>
+                            <h6>{{ $item->product->name }}</h6>
                         </td>
                         <td data-th="Price">
-                            <h6>S/. {{ $details['price'] }}</h6>
+                            <h6>S/. {{ $item->price }}</h6>
                         </td>
                         <td data-th="Quantity" style="width: 50px">
-                            <input type="number" value="{{ $details['quantity'] }}"
-                                class="form-control quantity cart_update" min="1" />
+                            <input type="number" value="{{ $item->quantity }}" class="form-control quantity cart_update"
+                                min="1" />
                         </td>
                         <td data-th="Subtotal">
-                            S/. {{ $details['price'] * $details['quantity'] }}
+                            S/. {{ $item->calculateSubtotal() }}
                         </td>
                         <td class="actions" data-th="">
                             <button class="btn btn-outline-danger rounded-circle cart_remove w-auto h-75">
@@ -62,7 +61,7 @@
                 <td colspan="7" style="text-align:right;">
                     <h3>
                         <strong class="me-3">
-                            Total: S/. {{ $total }}
+                            Total: S/. {{ session('cart')->calculateTotal() }}
                         </strong>
                     </h3>
                 </td>

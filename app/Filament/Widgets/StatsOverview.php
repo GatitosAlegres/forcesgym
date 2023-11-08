@@ -8,6 +8,8 @@ use App\Models\Partner;
 use App\Models\Promotion;
 use App\Models\User;
 use App\Models\ClassType;
+use App\Models\SaleDetail;
+use App\Models\Customer;
 use Filament\Widgets\StatsOverviewWidget\Card;
 use Filament\Widgets\StatsOverviewWidget as BaseWidget;
 
@@ -75,6 +77,16 @@ class StatsOverview extends BaseWidget
                 ->chart(
                     ClassType::pluck('id')->toArray(),
                 ),
+            Card::make('Clientes', Customer::distinct('email')->count())
+                ->description('Número de clientes únicos registrados')
+                ->descriptionIcon('heroicon-o-emoji-happy')
+                ->color('success'),
+
+            Card::make('Ventas totales', 'S/ PEN '.number_format(SaleDetail::sum('sub_amount'), 2))
+                ->description('Ventas registradas en la base de datos')
+                ->descriptionIcon('heroicon-o-cash')
+                ->color('success'),
+
         ];
     }
 }

@@ -3,6 +3,7 @@ ARG NODEJS_VERSION=lts-alpine3.18
 ARG NGINX_VERSION=alpine3.18
 
 ARG PHP_EXTS='bcmath ctype fileinfo mbstring pdo pdo_pgsql pdo_mysql pgsql mysqli dom pcntl exif gd zip'
+ARG PHP_PECL_EXTS="redis"
 
 ARG USER=forcesuser
 ARG USER_ID=1000
@@ -15,6 +16,7 @@ FROM php:${PHP_FPM_VERSION}-fpm as fpm
 
 ARG PHP_FPM_VERSION
 ARG PHP_EXTS
+ARG PHP_PECL_EXTS
 ARG USER
 ARG USER_ID
 ARG APP_NAME
@@ -23,6 +25,7 @@ ARG APP_DEBUG=false
 WORKDIR /opt/apps/${APP_NAME}
 
 RUN apt-get update && apt-get install -y \
+    ${PHPIZE_DEPS} \
     git \
     curl \
     libpng-dev \
@@ -36,6 +39,8 @@ RUN apt-get update && apt-get install -y \
 RUN apt-get clean && rm -rf /var/lib/apt/lists/*
 
 RUN docker-php-ext-install ${PHP_EXTS}
+RUN pecl install ${PHP_PECL_EXTS}
+RUN docker-php-ext-enable ${PHP_PECL_EXTS}
 
 COPY --from=composer:lts /usr/bin/composer /usr/bin/composer
 
@@ -54,7 +59,8 @@ RUN php artisan key:generate
 
 RUN php artisan event:cache && \
     php artisan route:cache && \
-    php artisan view:cache
+    php artisan view:cache && \
+    php artisan icons:cache
 
 USER www-data
 

@@ -17,8 +17,10 @@ class DownloadPdfController extends Controller
 
     public function downloadSale(Sale $record)
     {
+
         $customer = new Party([
             //'name'          => $record->user->name,
+
             'name' => $record->customers->nombre,
             'custom_fields' => [
                 'Dirección' => $record->customers->direccion,
@@ -35,7 +37,16 @@ class DownloadPdfController extends Controller
             ],
         ]);
 
+
+
+         // Verifica el tipo de documento y establece el prefijo correspondiente para el nombre del archivo PDF
+        $documentType = $record->document_type;
+        $documentPrefix = $documentType === 'Boleta' ? 'Boleta' : 'Factura';
+
+
         $items = [];
+
+
 
         foreach ($record->saleDetails as $saleDetail) {
             $item = new InvoiceItem();
@@ -52,7 +63,7 @@ class DownloadPdfController extends Controller
         ];
         $notes = implode("<br>", $notes);
 
-        $invoice = Invoice::make('VENTA')
+        $invoice = Invoice::make($documentPrefix)
             ->series('BIG')
             ->status("CANCELADO")
             ->sequence(667)
@@ -67,10 +78,13 @@ class DownloadPdfController extends Controller
             ->currencyFormat('{SYMBOL}{VALUE}')
             ->currencyThousandsSeparator('.')
             ->currencyDecimalPoint(',')
-            ->filename($client->nombre . ' ' . $customer->nombre)
+            ->filename($documentPrefix . ' ' . $client->nombre . ' ' . $customer->nombre) // Utiliza $documentTitle en el nombre del archivo
             ->addItems($items)
             ->notes($notes)
+
             ->logo(public_path('img/logo.png'))
+
+
 
             ->save('public');
 
@@ -115,6 +129,7 @@ class DownloadPdfController extends Controller
             ->status($record->status)
             ->sequence(667)
             ->serialNumberFormat($record->number)
+
             ->seller($supplier)
             ->buyer($buyer)
             ->date($record->created_at)

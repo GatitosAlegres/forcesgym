@@ -56,7 +56,6 @@ class PurchaseDetailRelationManager extends RelationManager
         return $table
             ->columns([
                 Tables\Columns\TextColumn::make('product.name')->label('Producto'),
-                Tables\Columns\TextColumn::make('supplier.name')->label('Proveedor'),
                 Tables\Columns\TextColumn::make('quantity')->label('Cantidad'),
                 Tables\Columns\TextColumn::make('unit_price')->label('Precio unitario (S/)'),
                 Tables\Columns\TextColumn::make('total')->label('Total (S/)'),

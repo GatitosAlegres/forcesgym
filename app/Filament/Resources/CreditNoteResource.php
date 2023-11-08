@@ -32,6 +32,10 @@ class CreditNoteResource extends Resource
                     ->options(\App\Models\Supplier::all()->pluck('name', 'id'))
                     ->required()
                     ->label('Proveedor'),
+                Forms\Components\Select::make('purchase_id')
+                    ->options(\App\Models\Purchase::all()->pluck('number', 'id'))
+                    ->required()
+                    ->label('Compra'),
                 Forms\Components\DatePicker::make('issue_date')
                     ->required()
                     ->label('Fecha de emisión')
@@ -48,9 +52,12 @@ class CreditNoteResource extends Resource
                     ])
                     ->required()
                     ->name('Moneda'),
-                Forms\Components\FileUpload::make('file_path')
+                Forms\Components\FileUpload::make('artifact')
                     ->required()
-                    ->acceptedFileTypes(['application/pdf', 'application/msword', 'application/vnd.ms-excel', 'image/*'])
+                    ->acceptedFileTypes(['image/*', 'application/pdf'])
+                    ->enableDownload()
+                    ->directory('credit_notes')
+                    ->disk('s3')
                     ->name('Archivo'),
                 Forms\Components\MarkdownEditor::make('observations')
                     ->columnSpan('full')
@@ -71,7 +78,7 @@ class CreditNoteResource extends Resource
                     ->label('Monto total'),
                 Tables\Columns\TextColumn::make('currency')
                     ->label('Moneda'),
-                Tables\Columns\IconColumn::make("file_path")
+                Tables\Columns\IconColumn::make("artifact_url")
                     ->options([
                         'heroicon-o-document'
                     ])
@@ -79,8 +86,8 @@ class CreditNoteResource extends Resource
                         'success',
                     ])
                     ->action(
-                        fn (CreditNote $record) => $record->file_path
-                            ? PDFController::redirectToPDFViewer($record->file_path)
+                        fn (CreditNote $record) => $record->artifact_url
+                            ? PDFController::redirectToPDFViewer($record->artifact_url)
                             : null
                     )
                     ->label('Archivo'),

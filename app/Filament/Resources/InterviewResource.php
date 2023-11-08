@@ -27,11 +27,8 @@ class InterviewResource extends Resource
     public static function form(Form $form): Form
     {
 
-        $availibleEvaluation = Interview::pluck('evaluation_id')->toArray();
-
-        $availibleEvaluation = \App\Models\Evaluation::whereNotIn('id', $availibleEvaluation)
-            ->pluck('code', 'id')
-            ->toArray();
+        $availibleEvaluation = \App\Models\Evaluation::where('state', true)
+            ->pluck('code', 'id');
 
         return $form
             ->schema([
@@ -78,12 +75,16 @@ class InterviewResource extends Resource
         return $table
             ->columns([
                 Tables\Columns\TextColumn::make('evaluation_id'),
-                Tables\Columns\TextColumn::make('recruiter'),
+                Tables\Columns\TextColumn::make('recruiter')
+                    ->label('Reclutador'),
                 Tables\Columns\TextColumn::make('date')
                     ->date(),
-                Tables\Columns\TextColumn::make('time'),
-                Tables\Columns\TextColumn::make('link'),
-                Tables\Columns\TextColumn::make('comment'),
+                Tables\Columns\TextColumn::make('time')
+                    ->label('Hora'),
+                Tables\Columns\TextColumn::make('link')
+                    ->label('Link'),
+                Tables\Columns\TextColumn::make('comment')
+                    ->label('Comentario'),
                 Tables\Columns\IconColumn::make('state')
                     ->boolean(),
                 Tables\Columns\TextColumn::make('created_at')

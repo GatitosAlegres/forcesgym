@@ -13,6 +13,7 @@ return new class extends Migration
     {
         Schema::create('sales', function (Blueprint $table) {
             $table->id();
+            $table->string('document_type')->enum(['Boleta', 'Factura']);
             $table->date('date');
             //$table->unsignedBigInteger('user_id');
             $table->unsignedBigInteger('cliente_id');

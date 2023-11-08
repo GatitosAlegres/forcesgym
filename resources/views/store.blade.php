@@ -5,11 +5,7 @@
     <div class="col-xs-12 col-3 my-3">
         <div class="img_thumbnail productlist">
             <div class="container-fluid">
-                <?php
-                $urlCompleta = $product['image'];
-                $parteDeseada = str_replace('http://127.0.0.1:8000/storage/', '', $urlCompleta);
-                ?>
-                <img class="img-fluid" src="{{ asset($parteDeseada) }}" alt="{{ $product->name }}">
+                <img class="img-fluid" src="{{ $product->image_url }}" alt="{{ $product->name }}">
             </div>
             <div class="caption mt-2 text-center text-dark">
                 <h4>{{ $product->name }}</h4>

@@ -20,6 +20,8 @@ use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
 use pxlrbt\FilamentExcel\Actions\Tables\ExportBulkAction;
 
+//use App\Filament\Resources\SaleResource\Widgets\SalesAmount;
+
 class SaleResource extends Resource
 {
 
@@ -35,23 +37,41 @@ class SaleResource extends Resource
     {
         return $form
             ->schema([
+
+                Forms\Components\Select::make('document_type')
+                ->options([
+                    'Boleta' => 'Boleta',
+                    'Factura' => 'Factura',
+                ])
+                ->required()
+                ->name("Tipo de documento"),
+
                 Forms\Components\Select::make('cliente_id')
-                    ->relationship('customer', 'nombre')
+                    ->relationship('customers', 'nombre')
                     ->required()
                     ->placeholder('Seleccione una cliente')
-                    ->name('Cliente')
+                    ->label("Cliente")
                     ->createOptionForm([
                         Forms\Components\TextInput::make('nombre')
-                            ->required(),
+                            ->required()
+                            ->maxLength(50)
+                            ->label('Nombre/Razón Social'),
                         Forms\Components\TextInput::make('dni')
-                            ->required(),
+                            ->required()
+                            ->maxLength(11)
+                            ->label('DNI/RUC'),
                         Forms\Components\TextInput::make('email')
+                            ->maxLength(30)
                             ->required(),
                         Forms\Components\TextInput::make('telefono')
+                            ->maxLength(9)
                             ->required(),
                         Forms\Components\TextInput::make('direccion')
+                            ->maxLength(50)
                             ->required(),
                     ]),
+
+
                 Forms\Components\DateTimePicker::make('date')
                     ->default(now())
                     ->label('Fecha y hora')
@@ -100,6 +120,7 @@ class SaleResource extends Resource
     {
         return $table
             ->columns([
+                Tables\Columns\TextColumn::make('document_type')->label('Tipo de Documento'),
                 Tables\Columns\TextColumn::make('customers.nombre')
                     ->label('Cliente'),
                 Tables\Columns\TextColumn::make('date')
@@ -127,6 +148,13 @@ class SaleResource extends Resource
         return [];
     }
 
+    protected static function getNavigationBadge(): ?string
+    {
+        return static::$model::count();
+    }
+
+
+
     public static function getPages(): array
     {
         return [
@@ -136,8 +164,4 @@ class SaleResource extends Resource
         ];
     }
 
-    protected static function getNavigationBadge(): ?string
-    {
-        return static::$model::count();
-    }
 }

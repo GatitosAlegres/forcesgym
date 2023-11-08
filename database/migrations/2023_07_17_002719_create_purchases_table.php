@@ -21,6 +21,9 @@ return new class extends Migration
             $table->text("notes")->nullable();
             $table->timestamps();
 
+            $table->unsignedBigInteger('supplier_id');
+            $table->foreign('supplier_id')->references('id')->on('suppliers');
+
             $table->unsignedBigInteger('remision_guide_id');
             $table->foreign('remision_guide_id')->references('id')->on('remision_guides')->onDelete('cascade');
 

@@ -68,18 +68,13 @@ class CandidateResource extends Resource
                     ->required()
                     ->placeholder('Seleccione la duración del contrato')
                     ->name('Duracion del contrato'),
-
                 Forms\Components\TextInput::make('dni')
                     ->required()
                     ->maxLength(255),
-                Forms\Components\TextInput::make('firstname')
+                Forms\Components\TextInput::make('fullname')
                     ->required()
                     ->maxLength(255)
-                    ->name('Nombres'),
-                Forms\Components\TextInput::make('lastname')
-                    ->required()
-                    ->maxLength(255)
-                    ->name('Apellidos'),
+                    ->name('Nombre Completo'),
                 Forms\Components\TextInput::make('email')
                     ->email()
                     ->required()
@@ -109,8 +104,7 @@ class CandidateResource extends Resource
                 Tables\Columns\TextColumn::make('vacancy.name')->label('Vacante'),
                 Tables\Columns\TextColumn::make('dni')->label('DNI'),
                 Tables\Columns\TextColumn::make('gender.name')->label('Género'),
-                Tables\Columns\TextColumn::make('firstname')->label('Nombres'),
-                Tables\Columns\TextColumn::make('lastname')->label('Apellidos'),
+                Tables\Columns\TextColumn::make('fullname')->label('Nombre completo'),
                 Tables\Columns\TextColumn::make('email')->label('Correo'),
                 Tables\Columns\TextColumn::make('phone')->label('Teléfono'),
                 Tables\Columns\TextColumn::make('journey.name')->label('Tipo de Jornada'),

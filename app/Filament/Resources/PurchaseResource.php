@@ -49,7 +49,7 @@ class PurchaseResource extends Resource
                     ->schema([
                         Forms\Components\Placeholder::make('invoice_number')
                             ->label('Proveedor')
-                            ->content(fn (Purchase $record): ?string => $record->invoice?->supplier->name),
+                            ->content(fn (Purchase $record): ?string => $record->supplier->name),
                         Forms\Components\Placeholder::make('warranty_code')
                             ->label('Expiración de Garantia')
                             ->content(fn (Purchase $record): ?string => $record->warranty?->expiration_date),
@@ -57,7 +57,7 @@ class PurchaseResource extends Resource
                             ->label('Monto total')
                             ->content(fn (Purchase $record): ?string => $record->currency . ' ' . $record->total_price),
                         Forms\Components\Placeholder::make('created_at')
-                            ->label('Created at')
+                            ->label('Creado en')
                             ->content(fn (Purchase $record): ?string => $record->created_at?->diffForHumans()),
                     ])
                     ->columnSpan(['lg' => 1])
@@ -74,6 +74,8 @@ class PurchaseResource extends Resource
                     ->label('Guia de remisión'),
                 Tables\Columns\TextColumn::make('invoice.invoice_number')
                     ->label('Número de factura'),
+                Tables\Columns\TextColumn::make('supplier.name')
+                    ->label('Proveedor'),
                 Tables\Columns\TextColumn::make('warranty.warranty_code')
                     ->label('Código de garantia'),
                 Tables\Columns\TextColumn::make('issue_date')
@@ -157,13 +159,6 @@ class PurchaseResource extends Resource
                             ])
                             ->name('Producto'),
 
-                        Forms\Components\Select::make('supplier_id')
-                            ->options(\App\Models\Supplier::all()->pluck('name', 'id'))
-                            ->columnSpan([
-                                'md' => 4,
-                            ])
-                            ->name('Proveedor'),
-
                         Forms\Components\TextInput::make('quantity')
                             ->numeric()
                             ->columnSpan([
@@ -195,7 +190,10 @@ class PurchaseResource extends Resource
                 ->disabled()
                 ->required()
                 ->label('Número de compra'),
-
+            Forms\Components\Select::make('supplier_id')
+                ->options(\App\Models\Supplier::all()->pluck('name', 'id'))
+                ->required()
+                ->label('Proveedor'),
             Forms\Components\DatePicker::make('issue_date')
                 ->default(now())
                 ->required()
@@ -211,9 +209,12 @@ class PurchaseResource extends Resource
                         ->required()
                         ->maxLength(255)
                         ->label('Código de Guia'),
-                    Forms\Components\FileUpload::make('file_path')
+                    Forms\Components\FileUpload::make('artifact')
                         ->required()
-                        ->acceptedFileTypes(['application/pdf', 'application/msword', 'application/vnd.ms-excel', 'image/*'])
+                        ->directory('remision_guides')
+                        ->acceptedFileTypes(['image/*', 'application/pdf'])
+                        ->enableDownload()
+                        ->disk('s3')
                         ->label('Archivo'),
                     Forms\Components\TextInput::make('RUC_carrier')
                         ->required()
@@ -252,9 +253,12 @@ class PurchaseResource extends Resource
                         ->default('FAC-')
                         ->maxLength(255)
                         ->name('Número de factura'),
-                    Forms\Components\FileUpload::make('file_path')
+                    Forms\Components\FileUpload::make('artifact')
                         ->required()
-                        ->acceptedFileTypes(['application/pdf', 'application/msword', 'application/vnd.ms-excel', 'image/*'])
+                        ->directory('invoices')
+                        ->acceptedFileTypes(['image/*', 'application/pdf'])
+                        ->enableDownload()
+                        ->disk('s3')
                         ->name('Archivo'),
                     Forms\Components\Select::make('supplier_id')
                         ->options(\App\Models\Supplier::all()->pluck('name', 'id'))
@@ -294,9 +298,12 @@ class PurchaseResource extends Resource
                     Forms\Components\DatePicker::make('expiration_date')
                         ->required()
                         ->label('Fecha de vencimiento'),
-                    Forms\Components\FileUpload::make('file_path')
+                    Forms\Components\FileUpload::make('artifact')
                         ->required()
-                        ->acceptedFileTypes(['application/pdf', 'application/msword', 'application/vnd.ms-excel', 'image/*'])
+                        ->directory('warranties')
+                        ->acceptedFileTypes(['image/*', 'application/pdf'])
+                        ->enableDownload()
+                        ->disk('s3')
                         ->name('Archivo'),
                 ])
                 ->createOptionAction(function (Forms\Components\Actions\Action $action) {

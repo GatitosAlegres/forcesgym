@@ -26,8 +26,7 @@ return new class extends Migration
             $table->foreignId('vacancy_id')->constrained()->onDelete('cascade')->onUpdate('cascade');
 
             $table->string('dni')->unique()->max(8);
-            $table->string('firstname')->max(50);
-            $table->string('lastname')->max(50);
+            $table->string('fullname')->max(120);
             $table->string('email')->unique()->max(50);
             $table->string('phone')->max(9);
             $table->string('address')->max(100);

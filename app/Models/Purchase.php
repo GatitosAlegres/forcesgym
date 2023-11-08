@@ -16,6 +16,11 @@ class Purchase extends Model
         return $this->hasMany(PurchaseDetail::class);
     }
 
+    public function supplier()
+    {
+        return $this->belongsTo(Supplier::class);
+    }
+
     public function remision_guide()
     {
         return $this->belongsTo(RemisionGuide::class);
@@ -29,5 +34,10 @@ class Purchase extends Model
     public function warranty()
     {
         return $this->belongsTo(Warranty::class);
+    }
+
+    public function credit_note()
+    {
+        return $this->hasMany(CreditNote::class);
     }
 }
