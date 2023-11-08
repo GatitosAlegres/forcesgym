@@ -38,9 +38,12 @@ class WarrantyResource extends Resource
                 Forms\Components\DatePicker::make('expiration_date')
                     ->required()
                     ->label('Fecha de vencimiento'),
-                Forms\Components\FileUpload::make('file_path')
+                Forms\Components\FileUpload::make('artifact')
                     ->required()
-                    ->acceptedFileTypes(['application/pdf', 'application/msword', 'application/vnd.ms-excel', 'image/*'])
+                    ->acceptedFileTypes(['image/*', 'application/pdf'])
+                    ->enableDownload()
+                    ->directory('warranties')
+                    ->disk('s3')
                     ->name('Archivo'),
             ]);
     }
@@ -57,7 +60,7 @@ class WarrantyResource extends Resource
                 Tables\Columns\TextColumn::make('expiration_date')
                     ->date()
                     ->label('Fecha de vencimiento'),
-                Tables\Columns\IconColumn::make("file_path")
+                Tables\Columns\IconColumn::make("artifact_url")
                     ->options([
                         'heroicon-o-document'
                     ])
@@ -65,8 +68,8 @@ class WarrantyResource extends Resource
                         'success',
                     ])
                     ->action(
-                        fn (Warranty $record) => $record->file_path
-                            ? PDFController::redirectToPDFViewer($record->file_path)
+                        fn (Warranty $record) => $record->artifact_url
+                            ? PDFController::redirectToPDFViewer($record->artifact_url)
                             : null
                     )
                     ->label('Archivo'),

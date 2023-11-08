@@ -14,7 +14,7 @@ return new class extends Migration
         Schema::create('remision_guides', function (Blueprint $table) {
             $table->id();
             $table->string('guia_code');
-            $table->string('file_path');
+            $table->string('artifact')->nullable();
             $table->string("RUC_carrier");
             $table->text("observations")->nullable();
             $table->float("weight", 8, 2);

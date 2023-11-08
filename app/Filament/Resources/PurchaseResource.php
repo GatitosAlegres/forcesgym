@@ -209,9 +209,12 @@ class PurchaseResource extends Resource
                         ->required()
                         ->maxLength(255)
                         ->label('Código de Guia'),
-                    Forms\Components\FileUpload::make('file_path')
+                    Forms\Components\FileUpload::make('artifact')
                         ->required()
-                        ->acceptedFileTypes(['application/pdf', 'application/msword', 'application/vnd.ms-excel', 'image/*'])
+                        ->directory('remision_guides')
+                        ->acceptedFileTypes(['image/*', 'application/pdf'])
+                        ->enableDownload()
+                        ->disk('s3')
                         ->label('Archivo'),
                     Forms\Components\TextInput::make('RUC_carrier')
                         ->required()
@@ -250,9 +253,12 @@ class PurchaseResource extends Resource
                         ->default('FAC-')
                         ->maxLength(255)
                         ->name('Número de factura'),
-                    Forms\Components\FileUpload::make('file_path')
+                    Forms\Components\FileUpload::make('artifact')
                         ->required()
-                        ->acceptedFileTypes(['application/pdf', 'application/msword', 'application/vnd.ms-excel', 'image/*'])
+                        ->directory('invoices')
+                        ->acceptedFileTypes(['image/*', 'application/pdf'])
+                        ->enableDownload()
+                        ->disk('s3')
                         ->name('Archivo'),
                     Forms\Components\Select::make('supplier_id')
                         ->options(\App\Models\Supplier::all()->pluck('name', 'id'))
@@ -292,9 +298,12 @@ class PurchaseResource extends Resource
                     Forms\Components\DatePicker::make('expiration_date')
                         ->required()
                         ->label('Fecha de vencimiento'),
-                    Forms\Components\FileUpload::make('file_path')
+                    Forms\Components\FileUpload::make('artifact')
                         ->required()
-                        ->acceptedFileTypes(['application/pdf', 'application/msword', 'application/vnd.ms-excel', 'image/*'])
+                        ->directory('warranties')
+                        ->acceptedFileTypes(['image/*', 'application/pdf'])
+                        ->enableDownload()
+                        ->disk('s3')
                         ->name('Archivo'),
                 ])
                 ->createOptionAction(function (Forms\Components\Actions\Action $action) {

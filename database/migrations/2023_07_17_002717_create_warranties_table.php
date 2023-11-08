@@ -16,7 +16,7 @@ return new class extends Migration
             $table->string("warranty_code");
             $table->date("initial_date");
             $table->date("expiration_date");
-            $table->string("file_path");
+            $table->string("artifact")->nullable();
             $table->timestamps();
         });
     }
