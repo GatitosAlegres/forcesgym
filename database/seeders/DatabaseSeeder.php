@@ -30,13 +30,14 @@ class DatabaseSeeder extends Seeder
 
         $this->call(ContractDurationSeeder::class);
 
-        //$this->call(MembershipSeeder::class);
+        $this->call(MembershipTypeSeeder::class);
+
+        $this->call(MembershipSeeder::class);
 
         $this->call(CategorySeeder::class);
 
         $this->call(ClassTypeSeeder::class);
 
-        $this->call(MembershipTypeSeeder::class);
 
         $this->call(SupplierSeeder::class);
 
