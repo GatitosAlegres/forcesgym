@@ -30,16 +30,11 @@ class TrainingClassResource extends Resource
 
     public static function form(Form $form): Form
     {
-                // Obtener los usuarios con los vacancy_id igual a 1
-        $users = Employee::where('vacancy_id', 1)->get();
-
-        // Crear un arreglo de opciones con los nombres y los IDs
-        $options = $users->pluck('firstname', 'employee_id')->toArray();
         return $form
             ->schema([
                 Forms\Components\Select::make('employee_id')
                 ->options(
-                    \App\Models\Employee::where('vacancy_id', 2)->pluck('firstname', 'id')
+                    \App\Models\Employee::where('vacancy_id', 2)->pluck('fullname', 'id')
                 )
                 ->label('Entrenador')
                 ->required(),
@@ -66,7 +61,7 @@ class TrainingClassResource extends Resource
     {
         return $table
             ->columns([
-                Tables\Columns\TextColumn::make('employee.firstname')
+                Tables\Columns\TextColumn::make('employee.fullname')
                     ->label('Entrenador'),
                 Tables\Columns\TextColumn::make('tipo_clase.nombre_tipo_clase')->sortable()->searchable()
                     ->label('Tipo de Clase'),

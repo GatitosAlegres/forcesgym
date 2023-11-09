@@ -15,6 +15,11 @@ class Assistance extends Model
         'estado',
     ];
 
+    public function detalles()
+    {
+        return $this->hasMany(AssistanceDetail::class);
+    }
+
     public function clase_entrenamiento()
     {
         return $this->belongsTo(TrainingClass::class);
