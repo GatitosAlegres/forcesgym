@@ -18,9 +18,9 @@ class DiscountResource extends Resource
 {
     protected static ?string $model = Discount::class;
 
-    protected static ?string $navigationIcon = 'heroicon-o-collection';
+    protected static ?string $navigationIcon = 'heroicon-o-fire';
 
-    protected static ?string $navigationGroup  = 'Gestión de inventario';
+    protected static ?string $navigationGroup  = 'Inventario';
 
     protected static ?string $label = 'Descuento';
 

@@ -18,9 +18,9 @@ class OfferResource extends Resource
 {
     protected static ?string $model = Offer::class;
 
-    protected static ?string $navigationIcon = 'heroicon-o-collection';
+    protected static ?string $navigationIcon = 'heroicon-o-flag';
 
-    protected static ?string $navigationGroup  = 'Gestión de inventario';
+    protected static ?string $navigationGroup  = 'Inventario';
 
     protected static ?string $label = 'Oferta';
 

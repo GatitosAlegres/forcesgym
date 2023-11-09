@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\ProductRecordSheet;
 use Carbon\Carbon;
 use App\Models\Sale;
 use App\Models\Purchase;

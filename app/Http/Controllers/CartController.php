@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Category;
 use App\Models\Cart;
 use App\Models\Product;
 use App\Models\Sale;
@@ -13,14 +14,16 @@ class CartController extends Controller
     public function index()
     {
         $products = Product::all();
-
-        return view('store', compact('products'));
+        $categories = Category::all();
+        return view('shop.store', compact('products', 'categories'));
     }
 
     public function cart()
     {
-        return view('cart');
+        $categories = Category::all();
+        return view('shop.cart', compact('categories'));
     }
+
     public function addToCart($id)
     {
         $product = Product::findOrFail($id);
@@ -57,9 +60,8 @@ class CartController extends Controller
         }
     }
 
-    public function remove(Request $request)
+    public function remove($id)
     {
-        $id = $request->id;
 
         if ($id) {
 
@@ -73,6 +75,8 @@ class CartController extends Controller
             }
 
             session()->flash('success', '¡Producto eliminado con éxito!');
+
+            return redirect()->back();
         }
     }
 
