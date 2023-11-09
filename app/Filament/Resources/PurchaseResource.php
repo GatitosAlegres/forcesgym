@@ -137,6 +137,7 @@ class PurchaseResource extends Resource
             'index' => Pages\ListPurchase::route('/'),
             'create' => Pages\CreatePurchase::route('/create'),
             'edit' => Pages\EditPurchase::route('/{record}/edit'),
+            'report' => Pages\ReportPurchase::route('/report'),
         ];
     }
 

@@ -14,6 +14,11 @@ class ListPurchase extends ListRecords
     {
         return [
             Actions\CreateAction::make(),
+            Actions\ActionGroup::make([
+                Actions\Action::make('Reporte de compras')
+                    ->icon('heroicon-s-chart-bar')
+                    ->url(PurchaseResource::getUrl('report'))
+            ]),
         ];
     }
 
