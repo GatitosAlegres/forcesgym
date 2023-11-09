@@ -23,12 +23,12 @@ class MembershipSeeder extends Seeder
             'Renovación de membresía trimestral',
         ];
 
-        for ($i = 0; $i < 1000; $i++) {
+        for ($i = 0; $i < 200; $i++) {
             $tipo_membresia_id = rand(1, 3);
             $precio = ($tipo_membresia_id === 1) ? 7 : (($tipo_membresia_id === 2) ? 120 : 1400);
 
             Membership::create([
-                'nombreCliente' => $faker->firstName . ' ' . $faker->lastName,
+                'nombreCliente' => $faker->unique()->firstName() . ' ' . $faker->unique()->lastName(),
                 'tipo_membresia_id' => $tipo_membresia_id,
                 'descripcion' => $descriptions[array_rand($descriptions)],
                 'precio' => $precio,
