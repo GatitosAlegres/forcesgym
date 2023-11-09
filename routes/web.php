@@ -15,7 +15,7 @@ Route::get('/store', [CartController::class, 'index'])->name('store');
 Route::get('cart', [CartController::class, 'cart'])->name('cart');
 Route::get('add-to-cart/{id}', [CartController::class, 'addToCart'])->name('add_to_cart');
 Route::patch('update-cart', [CartController::class, 'update'])->name('update_cart');
-Route::delete('remove-from-cart', [CartController::class, 'remove'])->name('remove_from_cart');
+Route::delete('remove-from-cart/{id}', [CartController::class, 'remove'])->name('remove_from_cart');
 
 Route::post('/session', [StripeController::class, 'session'])->name('session');
 Route::get('/success', [StripeController::class, 'success'])->name('success');

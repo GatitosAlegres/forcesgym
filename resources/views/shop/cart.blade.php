@@ -11,26 +11,24 @@
                 <div class="mt-8 mx-8">
                     <ul class="space-y-4">
                         @php
-                            $total = 0;
                             $count = 0;
                         @endphp
                         @if (session('cart'))
-                            @foreach (session('cart') as $id => $details)
+                            @foreach (session('cart')->getItems() as $item)
                                 @php
-                                    $total += $details['price'] * $details['quantity'];
                                     $count += 1;
                                 @endphp
-                                <li class="flex items-center gap-4" data-id="{{ $id }}">
-                                    <img src="{{ $details['image'] }}" alt="{{ $details['name'] }}"
+                                <li class="flex items-center gap-4" data-id="{{ $item->product->id }}">
+                                    <img src="{{ $item->product->image_url }}" alt="{{ $item->product->name }}"
                                         class="h-auto w-48 rounded object-cover" data-th="Image" />
 
                                     <div>
-                                        <h3 data-th="Product" class="text-sm text-gray-900">{{ $details['name'] }}</h3>
+                                        <h3 data-th="Product" class="text-sm text-gray-900">{{ $item->product->name }}</h3>
 
                                         <dl class="mt-0.5 space-y-px text-[10px] text-gray-600">
                                             <div data-th="Price">
                                                 <dt class="inline">Precio:</dt>
-                                                <dd class="inline">{{ $details['price'] }}</dd>
+                                                <dd class="inline">{{ $item->price }}</dd>
                                             </div>
                                         </dl>
                                     </div>
@@ -39,7 +37,7 @@
                                         <div data-th="Quantity">
                                             <label for="Line1Qty" class="sr-only"> Quantity </label>
 
-                                            <input type="number" min="1" value="{{ $details['quantity'] }}"
+                                            <input type="number" min="1" value="{{ $item->quantity }}"
                                                 id="Line1Qty"
                                                 class="h-8 w-12 rounded border-gray-200 bg-gray-50 p-0 text-center text-xs text-gray-600 [-moz-appearance:_textfield] focus:outline-none [&::-webkit-inner-spin-button]:m-0 [&::-webkit-inner-spin-button]:appearance-none [&::-webkit-outer-spin-button]:m-0 [&::-webkit-outer-spin-button]:appearance-none" />
                                         </div>
@@ -64,7 +62,9 @@
                             <dl class="space-y-0.5 text-sm text-gray-700">
                                 <div data-th="Subtotal" class="flex justify-between">
                                     <dt>Subtotal</dt>
-                                    <dd>{{ $total }}</dd>
+                                    @if (session('cart'))
+                                        <dd>{{ session('cart')->calculateTotal() }}</dd>
+                                    @endif
                                 </div>
 
                                 <div class="flex justify-between">
@@ -74,7 +74,9 @@
 
                                 <div class="flex justify-between !text-base font-medium">
                                     <dt>Total</dt>
-                                    <dd>{{ $total }}</dd>
+                                    @if (session('cart'))
+                                        <dd>{{ session('cart')->calculateTotal() }}</dd>
+                                    @endif
                                 </div>
                             </dl>
 
@@ -91,12 +93,28 @@
                                 </span>
                             </div>
 
-                            <div class="flex justify-end">
-                                <a href="#"
-                                    class="block rounded bg-gray-700 px-5 py-3 text-sm text-gray-100 transition hover:bg-gray-600">
-                                    Ir a la pasarela de pago
+                            <form action="/session" method="POST" class="flex items-center ">
+                                <a href="{{ url('/store') }}"
+                                    class="flex items-center justify-center btn me-2 bg-gray-100 hover:bg-gray-200 text-dark font-bold py-2 px-4 rounded">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16"
+                                        fill="currentColor" class="bi bi-arrow-return-left me-2" viewBox="0 0 16 16">
+                                        <path fill-rule="evenodd"
+                                            d="M14.5 1.5a.5.5 0 0 1 .5.5v4.8a2.5 2.5 0 0 1-2.5 2.5H2.707l3.347 3.346a.5.5 0 0 1-.708.708l-4.2-4.2a.5.5 0 0 1 0-.708l4-4a.5.5 0 1 1 .708.708L2.707 8.3H12.5A1.5 1.5 0 0 0 14 6.8V2a.5.5 0 0 1 .5-.5z" />
+                                    </svg>
+                                    Seguir comprando...
                                 </a>
-                            </div>
+                                <input type="hidden" name="_token" value="{{ csrf_token() }}">
+                                <button
+                                    class="btn btn-success flex items-center justify-center bg-green-700 hover:bg-green-800 text-white font-bold py-2 px-4 rounded"
+                                    type="submit" id="checkout-live-button">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16"
+                                        fill="currentColor" class="bi bi-currency-exchange me-2" viewBox="0 0 16 16">
+                                        <path
+                                            d="M0 5a5.002 5.002 0 0 0 4.027 4.905 6.46 6.46 0 0 1 .544-2.073C3.695 7.536 3.132 6.864 3 5.91h-.5v-.426h.466V5.05c0-.046 0-.093.004-.135H2.5v-.427h.511C3.236 3.24 4.213 2.5 5.681 2.5c.316 0 .59.031.819.085v.733a3.46 3.46 0 0 0-.815-.082c-.919 0-1.538.466-1.734 1.252h1.917v.427h-1.98c-.003.046-.003.097-.003.147v.422h1.983v.427H3.93c.118.602.468 1.03 1.005 1.229a6.5 6.5 0 0 1 4.97-3.113A5.002 5.002 0 0 0 0 5zm16 5.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0zm-7.75 1.322c.069.835.746 1.485 1.964 1.562V14h.54v-.62c1.259-.086 1.996-.74 1.996-1.69 0-.865-.563-1.31-1.57-1.54l-.426-.1V8.374c.54.06.884.347.966.745h.948c-.07-.804-.779-1.433-1.914-1.502V7h-.54v.629c-1.076.103-1.808.732-1.808 1.622 0 .787.544 1.288 1.45 1.493l.358.085v1.78c-.554-.08-.92-.376-1.003-.787H8.25zm1.96-1.895c-.532-.12-.82-.364-.82-.732 0-.41.311-.719.824-.809v1.54h-.005zm.622 1.044c.645.145.943.38.943.796 0 .474-.37.8-1.02.86v-1.674l.077.018z" />
+                                    </svg>
+                                    <p class="">¡Ir a la pasarela de pago!</p>
+                                </button>
+                            </form>
                         </div>
                     </div>
                 </div>
@@ -133,7 +151,7 @@
 
             if (confirm("Do you really want to remove?")) {
                 $.ajax({
-                    url: "{{ route('remove_from_cart') }}",
+                    url: "{{ route('remove_from_cart', 'id') }}",
                     method: "DELETE",
                     data: {
                         _token: '{{ csrf_token() }}',

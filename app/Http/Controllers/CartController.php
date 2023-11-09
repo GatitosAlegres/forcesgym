@@ -20,7 +20,8 @@ class CartController extends Controller
 
     public function cart()
     {
-        return view('shop.cart');
+        $categories = Category::all();
+        return view('shop.cart', compact('categories'));
     }
 
     public function addToCart($id)
@@ -59,9 +60,8 @@ class CartController extends Controller
         }
     }
 
-    public function remove(Request $request)
+    public function remove($id)
     {
-        $id = $request->id;
 
         if ($id) {
 
@@ -75,6 +75,8 @@ class CartController extends Controller
             }
 
             session()->flash('success', '¡Producto eliminado con éxito!');
+
+            return redirect()->back();
         }
     }
 
