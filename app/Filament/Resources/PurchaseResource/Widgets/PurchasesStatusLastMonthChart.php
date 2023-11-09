@@ -36,7 +36,7 @@ class PurchasesStatusLastMonthChart extends ApexChartWidget
                 'type' => 'radialBar',
                 'height' => 300,
             ],
-            'series' => [$purchasesDelivered],
+            'series' => [number_format($purchasesDelivered, 2, '.', '')],
             'plotOptions' => [
                 'radialBar' => [
                     'hollow' => [
