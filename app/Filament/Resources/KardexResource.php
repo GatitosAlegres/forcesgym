@@ -6,6 +6,7 @@ use App\Filament\Resources\KardexResource\Pages;
 use App\Filament\Resources\KardexResource\RelationManagers;
 use App\Filament\Resources\KardexResource\Widgets\KardexStats;
 use App\Models\Kardex;
+use App\Models\Product;
 use App\Models\ProductRecordSheet;
 use Closure;
 use Filament\Forms;
@@ -35,7 +36,7 @@ class KardexResource extends Resource
         return $form
             ->schema([
                 Card::make()->schema([
-                    Group::make()->schema([
+                    Section::make('Datos Principales')->schema([
                         Forms\Components\Select::make('product_record_sheet_id')
                             ->label('Código de Hoja de registros')
                             ->placeholder('Seleccione una hoja de registros')
@@ -59,7 +60,7 @@ class KardexResource extends Resource
 
                         Forms\Components\TextInput::make('code_item')
                             ->label('Código del Kardex')
-                            ->default('KAR-' . date('Y') . '-0000' . Kardex::count() + 1)
+                            ->default('KAR-' . Kardex::count() + 1)
                             ->disabled()
                             ->dehydrated()
                             ->required(),
@@ -74,21 +75,51 @@ class KardexResource extends Resource
                         Forms\Components\Select::make('responsible_id')
                             ->label('Responsable')
                             ->relationship('responsible', 'name')
+                            ->default(fn () => auth()->user()->id)
                             ->required(),
                     ])->columns(2),
 
-                    Group::make()->schema([
+                    Section::make('Producto Asociado')->schema([
                         Forms\Components\Select::make('product_id')
                             ->relationship('product', 'name')
                             ->label('Producto')
+                            ->reactive()
+                            ->required()
+                            ->lazy()
+                            ->afterStateUpdated(fn (string $context, $state, callable $set) =>
+                            [
+                                $product = Product::find($state),
+                                $brand = $product ? $product->supplier : null,
+                                $set('brand', $brand ? $brand->name : null),
+                                $base_price = $product ? $product->base_price : null,
+                                $set('unit_price', $base_price ? $product->base_price : null),
+                                $previous_stock = $product ? $product->stock : null,
+                                $set('previous_stock', $previous_stock ? $product->stock : null),
+                            ]),
+
+                        Forms\Components\TextInput::make('brand')
+                            ->label('Marca')
                             ->disabled()
                             ->required(),
 
-                        Forms\Components\Select::make('supplier_id')
-                            ->label('Proveedor')
-                            ->relationship('supplier', 'name')
+                        Forms\Components\TextInput::make('unit_price')
+                            ->label('Precio unitario $/.')
+                            ->disabled()
                             ->required(),
 
+                        Forms\Components\TextInput::make('total_price')
+                            ->label('Precio total $/.')
+                            ->placeholder(function (Closure $get) {
+                                $input_quantity = $get('input_quantity');
+                                $output_quantity = $get('output_quantity');
+                                $unit_price = $get('unit_price');
+                                $quantity = $input_quantity + $output_quantity;
+                                $total_price = $unit_price * $quantity;
+                                return $total_price;
+                            }),
+                    ])->columns(2),
+
+                    Section::make('Movimiento de Inventario')->schema([
                         Forms\Components\TextInput::make('previous_stock')
                             ->label('Stock anterior')
                             ->disabled()
@@ -111,25 +142,6 @@ class KardexResource extends Resource
                             )
                             ->required(),
 
-                        Forms\Components\TextInput::make('unit_price')
-                            ->label('Precio unitario $/.')
-                            ->disabled()
-                            ->required(),
-
-                        Forms\Components\TextInput::make('total_price')
-                            ->label('Precio total $/.')
-                            ->disabled()
-                            ->placeholder(function (Closure $get) {
-                                $input_quantity = $get('input_quantity');
-                                $output_quantity = $get('output_quantity');
-                                $unit_price = $get('unit_price');
-                                $quantity = $input_quantity + $output_quantity;
-                                $total_price = $unit_price * $quantity;
-                                return $total_price;
-                            }),
-                    ])->columns(2),
-
-                    Group::make()->schema([
                         Forms\Components\TextInput::make('input_quantity')
                             ->label('Cantidad de entrada')
                             ->numeric()
@@ -150,29 +162,8 @@ class KardexResource extends Resource
                                 $output_quantity = $get('output_quantity');
                                 $current_stock = $quantity + $input_quantity - $output_quantity;
                                 return $current_stock;
-                            })
-                            ->disabled(),
-                    ])->columns(3),
-
-                    Group::make()->schema([
-                        Forms\Components\Select::make('type_document')
-                            ->label('Comprobante de pago')
-                            ->options([
-                                'Factura' => 'Factura',
-                                'Boleta' => 'Boleta',
-                                'Guía de remisión' => 'Guía de remisión',
-                            ])
-                            ->required(),
-
-                        FileUpload::make('document')
-                            ->label('Comprobante de pago (PDF) <> (Imagen)')
-                            ->imagePreviewHeight('250')
-                            ->loadingIndicatorPosition('left')
-                            ->panelLayout('integrated')
-                            ->removeUploadedFileButtonPosition('right')
-                            ->uploadButtonPosition('left')
-                            ->uploadProgressIndicatorPosition('left'),
-                    ]),
+                            }),
+                    ])->columns(2),
                 ]),
             ]);
     }
@@ -181,29 +172,100 @@ class KardexResource extends Resource
     {
         return $table
             ->columns([
-                Tables\Columns\TextColumn::make('product_id'),
-                Tables\Columns\TextColumn::make('responsible_id'),
-                Tables\Columns\TextColumn::make('supplier_id'),
-                Tables\Columns\TextColumn::make('product_record_sheet_id'),
-                Tables\Columns\TextColumn::make('code_item'),
-                Tables\Columns\TextColumn::make('type_document'),
-                Tables\Columns\TextColumn::make('document'),
+
+                Tables\Columns\TextColumn::make('code_item')
+                    ->label('Código')
+                    ->searchable()
+                    ->sortable(),
+
+                Tables\Columns\TextColumn::make('productRecordSheet.code_item')
+                    ->label('Código de hoja de registros')
+                    ->searchable()
+                    ->sortable()
+                    ->toggleable(),
+
+                Tables\Columns\TextColumn::make('product.name')
+                    ->label('Producto')
+                    ->searchable()
+                    ->sortable(),
+
+                Tables\Columns\BadgeColumn::make('type_movement')
+                    ->label('Tipo de movimiento')
+                    ->searchable()
+                    ->sortable()
+                    ->colors([
+                        'success' => 'Entrada',
+                        'primary' => 'Salida'
+                    ]),
+
                 Tables\Columns\TextColumn::make('movement_date')
-                    ->dateTime(),
-                Tables\Columns\TextColumn::make('unit_price'),
-                Tables\Columns\TextColumn::make('total_price'),
-                Tables\Columns\TextColumn::make('previous_stock'),
-                Tables\Columns\TextColumn::make('type_movement'),
-                Tables\Columns\TextColumn::make('input_quantity'),
-                Tables\Columns\TextColumn::make('output_quantity'),
-                Tables\Columns\TextColumn::make('current_stock'),
-                Tables\Columns\TextColumn::make('created_at')
-                    ->dateTime(),
-                Tables\Columns\TextColumn::make('updated_at')
-                    ->dateTime(),
+                    ->dateTime()
+                    ->label('Fecha y hora')
+                    ->searchable()
+                    ->sortable(),
+
+                Tables\Columns\TextColumn::make('supplier.name')
+                    ->label('Marca')
+                    ->searchable()
+                    ->sortable()
+                    ->toggleable(),
+
+                Tables\Columns\TextColumn::make('responsible.name')
+                    ->label('Responsable')
+                    ->searchable()
+                    ->sortable()
+                    ->toggleable(),
+
+                Tables\Columns\TextColumn::make('unit_price')
+                    ->label('Precio unitario')
+                    ->searchable()
+                    ->sortable()
+                    ->toggleable(),
+
+                Tables\Columns\TextColumn::make('total_price')
+                    ->label('Precio total')
+                    ->searchable()
+                    ->sortable()
+                    ->toggleable(),
+
+                Tables\Columns\BadgeColumn::make('previous_stock')
+                    ->label('Stock anterior')
+                    ->color('primary')
+                    ->searchable()
+                    ->sortable()
+                    ->toggleable(),
+
+
+                Tables\Columns\BadgeColumn::make('input_quantity')
+                    ->label('Cantidad de entrada')
+                    ->color('danger')
+                    ->searchable()
+                    ->sortable()
+                    ->toggleable(),
+
+                Tables\Columns\BadgeColumn::make('output_quantity')
+                    ->label('Cantidad de salida')
+                    ->color('success')
+                    ->searchable()
+                    ->sortable()
+                    ->toggleable(),
+
+                Tables\Columns\BadgeColumn::make('current_stock')
+                    ->label('Stock actual')
+                    ->color('white')
+                    ->searchable()
+                    ->sortable()
+                    ->toggleable(),
             ])
             ->filters([
-                //
+                Tables\Filters\SelectFilter::make('type_movement')
+                    ->label('Tipo de movimiento')
+                    ->options([
+                        'Entrada' => 'Entrada',
+                        'Salida' => 'Salida'
+                    ])
+                    ->placeholder('Todos')
+                    ->multiple(),
             ])
             ->actions([
                 Tables\Actions\EditAction::make(),

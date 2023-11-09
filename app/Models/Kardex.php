@@ -38,12 +38,12 @@ class Kardex extends Model
         parent::boot();
 
         self::creating(function ($kardex) {
-            $kardex->total_price = $kardex->unit_price * $kardex->quantity;
+            $kardex->total_price = $kardex->unit_price * ($kardex->input_quantity - $kardex->output_quantity);
             $kardex->current_stock = $kardex->previous_stock + ($kardex->input_quantity - $kardex->output_quantity);
         });
 
         self::updating(function ($kardex) {
-            $kardex->total_price = $kardex->unit_price * $kardex->quantity;
+            $kardex->total_price = $kardex->unit_price * ($kardex->input_quantity - $kardex->output_quantity);
             $kardex->current_stock = $kardex->previous_stock + ($kardex->input_quantity - $kardex->output_quantity);
         });
     }

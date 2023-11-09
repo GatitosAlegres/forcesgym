@@ -8,6 +8,7 @@ use App\Filament\Resources\ProductRecordSheetResource\Widgets\ProductRecordSheet
 use App\Models\Kardex;
 use App\Models\Product;
 use App\Models\ProductRecordSheet;
+use Carbon\Carbon;
 use Closure;
 use Filament\Forms;
 use Filament\Forms\Components\Card;
@@ -24,9 +25,14 @@ use Filament\Resources\Form;
 use Filament\Resources\Resource;
 use Filament\Resources\Table;
 use Filament\Tables;
+use Filament\Tables\Actions\Action;
+use Filament\Tables\Actions\Modal\Actions\Action as ActionsAction;
+use Filament\Tables\Filters\Filter;
+use Filament\Tables\Filters\TrashedFilter;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
+use pxlrbt\FilamentExcel\Actions\Tables\ExportBulkAction;
 
 class ProductRecordSheetResource extends Resource
 {
@@ -54,20 +60,21 @@ class ProductRecordSheetResource extends Resource
 
                         Forms\Components\Section::make('Kardex Items')
                             ->schema(static::getFormSchema('kardex')),
-                    ]),
-                //->columnSpan(['lg' => fn (? Kardex $record) => $record === null ? 3 : 2]),
+                    ])
+                    ->columnSpan(['lg' => fn (?ProductRecordSheet $record) => $record === null ? 3 : 2]),
 
                 Forms\Components\Card::make()
                     ->schema([
                         Forms\Components\Placeholder::make('created_at')
-                            ->label('Fecha de registro'), //->content(fn (Kardex $record): ?string => $record->created_at?->diffForHumans()),
+                            ->label('Fecha de registro')
+                            ->content(fn (ProductRecordSheet $record): ?string => $record->created_at?->diffForHumans()),
 
                         Forms\Components\Placeholder::make('updated_at')
                             ->label('Fecha de actualización')
-                        //->content(fn (Kardex $record): ?string => $record->updated_at?->diffForHumans()),
+                            ->content(fn (ProductRecordSheet $record): ?string => $record->updated_at?->diffForHumans()),
                     ])
                     ->columnSpan(['lg' => 1])
-                //->hidden(fn (?Kardex $record) => $record === null),
+                    ->hidden(fn (?ProductRecordSheet $record) => $record === null),
             ])->columns(3);
     }
 
@@ -79,29 +86,35 @@ class ProductRecordSheetResource extends Resource
                     ->label('Código')
                     ->sortable()
                     ->searchable(),
+
                 Tables\Columns\TextColumn::make('product.name')
                     ->label('Producto')
                     ->sortable()
                     ->searchable(),
+
                 Tables\Columns\TextColumn::make('description')
                     ->label('Descripción')
                     ->toggleable()
                     ->toggledHiddenByDefault(),
+
                 Tables\Columns\TextColumn::make('category')
                     ->label('Categoría')
                     ->sortable()
                     ->toggleable()
                     ->toggledHiddenByDefault(),
+
                 Tables\Columns\TextColumn::make('base_price')
                     ->label('Precio base')
                     ->toggleable()
                     ->sortable(),
+
                 Tables\Columns\BadgeColumn::make('minimum_replacement_stock')
                     ->label('Stock mínimo de reposición')
                     ->toggleable()
                     ->sortable()
                     ->color('primary')
                     ->alignCenter(),
+
                 Tables\Columns\BadgeColumn::make('unit_of_measurement')
                     ->label('Unidad de medida')
                     ->toggleable()
@@ -114,17 +127,20 @@ class ProductRecordSheetResource extends Resource
                         'Metro' => 'danger',
                     ])
                     ->alignCenter(),
+
                 Tables\Columns\BadgeColumn::make('replacement_quantity')
                     ->label('Cantidad de reposición')
                     ->toggleable()
                     ->sortable()
                     ->color('success')
                     ->alignCenter(),
+
                 Tables\Columns\TextColumn::make('created_at')
                     ->dateTime()
                     ->sortable()
                     ->toggleable()
                     ->toggledHiddenByDefault(),
+
                 Tables\Columns\TextColumn::make('updated_at')
                     ->dateTime()
                     ->sortable()
@@ -136,9 +152,16 @@ class ProductRecordSheetResource extends Resource
             ])
             ->actions([
                 Tables\Actions\EditAction::make(),
+
+                Tables\Actions\Action::make('Descargar Pdf')
+                    ->icon('heroicon-o-download')
+                    ->color('danger')
+                    ->url(fn (ProductRecordSheet $record) => route('productRecordSheet.pdf.download', $record))
+                    ->openUrlInNewTab(),
             ])
             ->bulkActions([
                 Tables\Actions\DeleteBulkAction::make(),
+                ExportBulkAction::make(),
             ]);
     }
 
@@ -198,147 +221,114 @@ class ProductRecordSheetResource extends Resource
                     ->relationship()
                     ->schema([
                         Group::make()->schema([
-                            Forms\Components\TextInput::make('code_item')
-                                ->label('Código del Kardex')
-                                ->default('KAR-' . date('Y') . '-0000' . Kardex::count() + 1)
-                                ->disabled()
-                                ->dehydrated()
-                                ->required(),
+                            Section::make('Datos Principales')->schema([
+                                Forms\Components\TextInput::make('code_item')
+                                    ->label('Código del Kardex')
+                                    ->default('KAR-' . Kardex::count() + 1)
+                                    ->disabled()
+                                    ->dehydrated()
+                                    ->required(),
 
-                            Forms\Components\DateTimePicker::make('movement_date')
-                                ->label('Fecha y hora')
-                                ->timezone('America/Lima')
-                                ->default(now())
-                                ->disabled()
-                                ->required(),
+                                Forms\Components\DateTimePicker::make('movement_date')
+                                    ->label('Fecha y hora')
+                                    ->timezone('America/Lima')
+                                    ->default(now())
+                                    ->disabled()
+                                    ->required(),
 
-                            Forms\Components\Select::make('responsible_id')
-                                ->label('Responsable')
-                                ->searchable()
-                                ->relationship('responsible', 'name')
-                                ->default(fn () => auth()->user()->id)
-                                ->required(),
-                        ])->columns(2),
+                                Forms\Components\Select::make('responsible_id')
+                                    ->label('Responsable')
+                                    ->relationship('responsible', 'name')
+                                    ->default(fn () => auth()->user()->id)
+                                    ->required(),
+                            ])->columns(2),
 
-                        Group::make()->schema([
-                            Forms\Components\Select::make('product_id')
-                                ->relationship('product', 'name')
-                                ->searchable()
-                                ->label('Producto')
-                                ->lazy()
-                                ->afterStateUpdated(
-                                    fn (string $context, $state, callable $set) =>
+                            Section::make('Producto Asociado')->schema([
+                                Forms\Components\Select::make('product_id')
+                                    ->relationship('product', 'name')
+                                    ->label('Producto')
+                                    ->reactive()
+                                    ->required()
+                                    ->lazy()
+                                    ->afterStateUpdated(fn (string $context, $state, callable $set) =>
                                     [
                                         $product = Product::find($state),
+                                        $brand = $product ? $product->supplier : null,
+                                        $set('brand', $brand ? $brand->name : null),
                                         $base_price = $product ? $product->base_price : null,
-                                        $set('unit_price', $base_price),
+                                        $set('unit_price', $base_price ? $product->base_price : null),
+                                        $previous_stock = $product ? $product->stock : null,
+                                        $set('previous_stock', $previous_stock ? $product->stock : null),
+                                    ]),
 
-                                        $stock = $product ? $product->stock : null,
-                                        $set('previous_stock', $stock),
+                                Forms\Components\TextInput::make('brand')
+                                    ->label('Marca')
+                                    ->disabled()
+                                    ->required(),
 
-                                        $supplier = $product ? $product->supplier : null,
-                                        $set('supplier_id', $supplier ? $supplier->id : null),
-                                    ]
-                                )->required(),
+                                Forms\Components\TextInput::make('unit_price')
+                                    ->label('Precio unitario $/.')
+                                    ->disabled()
+                                    ->required(),
 
-                            Forms\Components\Select::make('supplier_id')
-                                ->label('Proveedor')
-                                ->relationship('supplier', 'name')
-                                ->required(),
+                                Forms\Components\TextInput::make('total_price')
+                                    ->label('Precio total $/.')
+                                    ->placeholder(function (Closure $get) {
+                                        $input_quantity = $get('input_quantity');
+                                        $output_quantity = $get('output_quantity');
+                                        $unit_price = $get('unit_price');
+                                        $quantity = $input_quantity + $output_quantity;
+                                        $total_price = $unit_price * $quantity;
+                                        return $total_price;
+                                    }),
+                            ])->columns(2),
 
-                            Forms\Components\TextInput::make('previous_stock')
-                                ->label('Stock anterior')
-                                ->disabled()
-                                ->required(),
+                            Section::make('Movimiento de Inventario')->schema([
+                                Forms\Components\TextInput::make('previous_stock')
+                                    ->label('Stock anterior')
+                                    ->disabled()
+                                    ->required(),
 
-                            Forms\Components\Select::make('type_movement')
-                                ->label('Tipo de movimiento')
-                                ->options([
-                                    'Entrada' => 'Entrada',
-                                    'Salida' => 'Salida'
-                                ])
-                                ->reactive()
-                                ->afterStateUpdated(
-                                    fn (string $context, $state, callable $set) =>
-                                    [
-                                        $type_movement = $state,
-                                        $set('input_quantity', $type_movement == 'Entrada' ? 1 : 0),
-                                        $set('output_quantity', $type_movement == 'Salida' ? 1 : 0),
-                                    ]
-                                )
-                                ->required(),
+                                Forms\Components\Select::make('type_movement')
+                                    ->label('Tipo de movimiento')
+                                    ->options([
+                                        'Entrada' => 'Entrada',
+                                        'Salida' => 'Salida'
+                                    ])
+                                    ->reactive()
+                                    ->afterStateUpdated(
+                                        fn (string $context, $state, callable $set) =>
+                                        [
+                                            $type_movement = $state,
+                                            $set('input_quantity', $type_movement == 'Entrada' ? 1 : 0),
+                                            $set('output_quantity', $type_movement == 'Salida' ? 1 : 0),
+                                        ]
+                                    )
+                                    ->required(),
 
-                            Forms\Components\TextInput::make('unit_price')
-                                ->label('Precio unitario $/.')
-                                ->numeric()
-                                ->required(),
+                                Forms\Components\TextInput::make('input_quantity')
+                                    ->label('Cantidad de entrada')
+                                    ->numeric()
+                                    ->reactive()
+                                    ->required(),
 
-                            Forms\Components\TextInput::make('total_price')
-                                ->label('Precio total $/.')
-                                ->numeric()
-                                ->placeholder(function (Closure $get) {
-                                    $input_quantity = $get('input_quantity');
-                                    $output_quantity = $get('output_quantity');
-                                    $unit_price = $get('unit_price');
-                                    $quantity = $input_quantity + $output_quantity;
-                                    $total_price = $unit_price * $quantity;
-                                    return $total_price;
-                                }),
-                        ])->columns(2),
+                                Forms\Components\TextInput::make('output_quantity')
+                                    ->label('Cantidad de salida')
+                                    ->reactive()
+                                    ->numeric()
+                                    ->required(),
 
-                        Group::make()->schema([
-                            Forms\Components\TextInput::make('input_quantity')
-                                ->label('Cantidad de entrada')
-                                ->numeric()
-                                ->reactive()
-                                ->required(),
-
-                            Forms\Components\TextInput::make('output_quantity')
-                                ->label('Cantidad de salida')
-                                ->reactive()
-                                ->numeric()
-                                ->required(),
-
-                            Forms\Components\TextInput::make('current_stock')
-                                ->label('Stock actual')
-                                ->placeholder(function (Closure $get) {
-                                    $quantity = $get('previous_stock');
-                                    $input_quantity = $get('input_quantity');
-                                    $output_quantity = $get('output_quantity');
-                                    $current_stock = $quantity + $input_quantity - $output_quantity;
-                                    return $current_stock;
-                                })
-                                ->disabled(),
-                        ])->columns(3),
-
-                        Group::make()->schema([
-                            Forms\Components\Select::make('type_document')
-                                ->label('Comprobante de pago')
-                                ->options([
-                                    'Factura' => 'Factura',
-                                    'Boleta' => 'Boleta',
-                                    'Guía de remisión' => 'Guía de remisión',
-                                ])
-                                ->required(),
-
-                            Forms\Components\Select::make('state')
-                                ->label('Estado del comprobante de pago')
-                                ->options([
-                                    'Pagado' => 'Pagado',
-                                    'Pendiente' => 'Pendiente',
-                                ])
-                                ->required(),
-
-                            FileUpload::make('document')
-                                ->label('Comprobante de pago (PDF) <> (Imagen)')
-                                ->imagePreviewHeight('250')
-                                ->loadingIndicatorPosition('left')
-                                ->panelLayout('integrated')
-                                ->removeUploadedFileButtonPosition('right')
-                                ->uploadButtonPosition('left')
-                                ->uploadProgressIndicatorPosition('left')
-                                ->columnSpanFull(),
-                        ])->columns(2),
+                                Forms\Components\TextInput::make('current_stock')
+                                    ->label('Stock actual')
+                                    ->placeholder(function (Closure $get) {
+                                        $quantity = $get('previous_stock');
+                                        $input_quantity = $get('input_quantity');
+                                        $output_quantity = $get('output_quantity');
+                                        $current_stock = $quantity + $input_quantity - $output_quantity;
+                                        return $current_stock;
+                                    }),
+                            ])->columns(2),
+                        ]),
                     ])
             ];
         }
@@ -347,14 +337,13 @@ class ProductRecordSheetResource extends Resource
             Grid::make()->schema([
                 TextInput::make('code_item')
                     ->label('Código de la Hoja de Registro de Movimientos')
-                    ->default('HRM-00000000' . ProductRecordSheet::count() + 1)
+                    ->default('HRM-' . ProductRecordSheet::count() + 1)
                     ->disabled()
                     ->dehydrated()
                     ->required(),
 
                 MarkdownEditor::make('description')
-                    ->label('Descripción')
-                    ->required(),
+                    ->label('Descripción'),
             ])->columns(1),
 
             Section::make('Producto')
@@ -365,7 +354,6 @@ class ProductRecordSheetResource extends Resource
                                 ->label('Nombre')
                                 ->placeholder('Seleccione un producto')
                                 ->relationship('product', 'name')
-                                ->searchable()
                                 ->reactive()
                                 ->required()
                                 ->lazy()
@@ -389,7 +377,7 @@ class ProductRecordSheetResource extends Resource
                         ->schema([
                             TextInput::make('base_price')
                                 ->label('Precio base $/.')
-                                //->disabled()
+                                ->disabled()
                                 ->required(),
                             Select::make('unit_of_measurement')
                                 ->required()
@@ -403,12 +391,14 @@ class ProductRecordSheetResource extends Resource
                                 ]),
                             TextInput::make('minimum_replacement_stock')
                                 ->label('Stock mínimo de reposición')
-                                ->minValue(1)
+                                ->minValue(0)
+                                ->default(1)
                                 ->numeric()
                                 ->required(),
                             TextInput::make('replacement_quantity')
                                 ->label('Cantidad de reposición')
-                                ->minValue(1)
+                                ->minValue(0)
+                                ->default(1)
                                 ->numeric()
                                 ->required(),
                         ])->columns(2),

@@ -15,7 +15,7 @@ return new class extends Migration
             $table->id();
             $table->string('code_item');
             $table->unsignedBigInteger('product_id');
-            $table->longText('description');
+            $table->longText('description')->nullable();
             $table->string('category');
             $table->decimal('base_price', 10, 2);
             $table->integer('minimum_replacement_stock');
