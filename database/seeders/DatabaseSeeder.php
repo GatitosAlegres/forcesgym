@@ -65,5 +65,9 @@ class DatabaseSeeder extends Seeder
         $this->call(WarrantySeeder::class);
 
         $this->call(PurchaseSeeder::class);
+
+        $this->call(CustomerSeeder::class);
+
+        $this->call(TrainingClassSeeder::class);
     }
 }

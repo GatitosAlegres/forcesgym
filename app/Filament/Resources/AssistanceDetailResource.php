@@ -27,9 +27,6 @@ class AssistanceDetailResource extends Resource
     {
         return $form
             ->schema([
-                Forms\Components\Select::make('clase_entrenamiento_id')
-                    ->relationship('clase_entrenamiento', 'codigo')
-                    ->required(),
                 Forms\Components\Select::make('socio_id')
                     ->relationship('Socio', 'nombreCliente')
                     ->required(),
