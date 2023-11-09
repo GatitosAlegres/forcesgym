@@ -20,11 +20,11 @@ class ListProducts extends ListRecords
             Actions\ActionGroup::make([
                 Actions\Action::make('Gráficos dinámicos')
                     ->icon('heroicon-s-chart-bar')
-                    ->url('./products/report'),
+                    ->url(ProductResource::getUrl('report')),
 
                 Actions\Action::make('Generar Pdf')
                     ->icon('heroicon-s-document-download')
-                    ->url(route('products.pdf.download'))
+                    //->url(route('products.pdf.download'))
                     ->openUrlInNewTab(),
             ]),
         ];
