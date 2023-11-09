@@ -57,7 +57,7 @@ class KardexResource extends Resource
                                 ]
                             )
                             ->required(),
-                        
+
                         Forms\Components\TextInput::make('code_item')
                             ->label('Código del Kardex')
                             ->default('KAR-' . Kardex::count() + 1)
@@ -204,7 +204,7 @@ class KardexResource extends Resource
                     ->searchable()
                     ->sortable(),
 
-                Tables\Columns\TextColumn::make('brand')
+                Tables\Columns\TextColumn::make('supplier.name')
                     ->label('Marca')
                     ->searchable()
                     ->sortable()

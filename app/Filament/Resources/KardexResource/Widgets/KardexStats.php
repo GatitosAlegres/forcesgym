@@ -14,7 +14,7 @@ class KardexStats extends BaseWidget
     {
         return [
             Card::make('Kardex Registrados', Kardex::count()),
-            Card::make('Kardex de Ingreso', Kardex::where('type_movement', 'Ingreso')->count()),
+            Card::make('Kardex de Ingreso', Kardex::where('type_movement', 'Entrada')->count()),
             Card::make('Kardex de Salida', Kardex::where('type_movement', 'Salida')->count()),
         ];
     }
