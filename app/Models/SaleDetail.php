@@ -38,6 +38,7 @@ class SaleDetail extends Model
             $product = Product::find($saleDetail->product_id);
             $product->stock -= $saleDetail->quantity;
             $sale->save();
+            $productRecordSheet = ProductRecordSheet::where('product_id', $saleDetail->product_id)->first();
             Kardex::create([
                 'code_item' => 'KAR-' . Date::now()->format('Y') . '-00000' . Kardex::count(),
                 'created_at' => now(),
@@ -49,7 +50,10 @@ class SaleDetail extends Model
                 'previous_stock' => $saleDetail->product->stock,
                 'product_id' => $saleDetail->product_id,
                 'product_record_sheet_id' => ProductRecordSheet::where('product_id', $saleDetail->product_id)->first()->id,
-                'responsible_id' => auth()->user()->id,
+                'product_record_sheet_id' => $productRecordSheet ? $productRecordSheet->id : null,
+                'responsible_id' => auth()->user() ? auth()->user()->id : null,
+
+                //'responsible_id' => auth()->user()->id,
                 'state' => '',
                 'supplier_id' => $saleDetail->sale->client_id,
                 'total_price' => $saleDetail->sub_amount,
