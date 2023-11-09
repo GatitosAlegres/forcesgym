@@ -2,9 +2,10 @@
 
 namespace App\Filament\Resources\PurchaseResource\Pages;
 
+use Filament\Resources\Pages\Page;
 use App\Filament\Resources\PurchaseResource;
 use App\Filament\Resources\PurchaseResource\Widgets\PurchasesPerMonth;
-use Filament\Resources\Pages\Page;
+use App\Filament\Resources\PurchaseResource\Widgets\PurchasesStatusLastMonthChart;
 
 class ReportPurchase extends Page
 {
@@ -18,6 +19,7 @@ class ReportPurchase extends Page
     {
         return [
             PurchasesPerMonth::class,
+            PurchasesStatusLastMonthChart::class
         ];
     }
 }
