@@ -39,7 +39,7 @@ class StripeController extends Controller
             'mode'                  => 'payment',
             'allow_promotion_codes' => true,
             'metadata'              => [
-                'user_id' => "0001"
+                'user_id' => "1"
             ],
             'customer_email' => "admin@forcesgym.com",
             'success_url' => route('success'),
