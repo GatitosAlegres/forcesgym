@@ -16,6 +16,11 @@ class SalesChart extends ApexChartWidget
 
     protected static ?int $sort = 4;
 
+   /* protected function getFilters(): ?array
+    {
+        $categories = Category::all()->pluck('name')->toArray();
+        return $categories;
+    }*/
 
 
     protected function getOptions(): array

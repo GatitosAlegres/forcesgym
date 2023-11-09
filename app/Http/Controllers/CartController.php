@@ -89,8 +89,9 @@ class CartController extends Controller
     {
         $newSale = Sale::create([
             'date' => now(),
-            'user_id' => auth()->user()->id,
+            'cliente_id' => 1,
             'amount' => 0,
+            'document_type'=>'Boleta',
         ]);
 
         $cart = session()->get('cart', new Cart());
@@ -100,7 +101,7 @@ class CartController extends Controller
                 'sale_id' => $newSale->id,
                 'product_id' => $item->product->id,
                 'quantity' => $item->quantity,
-                'price_unitary' => $item->product->unit_price,
+                'price_unitary' => $item->product->sale_price,
                 'sub_amount' => $item->calculateSubtotal(),
             ]);
         }
