@@ -17,7 +17,7 @@ return new class extends Migration
             $table->date('due_date');
             $table->decimal('total_amount', 10, 2);
             $table->boolean('paid')->default(false);
-            $table->string('file_path')->nullable();
+            $table->string('artifact')->nullable();
             $table->timestamps();
 
             $table->unsignedBigInteger('supplier_id');

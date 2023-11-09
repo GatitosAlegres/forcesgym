@@ -17,6 +17,7 @@ return new class extends Migration
             $table->string('email')->unique();
             $table->text("address");
             $table->string('phone');
+            $table->string('website')->nullable();
             $table->string('type')->enum(['natural', 'juridico']);
             $table->timestamps();
         });

@@ -34,10 +34,13 @@ class RemisionGuideResource extends Resource
                     ->required()
                     ->maxLength(255)
                     ->name('Código de Guia'),
-                Forms\Components\FileUpload::make('file_path')
-                    ->required()
-                    ->acceptedFileTypes(['application/pdf', 'application/msword', 'application/vnd.ms-excel', 'image/*'])
-                    ->name('Archivo'),
+                Forms\Components\FileUpload::make('artifact')
+                    ->directory('remision_guides')
+                    ->name('Archivo')
+                    ->acceptedFileTypes(['image/*', 'application/pdf'])
+                    ->enableDownload()
+                    ->disk('s3')
+                    ->required(),
                 Forms\Components\TextInput::make('RUC_carrier')
                     ->required()
                     ->numeric()
@@ -65,7 +68,7 @@ class RemisionGuideResource extends Resource
             ->columns([
                 Tables\Columns\TextColumn::make('guia_code')
                     ->label('Código de Guia'),
-                Tables\Columns\IconColumn::make("file_path")
+                Tables\Columns\IconColumn::make("artifact_url")
                     ->options([
                         'heroicon-o-document'
                     ])
@@ -73,8 +76,8 @@ class RemisionGuideResource extends Resource
                         'success',
                     ])
                     ->action(
-                        fn (RemisionGuide $record) => $record->file_path
-                            ? PDFController::redirectToPDFViewer($record->file_path)
+                        fn (RemisionGuide $record) => $record->artifact_url
+                            ? PDFController::redirectToPDFViewer($record->artifact_url)
                             : null
                     )
                     ->label('Archivo'),

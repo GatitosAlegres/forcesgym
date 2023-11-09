@@ -65,8 +65,12 @@ class ProductResource extends Resource
 
                         Forms\Components\Section::make('Imagen')->schema([
                             Forms\Components\FileUpload::make('image')
+                                ->label('Featured Image')
+                                ->image()
+                                ->directory('products')
+                                ->enableDownload()
                                 ->acceptedFileTypes(['image/*'])
-                                ->disableLabel()
+                                ->disk('s3')
                         ]),
 
                         Section::make('Precios')->schema([
@@ -197,7 +201,7 @@ class ProductResource extends Resource
     {
         return $table
             ->columns([
-                Tables\Columns\ImageColumn::make('image')
+                Tables\Columns\ImageColumn::make('image_url')
                     ->label("Imagen"),
 
                 Tables\Columns\TextColumn::make('name')

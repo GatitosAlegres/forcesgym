@@ -16,9 +16,9 @@ class Supplier extends Model
         return $this->hasMany(Invoice::class);
     }
 
-    public function purchase_details()
+    public function purchases()
     {
-        return $this->hasMany(PurchaseDetail::class);
+        return $this->hasMany(Purchase::class);
     }
 
     public function creditNotes()

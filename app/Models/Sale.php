@@ -22,8 +22,9 @@ class Sale extends Model
         return $this->hasMany(SaleDetail::class);
     }
 
-    public function customer()
+    public function customers()
     {
         return $this->belongsTo(Customer::class, 'cliente_id');
     }
+
 }

@@ -16,12 +16,15 @@ return new class extends Migration
             $table->date("issue_date");
             $table->float("total_amount", 8, 2);
             $table->string("currency", 3);
-            $table->string("file_path")->nullable();
+            $table->string("artifact")->nullable();
             $table->text("observations")->nullable();
             $table->timestamps();
 
             $table->unsignedBigInteger("supplier_id");
             $table->foreign("supplier_id")->references("id")->on("suppliers")->onDelete("cascade");
+
+            $table->unsignedBigInteger("purchase_id");
+            $table->foreign("purchase_id")->references("id")->on("purchases")->onDelete("cascade");
         });
     }
 

@@ -33,9 +33,12 @@ class InvoiceResource extends Resource
     {
         return $form
             ->schema([
-                Forms\Components\FileUpload::make('file_path')
+                Forms\Components\FileUpload::make('artifact')
                     ->required()
-                    ->acceptedFileTypes(['application/pdf', 'application/msword', 'application/vnd.ms-excel', 'image/*'])
+                    ->acceptedFileTypes(['image/*', 'application/pdf'])
+                    ->enableDownload()
+                    ->directory('invoices')
+                    ->disk('s3')
                     ->name('Archivo'),
                 Forms\Components\TextInput::make('invoice_number')
                     ->required()
@@ -65,7 +68,7 @@ class InvoiceResource extends Resource
             ->columns([
                 Tables\Columns\TextColumn::make('invoice_number')
                     ->label('Número de factura'),
-                Tables\Columns\IconColumn::make("file_path")
+                Tables\Columns\IconColumn::make("artifact_url")
                     ->options([
                         'heroicon-o-document'
                     ])
@@ -73,8 +76,8 @@ class InvoiceResource extends Resource
                         'success',
                     ])
                     ->action(
-                        fn (Invoice $record) => $record->file_path
-                            ? PDFController::redirectToPDFViewer($record->file_path)
+                        fn (Invoice $record) => $record->artifact_url
+                            ? PDFController::redirectToPDFViewer($record->artifact_url)
                             : null
                     )
                     ->label('Archivo'),
