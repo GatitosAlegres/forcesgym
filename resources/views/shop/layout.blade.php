@@ -144,7 +144,12 @@
                                 </svg>
                                 <span
                                     class="whitespace-nowrap rounded-full bg-green-400 px-2.5 py-0.5 text-sm text-green-950">
-                                    {{ count((array) session('cart')->getItems()) }}
+                                    @if (session('cart'))
+                                        {{ count((array) session('cart')->getItems()) }}
+                                    @else
+                                        0
+                                    @endif
+
                                 </span>
                             </button>
                         </div>
