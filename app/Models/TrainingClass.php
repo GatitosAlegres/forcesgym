@@ -38,9 +38,11 @@ class TrainingClass extends Model
 
     public function asistencia()
     {
-        // Verifica que la clave foránea 'clases_entrenamiento_id' sea la correcta
-        return $this->hasOne(Assistance::class, 'clase_entrenamiento_id');
+        // Verifica que la clave foránea 'clases_entrenamie<snto_id' sea la correcta
+        return $this->hasOne(Assistance::class);
     }
+
+
     protected static function boot()
     {
         parent::boot();
@@ -60,7 +62,7 @@ class TrainingClass extends Model
             // Crear un registro en la tabla 'timex_events' con los datos de la clase
             TimexEvent::create([
                 'subject' => $tipoClaseDescripcion, // Usar la descripción del tipo de clase como subject
-                'category' => 'danger', // Opcional: Puedes ajustar la categoría según tu lógica
+                'category' => 'primary', // Opcional: Puedes ajustar la categoría según tu lógica
                 'end' => $clase->fecha,
                 'start' => $clase->fecha,
                 'startTime' => $clase->hora_inicio,

@@ -47,7 +47,7 @@ class AssistanceResource extends Resource
 
                 Forms\Components\Card::make()
                     ->schema([
-                        Forms\Components\Placeholder::make('clase_entrenamineto_id')
+                        Forms\Components\Placeholder::make('clase_entrenamiento_id')
                             ->label('Codigo de Clase')
                             ->content(fn (Assistance $record): ?string => $record->clase_entrenamiento?->codigo),
                         Forms\Components\Placeholder::make('fecha')
@@ -90,12 +90,6 @@ class AssistanceResource extends Resource
             ]);
     }
 
-    public static function getRelations(): array
-    {
-        return [
-            AssistanceDetailRelationManager::class,
-        ];
-    }
 
     protected static function getNavigationBadge(): ?string
     {
@@ -130,9 +124,12 @@ class AssistanceResource extends Resource
                             ]),
 
                         //ahora para el estado de la asistencia
-                        Forms\Components\Toggle::make('estado')
-                            ->required()
-                            ->name('Aprobación'),
+                        Forms\Components\Toggle::make('estado_asistencia')
+                            ->label('Estado')
+                            ->columnSpan([
+                                'md' => 2,
+                            ])
+                            ->default(true),
 
                     ])
                     ->defaultItems(1)

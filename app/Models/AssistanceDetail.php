@@ -22,10 +22,17 @@ class AssistanceDetail extends Model
         return $this->belongsTo(Partner::class);
     }
 
+
+
     //realacionar con asistencia
     public function asistencia()
     {
         return $this->belongsTo(Assistance::class);
+    }
+
+    public function clase_entrenamiento()
+    {
+        return $this->belongsTo(TrainingClass::class);
     }
 
     protected static function boot()

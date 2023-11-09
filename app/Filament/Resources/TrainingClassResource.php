@@ -33,11 +33,11 @@ class TrainingClassResource extends Resource
         return $form
             ->schema([
                 Forms\Components\Select::make('employee_id')
-                ->options(
-                    \App\Models\Employee::where('vacancy_id', 2)->pluck('fullname', 'id')
-                )
-                ->label('Entrenador')
-                ->required(),
+                    ->options(
+                        \App\Models\Employee::where('vacancy_id', 2)->pluck('fullname', 'id')
+                    )
+                    ->label('Entrenador')
+                    ->required(),
                 Forms\Components\Select::make('tipo_clase_id')
                     ->relationship('tipo_clase', 'nombre_tipo_clase')
                     ->required(),
@@ -49,9 +49,15 @@ class TrainingClassResource extends Resource
                 Forms\Components\DatePicker::make('fecha')
                     ->required(),
                 Forms\Components\TextInput::make('hora_inicio')
-                    ->required(),
+                    ->required()
+                    ->maxLength(255)
+                    ->type('time')
+                    ->name('Hora de inicio'),
                 Forms\Components\TextInput::make('hora_fin')
-                    ->required(),
+                    ->required()
+                    ->maxLength(255)
+                    ->type('time')
+                    ->name('Hora de finalizacion'),
                 Forms\Components\Toggle::make('activo')
                     ->required(),
             ]);
@@ -97,7 +103,8 @@ class TrainingClassResource extends Resource
         ];
     }
 
-    protected static function getNavigationBadge(): ?string {
+    protected static function getNavigationBadge(): ?string
+    {
         return static::$model::count();
     }
 

@@ -13,7 +13,7 @@ return new class extends Migration
     {
         Schema::create('memberships', function (Blueprint $table) {
             $table->id();
-            $table->string('nombreCliente')->unique();
+            $table->string('nombreCliente');
             $table->unsignedBigInteger('tipo_membresia_id'); // Field for tipo_membresia ID
             $table->text('descripcion');
             $table->decimal('precio', 8, 2);

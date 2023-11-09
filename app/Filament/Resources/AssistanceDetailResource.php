@@ -39,8 +39,6 @@ class AssistanceDetailResource extends Resource
     {
         return $table
             ->columns([
-                Tables\Columns\TextColumn::make('clase_entrenamiento.codigo')
-                    ->label('Codigo de Clase'),
                 Tables\Columns\TextColumn::make('socio.nombreCliente')
                     ->label('Cliente'),
                 Tables\Columns\IconColumn::make('estado_asistencia')
