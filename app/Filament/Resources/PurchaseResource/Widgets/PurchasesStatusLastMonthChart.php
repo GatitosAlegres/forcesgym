@@ -67,5 +67,5 @@ class PurchasesStatusLastMonthChart extends ApexChartWidget
         ];
     }
 
-    protected static ?string $footer = 'Lorem Ipsum is simply dummy text of the printing and typesetting industry.';
+    protected static ?string $footer = 'Se muestra el porcentaje de compras entregadas del ultimo mes. 🛒';
 }
