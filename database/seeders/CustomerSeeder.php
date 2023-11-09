@@ -14,17 +14,6 @@ class CustomerSeeder extends Seeder
      */
     public function run(): void
     {
-         // Define el número de registros que deseas crear
-         $numberOfCustomers = 16;
-
-         for ($i = 0; $i < $numberOfCustomers; $i++) {
-             Customer::create([
-                 'nombre' => 'Cliente ' . ($i + 1),
-                 'dni' => Str::random(8), // Genera un DNI aleatorio
-                 'email' => 'cliente' . ($i + 1) . '@example.com',
-                 'telefono' => Str::random(9), // Genera un número de teléfono aleatorio
-                 'direccion' => 'Dirección de Cliente ' . ($i + 1),
-             ]);
-            }
+        \App\Models\Customer::factory(50)->create();
     }
 }

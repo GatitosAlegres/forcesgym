@@ -31,29 +31,32 @@ class SaleDetail extends Model
             /*$igvPercentage = 0.18;
             $saleDetail->igv_amount = $saleDetail->sub_amount * $igvPercentage;*/
 
-            $sale = Sale::find($saleDetail->sale_id);
+            $sale = $saleDetail->sale;
 
             $sale->amount += $saleDetail->sub_amount;
 
-            $product = Product::find($saleDetail->product_id);
+            $product = $saleDetail->product;
             $product->stock -= $saleDetail->quantity;
             $sale->save();
+            $productRecordSheet = ProductRecordSheet::where('product_id',$product->id )->first();
             Kardex::create([
                 'code_item' => 'KAR-' . Date::now()->format('Y') . '-00000' . Kardex::count(),
                 'created_at' => now(),
                 'current_stock' => $saleDetail->product->stock - $saleDetail->quantity,
-                'document' => '',
                 'input_quantity' => 0,
                 'movement_date' => now(),
                 'output_quantity' => $saleDetail->quantity,
                 'previous_stock' => $saleDetail->product->stock,
-                'product_id' => $saleDetail->product_id,
-                'product_record_sheet_id' => ProductRecordSheet::where('product_id', $saleDetail->product_id)->first()->id,
-                'responsible_id' => auth()->user()->id,
-                'state' => '',
-                'supplier_id' => $saleDetail->sale->client_id,
+                'product_id' => $product->id,
+                //'product_record_sheet_id' => ProductRecordSheet::where('product_id', $saleDetail->product_id)->first()->id,
+                'product_record_sheet_id' => $productRecordSheet ? $productRecordSheet->id : null,
+                'responsible_id' => auth()->user()->id ?? User::first()->id,
+
+                //'responsible_id' => auth()->user()->id,
+
+                'supplier_id' => $saleDetail->product->supplier->id,
                 'total_price' => $saleDetail->sub_amount,
-                'type_document' => 'Venta',
+
                 'type_movement' => 'Salida',
                 'unit_price' => $saleDetail->price_unitary,
             ]);
