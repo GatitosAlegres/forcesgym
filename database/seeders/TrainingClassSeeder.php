@@ -16,7 +16,7 @@ class TrainingClassSeeder extends Seeder
         {
             $mesActual = date('m'); // Obtener el mes actual
             $anioActual = date('Y'); // Obtener el año actual
-            $diaAleatorio = rand(1, 31); // Día aleatorio (asumiendo febrero con 28 días)
+            $diaAleatorio = rand(1, 30); // Día aleatorio (asumiendo febrero con 28 días)
             return "$anioActual-$mesActual-$diaAleatorio";
         }
 
