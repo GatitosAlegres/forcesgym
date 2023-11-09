@@ -15,6 +15,13 @@ class PurchaseSeeder extends Seeder
     public function run(): void
     {
         Purchase::factory([
+            'status' => 'procesando'
+        ])
+            ->count(5)
+            ->has(PurchaseDetail::factory()->count(3), 'detalles')
+            ->create();
+
+        Purchase::factory([
             'status' => 'entregado'
         ])
             ->count(50)
