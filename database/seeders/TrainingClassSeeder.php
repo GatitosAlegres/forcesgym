@@ -21,7 +21,7 @@ class TrainingClassSeeder extends Seeder
         }
 
         // Generar 30 clases de entrenamiento con datos aleatorios y guardarlos en la base de datos
-        for ($i = 1; $i <= 30; $i++) {
+        for ($i = 1; $i <= 50; $i++) {
             $employeeId = rand(8, 12);
             $fecha = generarFechaAleatoria();
 

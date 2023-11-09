@@ -21,7 +21,7 @@ class AssistanceDetailRelationManager extends RelationManager
     {
         return $form
             ->schema([
-                Forms\Components\Select::make('clase_entrenamiento_id')
+                Forms\Components\Select::make('clase_entrenamiento.codigo')
                     ->relationship('clase_entrenamiento', 'codigo')
                     ->required(),
                 Forms\Components\Select::make('user_id')
@@ -36,9 +36,7 @@ class AssistanceDetailRelationManager extends RelationManager
     {
         return $table
             ->columns([
-                Tables\Columns\TextColumn::make('clase_entrenamiento.codigo')
-                    ->label('Codigo de Clase'),
-                Tables\Columns\TextColumn::make('user.name')
+                Tables\Columns\TextColumn::make('socio.nombreCliente')
                     ->label('Cliente'),
                 Tables\Columns\IconColumn::make('estado_asistencia')
                     ->boolean(),

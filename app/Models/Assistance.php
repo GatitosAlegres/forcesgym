@@ -25,12 +25,11 @@ class Assistance extends Model
         return $this->belongsTo(TrainingClass::class);
     }
 
-    public function asistencia_detalle()
-    {
+    public function AssistanceDetail(){
         return $this->hasMany(AssistanceDetail::class);
     }
 
-    public function AssistanceDetail()
+    public function asistencia_detalle()
     {
         return $this->hasMany(AssistanceDetail::class);
     }
