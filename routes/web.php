@@ -27,5 +27,4 @@ Route::prefix('report')->group(function () {
 });
 
 Route::get('/product-record-sheets/{record}/pdf', [ProductRecordSheetController::class, 'downloadProductRecordSheet'])->name('productRecordSheet.pdf.download');
-Route::get('/products/excel', [ProductController::class, 'downloadExcel'])->name('products.excel.download');
 Route::get('/products/pdf', [ProductController::class, 'downloadPdf'])->name('products.pdf.download');

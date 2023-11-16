@@ -5,8 +5,6 @@ namespace App\Filament\Resources\ProductResource\Pages;
 use App\Filament\Resources\ProductResource;
 use Filament\Pages\Actions;
 use Filament\Resources\Pages\ListRecords;
-use pxlrbt\FilamentExcel\Actions\Tables\ExportAction;
-use pxlrbt\FilamentExcel\Exports\ExcelExport;
 
 class ListProducts extends ListRecords
 {
@@ -24,7 +22,7 @@ class ListProducts extends ListRecords
 
                 Actions\Action::make('Generar Pdf')
                     ->icon('heroicon-s-document-download')
-                    //->url(route('products.pdf.download'))
+                    ->url(route('products.pdf.download'))
                     ->openUrlInNewTab(),
             ]),
         ];
