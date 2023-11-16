@@ -114,6 +114,7 @@ class TrainingClassResource extends Resource
             'index' => Pages\ListTrainingClass::route('/'),
             'create' => Pages\CreateTrainingClass::route('/create'),
             'edit' => Pages\EditTrainingClass::route('/{record}/edit'),
+            'report' => Pages\ReportTrainingClass::route('/report'),
         ];
     }
 }

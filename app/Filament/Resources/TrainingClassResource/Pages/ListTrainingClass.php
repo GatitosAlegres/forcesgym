@@ -14,6 +14,17 @@ class ListTrainingClass extends ListRecords
     {
         return [
             Actions\CreateAction::make(),
+
+            Actions\ActionGroup::make([
+                Actions\Action::make('Gráficos dinámicos')
+                    ->icon('heroicon-s-chart-bar')
+                    ->url(TrainingClassResource::getUrl('report')),
+            ]),
         ];
+    }
+
+    protected function getHeaderWidgets(): array
+    {
+        return TrainingClassResource::getWidgets();
     }
 }
