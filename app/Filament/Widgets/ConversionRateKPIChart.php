@@ -24,6 +24,7 @@ class ConversionRateKPIChart extends ApexChartWidget
         } else {
             $conversionRate = ($shoppingCount / $clients) * 100;
         }
+        $formattedConversionRate = number_format($conversionRate, 2);
 
         return [
             'chart' => [
@@ -33,7 +34,7 @@ class ConversionRateKPIChart extends ApexChartWidget
                     'show' => false,
                 ],
             ],
-            'series' => [$conversionRate],
+            'series' => [$formattedConversionRate],
             'plotOptions' => [
                 'radialBar' => [
                     'startAngle' => -135,

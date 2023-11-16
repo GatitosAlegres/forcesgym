@@ -13,14 +13,16 @@ return new class extends Migration
     {
         Schema::create('sales', function (Blueprint $table) {
             $table->id();
-            $table->string('document_type')->enum(['Boleta', 'Factura']);
+
+            $table->string('code')->unique();
             $table->date('date');
-            //$table->unsignedBigInteger('user_id');
+            $table->unsignedBigInteger('user_id')->nullable();;
             $table->unsignedBigInteger('cliente_id');
             $table->decimal('amount', 10, 2)->nullable();
             $table->timestamps();
-            //$table->foreign('user_id')->references('id')->on('users')->cascadeOnDelete();
+            $table->foreign('user_id')->references('id')->on('users')->cascadeOnDelete();
             $table->foreign('cliente_id')->references('id')->on('customers')->cascadeOnDelete();
+
         });
     }
 

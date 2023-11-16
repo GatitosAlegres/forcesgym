@@ -16,8 +16,8 @@ class TotalSalesKPIChart extends ApexChartWidget
     protected function getOptions(): array
     {
         $totalSales = Sale::count();
-        $expectedSales = 500;
-        $percentage = ($totalSales / $expectedSales) * 100;
+        $expectedSales = 70;
+        $percentage = number_format(($totalSales / $expectedSales) * 100, 2);
 
         return [
             'chart' => [

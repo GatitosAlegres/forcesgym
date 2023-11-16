@@ -181,11 +181,13 @@
         <thead>
             <tr>
                 <th class="border-0 pl-0 party-header" width="48.5%">
-                    {{ __('invoices::invoice.seller') }}
+                   {{-- {{ __('invoices::invoice.seller') }} --}}
+                   Vendedor
                 </th>
                 <th class="border-0" width="3%"></th>
                 <th class="border-0 pl-0 party-header">
-                    {{ __('invoices::invoice.buyer') }}
+                    {{-- {{ __('invoices::invoice.buyer') }} --}}
+                    Cliente
                 </th>
             </tr>
         </thead>
@@ -274,12 +276,12 @@
     <table class="table table-items">
         <thead>
             <tr>
-                <th scope="col" class="border-0 pl-0">{{ __('invoices::invoice.description') }}</th>
+                <th scope="col" class="border-0 pl-0">Productos</th>
                 @if ($invoice->hasItemUnits)
                     <th scope="col" class="text-center border-0">{{ __('invoices::invoice.units') }}</th>
                 @endif
-                <th scope="col" class="text-center border-0">{{ __('invoices::invoice.quantity') }}</th>
-                <th scope="col" class="text-right border-0">{{ __('invoices::invoice.price') }}</th>
+                <th scope="col" class="text-center border-0">Cantidad</th>
+                <th scope="col" class="text-right border-0">Precio</th>
                 @if ($invoice->hasItemDiscount)
                     <th scope="col" class="text-right border-0">{{ __('invoices::invoice.discount') }}</th>
                 @endif
@@ -371,7 +373,7 @@
             @endif
             <tr>
                 <td colspan="{{ $invoice->table_columns - 2 }}" class="border-0"></td>
-                <td class="text-right pl-0">{{ __('invoices::invoice.total_amount') }}</td>
+                <td class="text-right pl-0">Precio total</td>
                 <td class="text-right pr-0 total-amount">
                     {{ $invoice->formatCurrency($invoice->total_amount) }}
                 </td>
