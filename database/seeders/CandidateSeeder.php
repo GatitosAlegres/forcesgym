@@ -14,8 +14,10 @@ class CandidateSeeder extends Seeder
     public function run(): void
     {
 
-        $nombresMasculinos = ['Luis Miguel', 'Jose Alfredo','Javier Ignacio', 'Daniel Eduardo', 'Carlos Enrique', 'Martín Sebastián'];
-        $nombresFemeninos = ['Xioamara Gabriela','Patricia Estefanía', 'Karla Alejandra', 'Ximena','Natalia Antonia', 'Sofía Valentina'];
+        $nombresMasculinos = ['Luis Miguel', 'Jose Alfredo', 'Javier Ignacio', 'Daniel Eduardo', 'Carlos Enrique', 'Martín Sebastián', 'Alejandro', 'Juan Carlos', 'Ricardo', 'Fernando', 'Héctor', 'Mario', 'Andrés', 'Pedro', 'Gabriel', 'Miguel Ángel', 'Felipe', 'Raúl', 'Sergio', 'Francisco', 'Gustavo', 'Ignacio', 'Rafael', 'Emilio', 'Eduardo', 'Jorge', 'Antonio', 'Rodrigo'];
+
+        $nombresFemeninos = ['Xioamara Gabriela', 'Patricia Estefanía', 'Karla Alejandra', 'Ximena', 'Natalia Antonia', 'Sofía Valentina', 'Isabella', 'Fabiola', 'Laura', 'María José', 'Cristina', 'Valeria', 'Daniela', 'Mariana', 'Victoria', 'Lucía', 'Gabriela', 'Alejandra', 'Ana Sofía', 'Carolina', 'Renata', 'Paula', 'Adriana', 'Raquel', 'Beatriz', 'Elena', 'Esther', 'Verónica'];
+        
        
         $apellidos = [
             'Rodríguez López', 'Fernández Pérez', 'Gutiérrez Sánchez', 'Hernández Martínez',
@@ -23,13 +25,19 @@ class CandidateSeeder extends Seeder
             'Soto Ramírez', 'Cruz Martínez', 'Ortega Pérez', 'Mendoza Sánchez', 'Silva Martínez',
             'Núñez López', 'Chávez Pérez', 'Molina Sánchez', 'Gómez Martínez', 'Ramos López',
             'Sanchez Hernández', 'Romero Pérez', 'Vargas Martínez', 'Dominguez López',
+            'Guerrero Ramírez', 'Castillo Soto', 'Acosta Díaz', 'Moreno Silva', 'Cortez Núñez',
+            'Luna García', 'Ríos Rodríguez', 'Salgado González', 'Pacheco Mendoza', 'Cruz Torres',
+            'Jiménez Vargas', 'Navarro Díaz', 'Salinas Sánchez', 'Cervantes Pérez', 'Villa Martínez',
+            'Miranda López', 'Castañeda Chávez', 'Peralta Molina', 'Serrano Gómez', 'Guadarrama Ramos',
+            'Santos Mendoza', 'Bautista Silva', 'Cisneros Núñez', 'Trujillo Pérez', 'Hidalgo Cruz',
         ];
+        
 
         $generos = [1, 2];
         $dias = [1, 2, 3, 4];
         $jornadas = [1, 2];
 
-        for ($i = 1; $i <= 7; $i++) {
+        for ($i = 1; $i <= 25; $i++) {
             $nombreAleatorio = '';
             $generoAleatorio = 0;
 

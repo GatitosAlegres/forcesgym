@@ -58,8 +58,11 @@ class PayrollResource extends Resource
             ->columns([
                 Tables\Columns\TextColumn::make('employee.dni')
                     ->label('DNI'),
+                Tables\Columns\TextColumn::make('employee.fullname')
+                    ->label('DNI'),
                 Tables\Columns\TextColumn::make('salary')
-                    ->label('Salario'),
+                    ->label('Salario')
+                    ->prefix('S/. '),
                 Tables\Columns\TextColumn::make('date_start')
                     ->date()
                     ->label('Fecha de inicio'),
@@ -195,7 +198,9 @@ class PayrollResource extends Resource
                 ->prefix('S/.'),
             Forms\Components\DatePicker::make('date_start')
                 ->required()
-                ->name('Fecha de inicio'),
+                ->name('Fecha de inicio')
+                ->default(now()->subday())
+                ->disabled(),
             Forms\Components\DatePicker::make('date_end')
                 ->required()
                 ->name('Fecha de finalizacion'),

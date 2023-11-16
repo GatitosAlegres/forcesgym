@@ -16,7 +16,6 @@ use Illuminate\Database\Eloquent\SoftDeletingScope;
 use pxlrbt\FilamentExcel\Actions\Tables\ExportBulkAction;
 use App\Models\EvaluationDetail;
 use App\Models\EvaluationType;
-use App\Models\Purchase;
 
 
 class EvaluationResource extends Resource
@@ -114,6 +113,7 @@ class EvaluationResource extends Resource
             'index' => Pages\ListEvaluations::route('/'),
             'create' => Pages\CreateEvaluation::route('/create'),
             'edit' => Pages\EditEvaluation::route('/{record}/edit'),
+            'report' => Pages\ReportEvaluation::route('/report'),
         ];
     }
 

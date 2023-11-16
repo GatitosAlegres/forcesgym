@@ -48,9 +48,13 @@ class FeeResource extends Resource
                     ->maxValue(1025)
                     ->prefix('S/. '),
                 Forms\Components\DatePicker::make('date_start')
-                    ->required(),
+                    ->required()
+                    ->default(now()->subday())
+                    ->disabled()
+                    ->name('Fecha de inicio'),
                 Forms\Components\DatePicker::make('date_end')
-                    ->required(),
+                    ->required()
+                    ->name('Fecha de fin'),
                 Forms\Components\Toggle::make('training')
                     ->required()
                     ->name('Capacitación'),
@@ -63,12 +67,11 @@ class FeeResource extends Resource
             ->columns([
                 Tables\Columns\TextColumn::make('employee.dni')
                     ->label('Dni Empleado'),
-                Tables\Columns\TextColumn::make('employee.firstname')
-                    ->label('Nombres'),
-                Tables\Columns\TextColumn::make('employee.lastname')
+                Tables\Columns\TextColumn::make('employee.fullname')
                     ->label('Apellidos'),
                 Tables\Columns\TextColumn::make('salary')
-                    ->label('Salario'),
+                    ->label('Salario')
+                    ->prefix('S/. '),
                 Tables\Columns\TextColumn::make('date_start')
                     ->date()
                     ->label('Fecha de inicio'),

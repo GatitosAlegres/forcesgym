@@ -14,6 +14,18 @@ class ListEvaluations extends ListRecords
     {
         return [
             Actions\CreateAction::make(),
+
+            Actions\ActionGroup::make([
+                Actions\Action::make('Reporte Gráfico')
+                    ->icon('heroicon-s-chart-bar')
+                    ->url(EvaluationResource::getUrl('report')),
+            ]),
         ];
+    }
+
+    
+    protected function getHeaderWidgets(): array
+    {
+        return EvaluationResource::getWidgets();
     }
 }
