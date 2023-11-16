@@ -5,6 +5,7 @@ namespace Database\Seeders;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 use App\Models\Evaluation;
+use App\Models\Candidate;
 
 class EvaluationSeeder extends Seeder
 {
@@ -20,7 +21,7 @@ class EvaluationSeeder extends Seeder
             'Luis Hernández Martínez',
         ];
 
-        for ($i = 1; $i <= 7; $i++) {
+        for ($i = 1; $i <= Candidate::count(); $i++) {
             Evaluation::create([
                 'code' => 'E-000' . $i, // Puedes personalizar el formato del código
                 'recruiter' => $recruiters[array_rand($recruiters)],

@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Filament\Widgets;
+namespace App\Filament\Resources\EvaluationResource\Widgets;
 
 use Leandrocfe\FilamentApexCharts\Widgets\ApexChartWidget;
 use App\Models\Candidate;

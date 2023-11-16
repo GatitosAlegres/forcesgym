@@ -73,5 +73,9 @@ class DatabaseSeeder extends Seeder
 
         $this->call(TrainingClassSeeder::class);
 
+        $this->call(PayrollSeeder::class);
+
+        $this->call(FeeSeeder::class);
+
     }
 }
