@@ -21,7 +21,7 @@
         "laraveldaily/laravel-invoices": "^3.1",
         "league/flysystem-aws-s3-v3": "3.0",
         "leandrocfe/filament-apex-charts": "2.0",
-        "nesbot/carbon": "^2.68",
+        "nesbot/carbon": "^2.71",
         "phpoffice/phpspreadsheet": "^1.29",
         "predis/predis": "^2.2",
         "psr/simple-cache": "2.0",
