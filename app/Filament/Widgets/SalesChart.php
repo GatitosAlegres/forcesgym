@@ -39,7 +39,7 @@ $totalSales = $salesByProduct->pluck('total_sales')->toArray();
 return [
     'chart' => [
         'type' => 'bar',
-        'height' => 293,
+        'height' => 700,
         'toolbar' => [
             'show' => false,
         ],

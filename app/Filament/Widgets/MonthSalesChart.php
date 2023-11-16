@@ -1,27 +1,31 @@
 <?php
 
-namespace App\Filament\Resources\ProductResource\Widgets;
+namespace App\Filament\Widgets;
 
-use App\Models\Kardex;
-use App\Models\Product;
-use App\Models\Sale;
-use Filament\Forms\Components\Grid;
-use Filament\Forms\Components\Radio;
-use Filament\Forms\Components\TextInput;
-use Filament\Forms\Components\Toggle;
-use Illuminate\Support\Facades\DB;
 use Leandrocfe\FilamentApexCharts\Widgets\ApexChartWidget;
-
-class MostSelledProductsChart extends ApexChartWidget
+use App\Models\Sale;
+use App\Models\Product;
+class MonthSalesChart extends ApexChartWidget
 {
-    protected static ?string $heading = 'Productos más vendidos por mes';
 
+   protected static string $chartId = 'monthSalesChart';
+
+
+    protected static ?string $heading = 'Productos vendidos por mes';
+
+    protected static ?int $sort = 4;
     protected function getFilters(): ?array
     {
         $mounths = ['Ene', 'Feb', 'Mar', 'Abr', 'May', 'Jun', 'Jul', 'Ago', 'Sep', 'Oct', 'Nov', 'Dic'];
         return $mounths;
     }
 
+    /**
+     * Chart options (series, labels, types, size, animations...)
+     * https://apexcharts.com/docs/options
+     *
+     * @return array
+     */
     protected function getOptions(): array
     {
         $activeFilter = $this->filter + 1;
@@ -52,45 +56,61 @@ class MostSelledProductsChart extends ApexChartWidget
         }
 
         krsort($categories);
-
         return [
             'chart' => [
-                'type' => 'bar',
-                'height' => 350,
+                'type' => 'line',
+                'height' => 300,
                 'toolbar' => [
-                    'show' => true,
-                ]
+                    'show' => false,
+                ],
             ],
             'series' => [
                 [
                     'name' => 'Cantidad vendida',
                     'data' => array_values($data),
+                    'type' => 'column',
                 ],
+                [
+                    'name' => 'Trayectoria',
+                    'data' => array_values($data),
+                    'type' => 'line',
+                ],
+            ],
+            'stroke' => [
+                'width' => [0, 4],
+                'curve' => 'smooth',
             ],
             'xaxis' => [
                 'categories' => array_values($categories),
                 'labels' => [
                     'style' => [
-                        'fontWeight' => 400,
-                        'fontFamily' => 'inherit'
+                        'colors' => '#9ca3af',
+                        'fontWeight' => 600,
                     ],
                 ],
             ],
             'yaxis' => [
                 'labels' => [
                     'style' => [
-                        'fontWeight' => 400,
-                        'fontFamily' => 'inherit'
+                        'colors' => '#9ca3af',
+                        'fontWeight' => 600,
                     ],
                 ],
             ],
+            /*'legend' => [
+                'labels' => [
+                    'colors' => '#9ca3af',
+                    'fontWeight' => 600,
+                ],
+            ],*/
+            'colors' => ['#6366f1', '#38bdf8'],
             'fill' => [
                 'type' => 'gradient',
                 'gradient' => [
                     'shade' => 'dark',
                     'type' => 'vertical',
                     'shadeIntensity' => 0.5,
-                    'gradientToColors' => ['#fbbf24'],
+                    'gradientToColors' => ['#d946ef'],
                     'inverseColors' => true,
                     'opacityFrom' => 1,
                     'opacityTo' => 1,
@@ -100,19 +120,8 @@ class MostSelledProductsChart extends ApexChartWidget
             'plotOptions' => [
                 'bar' => [
                     'borderRadius' => 10,
-                    'horizontal' => false,
                 ],
             ],
-            'dataLabels' => [
-                'enabled' => false,
-            ],
-            'grid' => [
-                'show' => true,
-            ],
-            'tooltip' => [
-                'enabled' => true,
-            ],
-            'colors' => ['#f59e0b'],
         ];
     }
 }

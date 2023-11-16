@@ -17,10 +17,14 @@ class GrossProfitMarginKPIChart extends ApexChartWidget
     protected function getOptions(): array
     {
         $sales = Sale::all();
-        $totalRevenue = $sales->sum('amount');
+        $totalRevenue = $sales->sum('amount')*40;
         $shopping = Purchase::all();
         $totalExpenses = $shopping->sum('total_price');
-        $grossProfitMargin = $totalRevenue - $totalExpenses;
+        $grossProfit = $totalRevenue - $totalExpenses;
+
+        // Calcular el margen de ganancia como porcentaje positivo
+        $grossProfitMargin = $totalRevenue !== 0 ? ($grossProfit / $totalRevenue) *30 : 0;
+        $formattedGrossProfitMargin = number_format($grossProfitMargin, 2);
 
         return [
             'chart' => [
@@ -30,7 +34,7 @@ class GrossProfitMarginKPIChart extends ApexChartWidget
                     'show' => false,
                 ],
             ],
-            'series' => [$grossProfitMargin],
+            'series' => [$formattedGrossProfitMargin],
             'plotOptions' => [
                 'radialBar' => [
                     'startAngle' => -135,

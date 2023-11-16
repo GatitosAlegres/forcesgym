@@ -15,7 +15,7 @@ class SaleSeeder extends Seeder
     public function run(): void
     {
         Sale::factory()
-        ->count(100) // Crea 50 registros de venta
+        ->count(30) // Crea 50 registros de venta
         ->has(SaleDetail::factory()->count(5), 'saleDetails') // Asocia detalles de venta
         ->create();
 

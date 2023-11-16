@@ -17,6 +17,7 @@ class SaleDetailFactory extends Factory
      */
     public function definition(): array
     {
+
         return [
         'sale_id' => Sale::inRandomOrder()->first()->id,
         'product_id' => Product::inRandomOrder()->first()->id,

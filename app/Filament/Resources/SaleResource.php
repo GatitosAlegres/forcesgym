@@ -7,7 +7,7 @@ use App\Filament\Resources\SaleResource\RelationManagers;
 use App\Models\Product;
 use App\Models\Sale;
 use App\Models\Customer;
-//use App\Models\User;
+use App\Models\User;
 use Filament\Forms;
 use Filament\Forms\Components\Repeater;
 use Filament\Forms\Components\TextInput;
@@ -38,13 +38,25 @@ class SaleResource extends Resource
         return $form
             ->schema([
 
-                Forms\Components\Select::make('document_type')
+                Forms\Components\Select::make('code')
                 ->options([
                     'Boleta' => 'Boleta',
                     'Factura' => 'Factura',
                 ])
                 ->required()
                 ->name("Tipo de documento"),
+                /*Forms\Components\Select::make('user_id')
+    ->relationship('user', 'name')
+    ->required()
+    ->placeholder('Seleccionar un usuario')
+    ->label('Usuario'),*/
+                Forms\Components\TextInput::make('user_name')
+                ->disabled()
+                ->default(auth()->user()->name) // Nombre predeterminado del usuario autenticado
+                ->label('Usuario'),
+
+
+
 
                 Forms\Components\Select::make('cliente_id')
                     ->relationship('customers', 'nombre')
@@ -120,12 +132,16 @@ class SaleResource extends Resource
     {
         return $table
             ->columns([
-                Tables\Columns\TextColumn::make('document_type')->label('Tipo de Documento'),
+                Tables\Columns\TextColumn::make('code')->label('Tipo de Documento'),
                 Tables\Columns\TextColumn::make('customers.nombre')
+                    ->searchable()
                     ->label('Cliente'),
+
                 Tables\Columns\TextColumn::make('date')
                     ->date()->label('Fecha y hora'),
-                Tables\Columns\TextColumn::make('amount')->label('Monto')
+                Tables\Columns\TextColumn::make('amount')->label('Monto'),
+                Tables\Columns\TextColumn::make('user.name')
+                ->label('Usuario')
             ])
             ->filters([
                 //
@@ -136,6 +152,7 @@ class SaleResource extends Resource
                     ->icon('heroicon-o-document-download')
                     ->url(fn (Sale $record) => route('sale.pdf.download', $record))
                     ->openUrlInNewTab(),
+                    Tables\Actions\DeleteAction::make(),
             ])
             ->bulkActions([
                 Tables\Actions\DeleteBulkAction::make(),

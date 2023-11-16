@@ -31,20 +31,26 @@ class DownloadPdfController extends Controller
 
         $client = new Party([
             'name'          => 'Reto GYM',
-            'address'       => 'Guadalupe - Perú',
+            'Dirección'       => 'Guadalupe - Perú',
             'custom_fields' => [
-                'order number' => $record->id,
+                'número de orden' => $record->id,
+                'vendedor' => $record->user->name,
             ],
         ]);
 
 
 
          // Verifica el tipo de documento y establece el prefijo correspondiente para el nombre del archivo PDF
-        $documentType = $record->document_type;
-        $documentPrefix = $documentType === 'Boleta' ? 'Boleta' : 'Factura';
+        /*$documentType = $record->document_type;
+        $documentPrefix = $documentType === 'Boleta' ? 'Boleta' : 'Factura';*/
+         // Obtiene el tipo de documento y establece el prefijo para el código del documento
+         $documentType = $record->code;
+         $documentPrefix = strtoupper(substr($documentType, 0, 1));
+
 
 
         $items = [];
+
 
 
 
@@ -63,7 +69,7 @@ class DownloadPdfController extends Controller
         ];
         $notes = implode("<br>", $notes);
 
-        $invoice = Invoice::make($documentPrefix)
+        $invoice = Invoice::make($record->code)
             ->series('BIG')
             ->status("CANCELADO")
             ->sequence(667)
@@ -78,14 +84,11 @@ class DownloadPdfController extends Controller
             ->currencyFormat('{SYMBOL}{VALUE}')
             ->currencyThousandsSeparator('.')
             ->currencyDecimalPoint(',')
-            ->filename($documentPrefix . ' ' . $client->nombre . ' ' . $customer->nombre) // Utiliza $documentTitle en el nombre del archivo
+            ->filename($record->code) // Cambiado el nombre del documento
             ->addItems($items)
             ->notes($notes)
 
-            ->logo(public_path('img/logo.png'))
-
-
-
+            ->logo(public_path('img/logo_forces.jpg'))
             ->save('public');
 
 
