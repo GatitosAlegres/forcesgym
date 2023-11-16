@@ -9,7 +9,7 @@ use Leandrocfe\FilamentApexCharts\Widgets\ApexChartWidget;
 
 class PurchasesPerMonth extends ApexChartWidget
 {
-    protected static ?string $heading = 'Productos más vendidos por mes';
+    protected static ?string $heading = 'Productos más comprados por mes';
 
     protected function getFilters(): ?array
     {
