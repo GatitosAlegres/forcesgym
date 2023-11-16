@@ -23,7 +23,7 @@
         <thead class="thead-light">
             <tr>
                 <th scope="col">#</th>
-                {{-- <th scope="col">Imagen</th> --}}
+                <th scope="col">Imagen</th>
                 <th scope="col">Código</th>
                 <th scope="col">Nombre</th>
                 <th scope="col">Marca</th>
@@ -40,7 +40,7 @@
             @foreach ($products as $product)
                 <tr>
                     <th scope="row"> {{ $i++ }} </th>
-                    {{-- <td> <img src="{{ $product->image }}" alt="-" width="20" height="20"/> </td> --}}
+                    <td> <img src="https://minio.watunt.lat/forcesgym/{{ $product->image }}" alt="-" width="20" height="20"/> </td>
                     <td> {{ $product->barcode }} </td>
                     <td> {{ $product->name }} </td>
                     <td> {{ $product->supplier->name }} </td>
