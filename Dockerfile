@@ -60,7 +60,8 @@ RUN php artisan key:generate
 RUN php artisan event:cache && \
     php artisan route:cache && \
     php artisan view:cache && \
-    php artisan icons:cache
+    php artisan icons:cache && \
+    php artisan filament:cache-assets
 
 USER www-data
 

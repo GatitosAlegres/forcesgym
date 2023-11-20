@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "32ba360558865be9773a0806488788a4",
+    "content-hash": "667aff895dc41e6cafef438603074d76",
     "packages": [
         {
             "name": "akaunting/laravel-money",
@@ -365,83 +365,6 @@
                 }
             ],
             "time": "2023-01-12T15:12:49+00:00"
-        },
-        {
-            "name": "bezhansalleh/filament-language-switch",
-            "version": "1.0.8",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/bezhanSalleh/filament-language-switch.git",
-                "reference": "f40dbfcb37d5259b04c91af4e545dce8c95a07e1"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/bezhanSalleh/filament-language-switch/zipball/f40dbfcb37d5259b04c91af4e545dce8c95a07e1",
-                "reference": "f40dbfcb37d5259b04c91af4e545dce8c95a07e1",
-                "shasum": ""
-            },
-            "require": {
-                "filament/filament": "^2.0",
-                "illuminate/contracts": "^8.0|^9.0|^10.0",
-                "php": "^8.0|^8.1|^8.2",
-                "spatie/laravel-package-tools": "^1.9.2"
-            },
-            "require-dev": {
-                "laravel/pint": "^1.0",
-                "nunomaduro/collision": "^6.0",
-                "orchestra/testbench": "^7.0",
-                "pestphp/pest": "^1.21",
-                "pestphp/pest-plugin-laravel": "^1.1",
-                "phpunit/phpunit": "^9.5",
-                "spatie/laravel-ray": "^1.26"
-            },
-            "type": "library",
-            "extra": {
-                "laravel": {
-                    "providers": [
-                        "BezhanSalleh\\FilamentLanguageSwitch\\FilamentLanguageSwitchServiceProvider"
-                    ]
-                }
-            },
-            "autoload": {
-                "psr-4": {
-                    "BezhanSalleh\\FilamentLanguageSwitch\\": "src"
-                }
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "MIT"
-            ],
-            "authors": [
-                {
-                    "name": "Bezhan Salleh",
-                    "email": "bezhan_salleh@yahoo.com",
-                    "role": "Developer"
-                }
-            ],
-            "description": "Zero config Language Switch(Changer/Localizer) plugin for filamentphp admin",
-            "homepage": "https://github.com/bezhansalleh/filament-language-switch",
-            "keywords": [
-                "bezhanSalleh",
-                "filament-language-changer",
-                "filament-language-switch",
-                "filament-locale-changer",
-                "filament-localizer",
-                "filament-plugin",
-                "filamentphp",
-                "laravel"
-            ],
-            "support": {
-                "issues": "https://github.com/bezhanSalleh/filament-language-switch/issues",
-                "source": "https://github.com/bezhanSalleh/filament-language-switch/tree/1.0.8"
-            },
-            "funding": [
-                {
-                    "url": "https://github.com/bezhanSalleh",
-                    "type": "github"
-                }
-            ],
-            "time": "2023-07-16T20:12:51+00:00"
         },
         {
             "name": "bezhansalleh/filament-shield",
@@ -2451,6 +2374,68 @@
                 }
             ],
             "time": "2023-08-27T10:19:19+00:00"
+        },
+        {
+            "name": "hollyit/filament-static-assets",
+            "version": "0.1.4",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/HollyIT/filament-static-assets.git",
+                "reference": "0db698909bff6d55259259b9d81adf3d5e5a4528"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/HollyIT/filament-static-assets/zipball/0db698909bff6d55259259b9d81adf3d5e5a4528",
+                "reference": "0db698909bff6d55259259b9d81adf3d5e5a4528",
+                "shasum": ""
+            },
+            "require": {
+                "filament/filament": "^2.13",
+                "illuminate/contracts": "^9.0|^10",
+                "php": "^8.0",
+                "spatie/laravel-package-tools": "^1.9.2"
+            },
+            "require-dev": {
+                "orchestra/testbench": "7.*",
+                "pestphp/pest": "^1.21"
+            },
+            "type": "library",
+            "extra": {
+                "laravel": {
+                    "providers": [
+                        "HollyIT\\FilamentStaticAssets\\StaticAssetsServiceProvider"
+                    ]
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "HollyIT\\FilamentStaticAssets\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Jamie Holly",
+                    "email": "jamie@hollyit.net"
+                }
+            ],
+            "description": "Improved handling of stylesheets and javascript files for Filament",
+            "homepage": "https://github.com/HollyIT/filament-static-assets",
+            "keywords": [
+                "assets",
+                "filament",
+                "hollyit",
+                "laravel",
+                "performance"
+            ],
+            "support": {
+                "issues": "https://github.com/HollyIT/filament-static-assets/issues",
+                "source": "https://github.com/HollyIT/filament-static-assets/tree/0.1.4"
+            },
+            "time": "2023-03-02T15:35:12+00:00"
         },
         {
             "name": "laravel/framework",
