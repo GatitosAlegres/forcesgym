@@ -19,8 +19,9 @@ return new class extends Migration
             $table->foreign('product_id')->references('id')->on('products')->cascadeOnDelete();
             $table->integer('quantity');
             $table->decimal('price_unitary', 10, 2);
-            $table->decimal('sub_amount', 10, 2);
             //$table->decimal('igv_amount', 10, 2);
+            $table->decimal('sub_amount', 10, 2);
+
             $table->timestamps();
 
         });

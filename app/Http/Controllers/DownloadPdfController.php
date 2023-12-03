@@ -11,6 +11,9 @@ use LaravelDaily\Invoices\Invoice;
 use LaravelDaily\Invoices\Classes\Party;
 use LaravelDaily\Invoices\Classes\InvoiceItem;
 
+use function Termwind\style;
+
+
 
 class DownloadPdfController extends Controller
 {
@@ -22,6 +25,7 @@ class DownloadPdfController extends Controller
             //'name'          => $record->user->name,
 
             'name' => $record->customers->nombre,
+            'doc' => $record->customers->dni,
             'custom_fields' => [
                 'Dirección' => $record->customers->direccion,
                 'Correo' => $record->customers->email,
@@ -40,12 +44,20 @@ class DownloadPdfController extends Controller
 
 
 
+
+
          // Verifica el tipo de documento y establece el prefijo correspondiente para el nombre del archivo PDF
         /*$documentType = $record->document_type;
         $documentPrefix = $documentType === 'Boleta' ? 'Boleta' : 'Factura';*/
          // Obtiene el tipo de documento y establece el prefijo para el código del documento
          $documentType = $record->code;
          $documentPrefix = strtoupper(substr($documentType, 0, 1));
+
+
+
+
+
+
 
 
 
@@ -64,21 +76,25 @@ class DownloadPdfController extends Controller
         }
 
         $notes = [
-            'ForcesGym - Pacasmayo',
-            'Donde los sueños se vuelven musculos',
+            'Gracias por comprar en Forces Gym, ',
+            'Donde los sueños se vuelven músculos',
+           // 'img/qrforces.jpeg', // Reemplaza 'ruta_de_la_imagen.jpg' con la ruta real de tu imagen
         ];
+
+       // echo '<img src="' . $notes[2] . '" alt="Descripción de la imagen">'; // Cambia el índice según la posición de la ruta de la imagen en tu array
+
         $notes = implode("<br>", $notes);
 
         $invoice = Invoice::make($record->code)
             ->series('BIG')
-            ->status("CANCELADO")
+            //->status("CANCELADO")
             ->sequence(667)
             ->serialNumberFormat('V-' . $record->id . '-' . now()->format('Y-m-d'))
             ->seller($client)
             ->buyer($customer)
             ->date(now())
             ->dateFormat('d/m/Y')
-            ->payUntilDays(0)
+            //->payUntilDays(0)
             ->currencySymbol('S/')
             ->currencyCode('PEN')
             ->currencyFormat('{SYMBOL}{VALUE}')
@@ -86,9 +102,10 @@ class DownloadPdfController extends Controller
             ->currencyDecimalPoint(',')
             ->filename($record->code) // Cambiado el nombre del documento
             ->addItems($items)
-            ->notes($notes)
+            //->notes($notes)
 
-            ->logo(public_path('img/logo_forces.jpg'))
+            //->logo(public_path('img/logo_forces.jpg'))
+            ->logo(public_path('img/qrforces.jpeg'))
             ->save('public');
 
 
@@ -103,6 +120,7 @@ class DownloadPdfController extends Controller
             'name'          => $record->invoice->supplier->name,
             'phone'         => $record->invoice->supplier->phone,
             'address'       => $record->invoice->supplier->address,
+            'doc'           => $record->invoice->supplier->doc,
             'custom_fields' => [],
         ]);
 

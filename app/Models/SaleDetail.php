@@ -66,7 +66,7 @@ class SaleDetail extends Model
         self::updating(function($saleDetail){
             $saleDetail->sub_amount = $saleDetail->price_unitary * $saleDetail->quantity;
 
-           /* $igvPercentage = 0.18;
+            /*$igvPercentage = 0.18;
             $saleDetail->igv_amount = $saleDetail->sub_amount * $igvPercentage;*/
 
             $sale = Sale::find($saleDetail->sale_id);
