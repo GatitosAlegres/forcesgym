@@ -68,9 +68,11 @@ return [
 
     'paper' => [
         // A4 = 210 mm x 297 mm = 595 pt x 842 pt
-        'size'        => 'a4',
+        'size'        => 'a7',
         'orientation' => 'portrait',
+
     ],
+
 
     'disk' => 'local',
 

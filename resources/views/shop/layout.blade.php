@@ -18,7 +18,7 @@
                 <span class="self-center text-2xl font-semibold whitespace-nowrap">Forces Gym</span>
             </a>
             <div class="flex items-center">
-                <a href="tel:5541251234" class="mr-6 text-sm text-gray-500 hover:underline">+51 935 198 462</a>
+                <a href="tel:5541251234" class="mr-6 text-sm text-gray-500 hover:underline">+51 934 922 139</a>
                 <a href="#" class="text-sm text-blue-600 hover:underline">Login</a>
             </div>
         </div>
