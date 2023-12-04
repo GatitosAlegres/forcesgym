@@ -5,6 +5,11 @@
 php artisan migrate:fresh --seed
 ```
 
+## Crear link simbolico para las imagenes
+```sh
+php artisan storage:link
+```
+
 Ahora puedes iniciar sesion con el usuario:
 
 email: admin@forcesgym.com
