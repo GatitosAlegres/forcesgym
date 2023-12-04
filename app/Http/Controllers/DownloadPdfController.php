@@ -2,16 +2,17 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\ProductRecordSheet;
 use Carbon\Carbon;
 use App\Models\Sale;
 use App\Models\Purchase;
+use function Termwind\style;
 use Illuminate\Http\Request;
+use App\Models\ProductRecordSheet;
 use LaravelDaily\Invoices\Invoice;
+use Illuminate\Support\Facades\Storage;
+
 use LaravelDaily\Invoices\Classes\Party;
 use LaravelDaily\Invoices\Classes\InvoiceItem;
-
-use function Termwind\style;
 
 
 
@@ -46,12 +47,12 @@ class DownloadPdfController extends Controller
 
 
 
-         // Verifica el tipo de documento y establece el prefijo correspondiente para el nombre del archivo PDF
+        // Verifica el tipo de documento y establece el prefijo correspondiente para el nombre del archivo PDF
         /*$documentType = $record->document_type;
         $documentPrefix = $documentType === 'Boleta' ? 'Boleta' : 'Factura';*/
-         // Obtiene el tipo de documento y establece el prefijo para el código del documento
-         $documentType = $record->code;
-         $documentPrefix = strtoupper(substr($documentType, 0, 1));
+        // Obtiene el tipo de documento y establece el prefijo para el código del documento
+        $documentType = $record->code;
+        $documentPrefix = strtoupper(substr($documentType, 0, 1));
 
 
 
@@ -78,12 +79,26 @@ class DownloadPdfController extends Controller
         $notes = [
             'Gracias por comprar en Forces Gym, ',
             'Donde los sueños se vuelven músculos',
-           // 'img/qrforces.jpeg', // Reemplaza 'ruta_de_la_imagen.jpg' con la ruta real de tu imagen
+            // 'img/qrforces.jpeg', // Reemplaza 'ruta_de_la_imagen.jpg' con la ruta real de tu imagen
         ];
 
-       // echo '<img src="' . $notes[2] . '" alt="Descripción de la imagen">'; // Cambia el índice según la posición de la ruta de la imagen en tu array
+        // echo '<img src="' . $notes[2] . '" alt="Descripción de la imagen">'; // Cambia el índice según la posición de la ruta de la imagen en tu array
 
         $notes = implode("<br>", $notes);
+
+
+        $QRData = env('APP_URL') . '/report/sales/' . $record->id . '.png';
+
+        $imageUrl = 'https://api.qrserver.com/v1/create-qr-code/?size=100x100&data=' . $QRData;
+
+        $imageContent = file_get_contents($imageUrl);
+
+        $filename = 'image_' . time() . '.' . pathinfo($imageUrl, PATHINFO_EXTENSION);
+
+        Storage::disk('public')->put('sales/' . $filename, $imageContent);
+
+        $imageUrl = asset('storage/sales/' . $filename);
+
 
         $invoice = Invoice::make($record->code)
             ->series('BIG')
@@ -103,11 +118,8 @@ class DownloadPdfController extends Controller
             ->filename($record->code) // Cambiado el nombre del documento
             ->addItems($items)
             //->notes($notes)
-
-            //->logo(public_path('img/logo_forces.jpg'))
-            ->logo(public_path('img/qrforces.jpeg'))
+            ->logo(public_path('storage/sales/' . $filename))
             ->save('public');
-
 
         $link = $invoice->url();
 
