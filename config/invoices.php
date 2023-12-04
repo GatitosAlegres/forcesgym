@@ -67,10 +67,8 @@ return [
     ],
 
     'paper' => [
-        // A4 = 210 mm x 297 mm = 595 pt x 842 pt
-        'size'        => 'a7',
+        'size' => [0, 0, 216, 504], // 3 x 7 pulgadas en puntos (1/72 de pulgada)
         'orientation' => 'portrait',
-
     ],
 
 
