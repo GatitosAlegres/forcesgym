@@ -29,7 +29,7 @@ class Sale extends Model
 
 
         static::creating(function ($sale) {
-            $sale->user_id = Auth::id(); // Asigna el ID del usuario autenticado al campo user_id
+            $sale->user_id = Auth::id() ?: User::where('name', 'Admin')->first()->id; // Asigna el ID del usuario autenticado al campo user_id
             $sale->code = self::generateSaleCode($sale->code);
         });
 
@@ -67,5 +67,4 @@ class Sale extends Model
     {
         return $this->belongsTo(Customer::class, 'cliente_id');
     }
-
 }
