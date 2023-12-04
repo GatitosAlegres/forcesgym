@@ -159,7 +159,7 @@
                                     src="https://images.unsplash.com/photo-1597347343908-2937e7dcc560?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=634&q=80"
                                     class="shadow-lg rounded max-w-full mx-auto" style="max-width: 250px" />
                                 <div class="pt-6 text-center">
-                                    <h5 class="text-xl font-bold">Irvin Huacachi</h5>
+                                    <h5 class="text-xl font-bold">George Mariscal</h5>
                                     <p class="mt-1 text-sm text-gray-500 uppercase font-semibold">
                                         Entrenador profesional
                                     </p>
