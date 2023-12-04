@@ -61,7 +61,8 @@ RUN php artisan event:cache && \
     php artisan route:cache && \
     php artisan view:cache && \
     php artisan icons:cache && \
-    php artisan filament:cache-assets
+    php artisan filament:cache-assets && \
+    php artisan storage:link
 
 USER www-data
 
