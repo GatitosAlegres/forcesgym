@@ -58,6 +58,6 @@ class StripeController extends Controller
 
     public function cancel()
     {
-        return view('cancel');
+        return redirect()->route('store')->with('success', 'Continúe con su compra.');
     }
 }

@@ -52,7 +52,7 @@ class CartController extends Controller
 
             $cart = session()->get('cart');
 
-            $cart->updateItem($id, $cart->findItem($id)->quantity + $quantity);
+            $cart->updateItem($id, $quantity);
 
             session()->put('cart', $cart);
 
